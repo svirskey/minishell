@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:55 by bfarm             #+#    #+#             */
-/*   Updated: 2022/07/15 18:22:46 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/07/15 21:03:07 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 //malloc 
 //free 
 //exit
-//getenv -- environment variable function
+//getenv -- get value of key in env
 
 #include <fcntl.h>
 //open
@@ -44,7 +44,7 @@
 //pipe -- create descriptor pair for interprocess communication
 //ttyname, isatty, ttyslot -- get name of associated terminal (tty) from file descriptor
 
- #include <signal.h>
+#include <signal.h>
 //signal
 //sigaction
 //kill
