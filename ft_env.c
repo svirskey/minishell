@@ -18,7 +18,7 @@ void ft_env(t_info *info) // return void ?
 	t_list *tmp = info->envp_list;
 	while (tmp)
 	{
-		printf("%s=%s\n",tmp->key,tmp->value);
+		printf("%s=%s\n",(char *)tmp->key,(char *)tmp->value);
 		tmp = tmp->next;
 	}
 }

@@ -13,7 +13,7 @@ COMPILER = cc
 all: ${NAME} 
 
 ${NAME}: $(OBJS)
-	$(CC) $(OBJS) -o $@
+	$(CC) $(OBJS) -lreadline -lncurses -o $@
 
 %.o : %.c $(HEADERS) Makefile
 	$(CC)  $(CFLAGS) -c $< 

@@ -24,7 +24,7 @@ enum tokens
 	redir_right, // >
 	double_left, // <<
 	double_right, // >>
-	pipe // |
+	pipe_token // |
 };
 // echo $aasdadad 123 = [123]
 // echo "" 123 = [ 123]
