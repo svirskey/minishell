@@ -1,6 +1,11 @@
 make --dry-run --always-make --keep-going --print-directory
-make: Entering directory '/home/august/Desktop/minishell'
+
+make: Entering directory `/Users/bfarm/Desktop/minishell_github'
+cc  -Wall -Wextra -Werror -c init.c 
+ 
+cc  -Wall -Wextra -Werror -c libft_funcs.c 
+cc  -Wall -Wextra -Werror -c list_funcs.c 
 cc  -Wall -Wextra -Werror -c minishell.c 
-cc minishell.o -o minishell
-make: Leaving directory '/home/august/Desktop/minishell'
+cc init.o libft_funcs.o list_funcs.o minishell.o -o minishell
+make: Leaving directory `/Users/bfarm/Desktop/minishell_github'
  
