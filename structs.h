@@ -6,13 +6,28 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/07/15 21:48:14 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/07/15 22:26:58 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 typedef struct s_info t_info;
 
 typedef struct s_list t_list;
+
+enum tokens
+{
+	separator, // space ; < > << >>  кавычки
+	word,
+	singles, // ' '
+	doubles, // " "
+	redir_left, // <
+	redir_right, // >
+	double_left, // <<
+	double_right, // >>
+	pipe // |
+};
+// echo $aasdadad 123 = [123]
+// echo "" 123 = [ 123]
 
 struct s_list
 {
