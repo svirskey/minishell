@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:17:28 by bfarm             #+#    #+#             */
-/*   Updated: 2022/07/15 21:08:29 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/07/15 21:38:15 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	env_init(t_info *info, char **env)
 			value[k] = env[i][j + k];
 			k++;
 		}
-		ft_lstadd_back(&(info->envp_list) ,ft_lstnew(key, value));
+		ft_lstadd_back(&(info->envp_list) ,ft_lstnew((void *)key, (void *)value));
 		i++;
 	}
 }

@@ -6,14 +6,14 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:58:13 by bfarm             #+#    #+#             */
-/*   Updated: 2022/07/15 21:02:25 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/07/15 21:38:37 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "stdlib.h"
 
-t_list	*ft_lstnew(char *key, char *value)
+t_list	*ft_lstnew(void *key, void *value)
 {
 	t_list	*node;
 
@@ -42,6 +42,23 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 }
 
 void	ft_list_clear(t_list **lst)
+{
+	t_list	*curr;
+	t_list	*tmp;
+
+	if (lst == NULL)
+		return ;
+	curr = *lst;
+	while (curr)
+	{
+		tmp = curr;
+		curr = curr->next;
+		free(tmp);
+	}
+	*lst = NULL;
+}
+
+void	ft_list_clear_hard(t_list **lst)
 {
 	t_list	*curr;
 	t_list	*tmp;

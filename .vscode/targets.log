@@ -1,12 +1,14 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-# GNU Make 4.2.1
-# Built for x86_64-pc-linux-gnu
-# Copyright (C) 1988-2016 Free Software Foundation, Inc.
-# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-# This is free software: you are free to change and redistribute it.
-# There is NO WARRANTY, to the extent permitted by law.
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
 
-# Make data base, printed on Mon Jul 11 15:58:55 2022
+# This program built for i386-apple-darwin11.3.0
+ 
+
+# Make data base, printed on Fri Jul 15 21:49:39 2022
 
 # Variables
 
@@ -14,214 +16,145 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
-# environment
-DESKTOP_SESSION = xfce
-# default
-.SHELLFLAGS := -c
-# environment
-XDG_SESSION_CLASS = user
-# makefile (from 'Makefile', line 3)
+# makefile (from `Makefile', line 3)
 SRC = ${wildcard *.c}
 # environment
-XDG_SESSION_TYPE = x11
-# environment
-GTK3_MODULES = xapp-gtk3-module
+VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
-# environment
-XAUTHORITY = /home/august/.Xauthority
-# environment
-GDMSESSION = xfce
-# default
-MAKE_VERSION := 4.2.1
+# automatic
+@F = $(notdir $@)
 # makefile
-CURDIR := /home/august/Desktop/minishell
+CURDIR := /Users/bfarm/Desktop/minishell_github
 # makefile
 SHELL = /bin/sh
 # environment
-GDM_LANG = en_US
-# environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-_ = /usr/share/code/code
-# makefile (from 'Makefile', line 9)
+_ = /usr/bin/make
+# makefile (from `Makefile', line 9)
+ 
 CFLAGS = -Wall -Wextra -Werror
-# environment
-XDG_CONFIG_DIRS = /etc/xdg/xdg-xfce:/etc/xdg:/etc/xdg
-# makefile (from 'Makefile', line 1)
+# makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
-# automatic
-@F = $(notdir $@)
-# 'override' directive
-GNUMAKEFLAGS := 
 # environment
-MANDATORY_PATH = /usr/share/gconf/xfce.mandatory.path
-# environment
-XDG_DATA_DIRS = /usr/share/xfce4:/home/august/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/usr/share
-# environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
-# makefile (from 'Makefile', line 5)
+VSCODE_VERBOSE_LOGGING = true
+# makefile (from `Makefile', line 5)
 OBJS = ${patsubst %.c,%.o, ${SRC}}
 # environment
-LESSOPEN = | /usr/bin/lesspipe %s
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n0001zwr000gz6/T/vscode-ipc-070cc6ee-5332-4965-a265-8ba7c06b04a5.sock
 # environment
-LC_NAME = ru_RU.UTF-8
+VSCODE_CWD = /
 # environment
-VSCODE_CWD = /home/august
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.vNu9gQSGyd/Render
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
-# default
-MAKE_HOST := x86_64-pc-linux-gnu
+PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/munki:/opt/X11/bin
 # environment
-PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-# environment
-SESSION_MANAGER = local/august-Aspire-A315-33:@/tmp/.ICE-unix/956,unix/august-Aspire-A315-33:/tmp/.ICE-unix/956
-# environment
-XDG_RUNTIME_DIR = /run/user/1000
-# environment
-XDG_MENU_PREFIX = xfce-
+VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
-.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
+.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/august
-# environment
-LS_COLORS = 
-# environment
-XDG_SESSION_DESKTOP = xfce
-# environment
-SSH_AUTH_SOCK = /tmp/ssh-FtSTFg07UKua/agent.956
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.7EfZ1nNKI9/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
-DISPLAY = :0.0
+DISPLAY = /private/tmp/com.apple.launchd.5RJ3TLuhFV/org.xquartz:0
 # environment
-PWD = /home/august/Desktop/minishell
+VSCODE_PIPE_LOGGING = true
 # environment
-QT_QPA_PLATFORMTHEME = qt5ct
-# default
-.LOADED := 
+PWD = /Users/bfarm/Desktop/minishell_github
 # environment
-XDG_SEAT = seat0
-# environment
-SSH_AGENT_PID = 1100
-# environment
-ORIGINAL_XDG_CURRENT_DESKTOP = XFCE
-# environment
-GTK_MODULES = gail:atk-bridge
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-HOME = /home/august
+HOME = /Users/bfarm
+# default
+MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-LESSCLOSE = /usr/bin/lesspipe %s %s
+VSCODE_CODE_CACHE_PATH = /Users/bfarm/Library/Application Support/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
 # environment
-VSCODE_CODE_CACHE_PATH = /home/august/.config/Code/CachedData/92d25e35d9bf1a6b16f7d0758f25d48ace11e5b9
+LOGNAME = bfarm
 # environment
-LOGNAME = august
-# environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
-# automatic
-+F = $(notdir $+)
-# makefile (from 'Makefile', line 7)
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# makefile (from `Makefile', line 7)
 HEADERS = minishell.h
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
-XDG_VTNR = 7
-# environment
-CLUTTER_BACKEND = x11
-# environment
-MAKELEVEL := 0
+XPC_FLAGS = 0x0
 # default
 MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # environment
-SHLVL = 0
+SHLVL = 1
+# default
+MAKE_VERSION := 3.81
 # environment
-COMPIZ_CONFIG_PROFILE = mint
-# environment
-XDG_SESSION_ID = c1
-# environment
-USER = august
-# environment
-LC_MONETARY = ru_RU.UTF-8
+USER = bfarm
 # makefile
 .DEFAULT_GOAL := all
-# environment
-XDG_CURRENT_DESKTOP = XFCE
-# makefile (from 'Makefile', line 1)
+# makefile (from `Makefile', line 1)
 NAME = minishell
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
-# environment
-LC_TELEPHONE = ru_RU.UTF-8
 # default
-MAKE_COMMAND := make
+MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
 # default
 .VARIABLES := 
+# environment
+TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n0001zwr000gz6/T/
 # automatic
 *F = $(notdir $*)
 # environment
-LANGUAGE = en_US
-# environment
-XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
-# environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-48c80b53-1.69.0-main.sock
+VSCODE_IPC_HOOK = /Users/bfarm/Library/Application Support/Code/1.68.1-main.sock
 # makefile
-MAKEFLAGS = pqrR
+MAKEFLAGS = Rrqp
 # environment
-MFLAGS = -pqrR
+MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
+# environment
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000009.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
 # environment
-GDK_BACKEND = x11
+__CF_USER_TEXT_ENCODING = 0x3FE6:0x7:0x31
 # environment
-LC_PAPER = ru_RU.UTF-8
-# environment
-QT_ACCESSIBILITY = 1
-# environment
-DEFAULTS_PATH = /usr/share/gconf/xfce.default.path
-# makefile (from 'Makefile', line 11)
+COMMAND_MODE = unix2003
+# makefile (from `Makefile', line 11)
 COMPILER = cc
 # default
 MAKEFILES := 
-# environment
-LC_NUMERIC = ru_RU.UTF-8
 # automatic
 <F = $(notdir $<)
 # environment
-LC_MEASUREMENT = ru_RU.UTF-8
-# environment
 LC_ALL = C
+# environment
+SECURITYSESSIONID = 186f1
 # automatic
 ^F = $(notdir $^)
 # default
 SUFFIXES := 
-# environment
-CHROME_DESKTOP = code-url-handler.desktop
 # default
-.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+.INCLUDE_DIRS = /usr/local/include
 # environment
-LC_IDENTIFICATION = ru_RU.UTF-8
-# default
-.RECIPEPREFIX := 
-# environment
-LC_ADDRESS = ru_RU.UTF-8
+MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 5623
+VSCODE_PID = 23788
 # variable set hash-table stats:
-# Load=105/1024=10%, Rehash=0, Collisions=10/140=7%
+# Load=70/1024=7%, Rehash=0, Collisions=4/104=4%
 
 # Pattern-specific Variable Values
 
@@ -229,23 +162,33 @@ VSCODE_PID = 5623
 
 # Directories
 
-# . (device 2050, inode 23071802): 10 files, no impossibilities.
+# . (device 16777227, inode 506924): 19 files, no impossibilities.
 
-# 10 files, no impossibilities in 1 directories.
+# 19 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 %.o: %.c minishell.h Makefile
-#  recipe to execute (from 'Makefile', line 19):
+#  commands to execute (from `Makefile', line 19):
 	$(CC)  $(CFLAGS) -c $< 
+	
 
 # 1 implicit rules, 0 (0.0%) terminal.
 
 # Files
 
+# Not a target:
+init.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-15 21:38:15
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
 all: minishell
 #  Phony target (prerequisite of .PHONY).
-#  Command line target.
+#  Command-line target.
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
@@ -258,58 +201,90 @@ all: minishell
 #  Modification time never checked.
 #  File has not been updated.
 
- 
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-11 15:58:47.446076046
+#  Last modified 2022-07-15 20:00:13
 #  File has been updated.
 #  Successfully updated.
-
-minishell: minishell.o
-#  Implicit rule search has not been done.
-#  File does not exist.
-#  File has been updated.
-#  Needs to be updated (-q is set).
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
-#  recipe to execute (from 'Makefile', line 16):
-	$(CC) $(OBJS) -o $@
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-minishell.o: minishell.c minishell.h Makefile
+# Not a target:
+libft_funcs.c:
 #  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'minishell'
+#  Last modified 2022-07-15 21:03:55
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+minishell: init.o libft_funcs.o list_funcs.o minishell.o
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: `'
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # automatic
-# @ := minishell.o
+# @ := minishell
 # automatic
 # % := 
 # automatic
-# * := minishell
+# * := 
 # automatic
-# + := minishell.c minishell.h Makefile
+# + := init.o libft_funcs.o list_funcs.o minishell.o
 # automatic
 # | := 
 # automatic
-# < := minishell.c
+# < := init.o
 # automatic
-# ^ := minishell.c minishell.h Makefile
+# ^ := init.o libft_funcs.o list_funcs.o minishell.o
 # automatic
-# ? := minishell.c minishell.h Makefile
+# ? := init.o libft_funcs.o list_funcs.o minishell.o
 # variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/14=7%
-#  recipe to execute (from 'Makefile', line 19):
+# Load=8/32=25%, Rehash=0, Collisions=4/14=29%
+#  commands to execute (from `Makefile', line 16):
+	$(CC) $(OBJS) -o $@
+	
+
+minishell.o: minishell.c minishell.h Makefile
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `minishell'
+#  Last modified 2022-07-15 21:49:10
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 19):
 	$(CC)  $(CFLAGS) -c $< 
+	
 
 fclean: clean
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 25):
+#  commands to execute (from `Makefile', line 25):
 	rm -f $(NAME)
+	
+
+list_funcs.o: list_funcs.c minishell.h Makefile
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `list_funcs'
+#  Last modified 2022-07-15 21:49:10
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 19):
+	$(CC)  $(CFLAGS) -c $< 
+	
 
 # Not a target:
 .DEFAULT:
@@ -328,37 +303,75 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 22):
+#  commands to execute (from `Makefile', line 22):
 	rm -f $(OBJS)
+	
+
+init.o: init.c minishell.h Makefile
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `init'
+#  Last modified 2022-07-15 21:49:09
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 19):
+	$(CC)  $(CFLAGS) -c $< 
+	
 
 # Not a target:
 minishell.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-11 15:40:57.216892098
+#  Last modified 2022-07-15 21:46:25
 #  File has been updated.
 #  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+list_funcs.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-15 21:38:37
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 minishell.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-11 15:35:31.523033964
+#  Last modified 2022-07-15 21:03:07
 #  File has been updated.
 #  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+libft_funcs.o: libft_funcs.c minishell.h Makefile
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `libft_funcs'
+#  Last modified 2022-07-15 21:49:09
+#  File has been updated.
+ 
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 19):
+	$(CC)  $(CFLAGS) -c $< 
+	
 
 # files hash-table stats:
-# Load=12/1024=1%, Rehash=0, Collisions=0/40=0%
+# Load=18/1024=2%, Rehash=0, Collisions=0/72=0%
 # VPATH Search Paths
 
-# No 'vpath' search paths.
+# No `vpath' search paths.
 
-# No general ('VPATH' variable) search path.
+# No general (`VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 23 / storage = 188 B / avg = 8 B
-# current buf: size = 8162 B / used = 188 B / count = 23 / avg = 8 B
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# strcache performance: lookups = 51 / hit rate = 54%
-# hash-table stats:
-# Load=23/8192=0%, Rehash=0, Collisions=1/51=2%
-# Finished Make data base on Mon Jul 11 15:58:55 2022
+# Finished Make data base on Fri Jul 15 21:49:39 2022
 
  
