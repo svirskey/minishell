@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/07/15 21:01:22 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/07/15 21:12:20 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ struct s_info
 	t_list *tokens;
 	int exit_status;
 	int env_change;
+	//TODO more info data
 };
 
 void	ft_lstadd_back(t_list **lst, t_list *new);
