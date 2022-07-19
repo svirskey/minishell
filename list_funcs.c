@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:58:13 by bfarm             #+#    #+#             */
-/*   Updated: 2022/07/15 21:38:37 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/07/19 18:54:40 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	tmp->next = new;
 }
 
-void	ft_list_clear(t_list **lst)
+void	ft_list_clear(t_list **lst, int type)
 {
 	t_list	*curr;
 	t_list	*tmp;
@@ -53,24 +53,8 @@ void	ft_list_clear(t_list **lst)
 	{
 		tmp = curr;
 		curr = curr->next;
-		free(tmp);
-	}
-	*lst = NULL;
-}
-
-void	ft_list_clear_hard(t_list **lst)
-{
-	t_list	*curr;
-	t_list	*tmp;
-
-	if (lst == NULL)
-		return ;
-	curr = *lst;
-	while (curr)
-	{
-		tmp = curr;
-		curr = curr->next;
-		free(tmp->key);
+		if (type)
+			free(tmp->key);
 		free(tmp->value);
 		free(tmp);
 	}
