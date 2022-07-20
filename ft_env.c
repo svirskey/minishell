@@ -13,12 +13,17 @@
 #include "structs.h"
 #include <stdio.h>
 
-void ft_env(t_info *info) // return void ? 
+int ft_env(t_info *info) 
 {
-	t_list *tmp = info->envp_list;
+	t_list *tmp;
+
+	if (!info || !info->envp_list)
+		return (1);
+	tmp = info->envp_list;
 	while (tmp)
 	{
 		printf("%s=%s\n",(char *)tmp->key,(char *)tmp->value);
 		tmp = tmp->next;
 	}
+	return 0;
 }

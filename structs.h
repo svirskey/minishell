@@ -22,16 +22,14 @@ enum free_type
 
 enum tokens
 {
-	// separator = space tab ; < > << >>  кавычки
+	separator, // space tab < > << >> | ' ""
 	word,
 	singles, // ' '
 	doubles, // " "
-	singles_dollar, // $' '
-	double_dollar, // $" "
-	redir_left, // <
-	redir_right, // >
-	double_left, // <<
-	double_right, // >>
+	single_left, // < redirect input
+	single_right, // > redirect output
+	double_left, // << here-document with stop-word
+	double_right, // >> redirect output in append mode
 	pipe_token // |
 };
 // echo $aasdadad 123 = [123]
@@ -54,13 +52,15 @@ struct s_info
 	//TODO more info data
 };
 
-void	ft_lstadd_back(t_list **lst, t_list *new);
+void	ft_lstadd_back(t_list **lst, t_list *node);
 t_list	*ft_lstnew(void *key, void *value);
 void	ft_list_clear(t_list **lst, int type);
 
 int		ft_strlen(char *s);
 char	*ft_strdup(const char *s1);
-
+char	*ft_substr(char const *s, int start, int len);
 void	env_init(t_info *info, char **env);
+int		ft_isspace(const char c);
 
-void ft_env(t_info *info);
+void	lexer(t_info *info, char *str);
+int		ft_env(t_info *info);

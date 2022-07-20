@@ -26,19 +26,19 @@ t_list	*ft_lstnew(void *key, void *value)
 	return (node);
 }
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_list **lst, t_list *node)
 {
 	t_list	*tmp;
 
 	if (*lst == NULL)
 	{
-		*lst = new;
+		*lst = node;
 		return ;
 	}
 	tmp = *lst;
 	while (tmp->next)
 		tmp = tmp->next;
-	tmp->next = new;
+	tmp->next = node;
 }
 
 void	ft_list_clear(t_list **lst, int type)
