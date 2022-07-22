@@ -18,7 +18,7 @@ static char	*ft_readline()
 	char	*str;
 
 	str = readline("minishell:");
-	if (str)
+	if (str && str[0] != 0)
 		add_history(str);
 	return (str);
 }
@@ -48,8 +48,8 @@ static void ft_exit(t_info *info)
 	free(info->builtins[4]);
 	free(info->builtins[5]);
 	free(info->builtins[6]);
-	ft_list_clear(&(info->envp_list), hard);
-	//ft_list_clear(&(info->tokens), soft);
+	lst_clear(&info->envp_list);
+	lst_clear(&info->tokens);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -64,13 +64,21 @@ int main(int argc, char **argv, char **envp)
 	str = NULL;
 	while(!info.exit_status)
 	{
+		lst_clear(&info.tokens);
 		str = ft_readline(); 
 		if (!str) // ctrl-d in empty line
 			break;
 		if (str[0] == 0)
+		{
+			free(str);
 			continue;
+		}
+			
 
-		//lexer(info, str);
+		lexer(&info, str);
+
+		lst_print(info.tokens);
+
 		// lexer = parsing input to grammar lexical units
 
 		// parser = getting lexema type and check for correct cases

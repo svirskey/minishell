@@ -45,7 +45,7 @@ void	env_init(t_info *info, char **env)
 			value[k] = env[i][j + k];
 			k++;
 		}
-		ft_lstadd_back(&(info->envp_list) ,ft_lstnew((void *)key, (void *)value));
+		lst_push_back(&(info->envp_list) ,lst_new((void *)key, (void *)value));
 		i++;
 	}
 }

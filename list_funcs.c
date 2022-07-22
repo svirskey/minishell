@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 #include "structs.h"
+#include "stdio.h"
 #include "stdlib.h"
 
-t_list	*ft_lstnew(void *key, void *value)
+t_list	*lst_new(void *key, void *value)
 {
 	t_list	*node;
 
@@ -26,7 +27,7 @@ t_list	*ft_lstnew(void *key, void *value)
 	return (node);
 }
 
-void	ft_lstadd_back(t_list **lst, t_list *node)
+void	lst_push_back(t_list **lst, t_list *node)
 {
 	t_list	*tmp;
 
@@ -41,7 +42,7 @@ void	ft_lstadd_back(t_list **lst, t_list *node)
 	tmp->next = node;
 }
 
-void	ft_list_clear(t_list **lst, int type)
+void	lst_clear(t_list **lst)
 {
 	t_list	*curr;
 	t_list	*tmp;
@@ -53,10 +54,21 @@ void	ft_list_clear(t_list **lst, int type)
 	{
 		tmp = curr;
 		curr = curr->next;
-		if (type)
-			free(tmp->key);
+		free(tmp->key);
 		free(tmp->value);
 		free(tmp);
 	}
 	*lst = NULL;
+}
+
+void	lst_print(t_list *lst)
+{
+	t_list *tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		printf("[%s]\t->\t[%s]\n",(char *)tmp->key, (char *)tmp->value);
+		tmp = tmp->next;
+	}
 }
