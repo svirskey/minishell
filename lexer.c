@@ -117,9 +117,6 @@ void lexer(t_info *info, char *str)
 		else 
 			lexer_word(info, str, &i);
 	}
-	//expansion();
 	// separators : \f \n \r \t \v space < > << >> | ' ""
-	// add separators between words for this case : 'e''c''h''o' == echo (correct)
-	// echo asd'asd  -> unclosed quotes are not interpretating
-	// echo $PWD != echo $P'W'D => read till spec symbol
+
 }
