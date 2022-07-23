@@ -13,16 +13,31 @@
 #include "minishell.h"
 #include "structs.h"
 
-static int is_sep(char c)
+static int next_quote(char *str, int i)
 {
-	if (ft_isspace(c))
+	int c;
+
+	c = i + 1;
+	while (str[c] && str[c] != str[i])
+		c++;
+	if (!str[c])
+		return -1;
+	return c - i - 1;
+}
+
+static int is_sep(char *str, int i)
+{
+	
+	if (ft_isspace(str[*i]))
 		return 1;
-	if (c == '<' || c == '>' || c == '|' || c == '\'' || c == '\"')
+	if (str[i] == '<' || str[i] == '>' || str[i] == '|' )
+		return 1;
+	if ((str[i] == '\'' || str[i] == '\"') && next_quote(str, i, str[i]) == -1)
 		return 1;
 	return 0;
 }
 
-static char * lst_last_key(t_list *lst)
+static char *lst_last_key(t_list *lst)
 {
 	if (!lst)
 		return NULL;
@@ -69,16 +84,16 @@ static void lexer_spec(t_info *info, char *str, int *i)
 
 static void lexer_quotes(t_info *info, char *str, int *i)
 {
-	(void)info;
-	(void)str;
-	(void)i;
- //TODO parsing quotes with finding unclosed quotes
+	if (str[i] == '\'')
+		lst_push_back(&info->tokens, lst_new(ft_strdup("\'"), ft_substr(str, i + 1, next_quote(str, i))));
+	else
+		lst_push_back(&info->tokens, lst_new(ft_strdup("\""), ft_substr(str, i + 1, next_quote(str, i))));
 }
 
 static void lexer_word(t_info *info, char *str, int *i)
 {
 	int from = *i;
-	while (str[*i] && !is_sep(str[*i]))
+	while (str[*i] && !is_sep(str, *i))
 		(*i)++;
 	lst_push_back(&info->tokens, lst_new(ft_strdup("word"), ft_substr(str, from, *i - from)));
 }
@@ -95,7 +110,7 @@ void lexer(t_info *info, char *str)
 		//printf("%d\n", i);
 		if (!str[i])
 			break;
-		if (str[i] == '\'' || str[i] == '\"')
+		if ((str[i] == '\'' || str[i] == '\"') && next_quote(str, i) != -1)
 			lexer_quotes(info, str, &i);
 		else if (str[i] == '<' || str[i] == '|' || str[i] == '>')
 			lexer_spec(info, str, &i);
