@@ -47,6 +47,7 @@ struct s_info
 	char* builtins[7];
 	t_list *envp_list;
 	t_list *tokens;
+	t_list *grammars; // list of grammar tokens united by highest priority token (pipe)
 	int exit_status;
 	int env_change;
 	//TODO more info data

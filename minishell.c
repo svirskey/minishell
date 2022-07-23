@@ -81,7 +81,7 @@ int main(int argc, char **argv, char **envp)
 
 		// lexer = parsing input to grammar lexical units
 
-		// parser = getting lexema type and check for correct cases
+		// parser = expansion and check for correct cases
 		
 		// executer
 		

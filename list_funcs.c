@@ -68,7 +68,7 @@ void	lst_print(t_list *lst)
 	tmp = lst;
 	while (tmp)
 	{
-		printf("[%s]\t->\t[%s]\n",(char *)tmp->key, (char *)tmp->value);
+		printf("[%s]  \t-> [%s]\n",(char *)tmp->key, (char *)tmp->value);
 		tmp = tmp->next;
 	}
 }
