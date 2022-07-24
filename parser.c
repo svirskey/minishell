@@ -43,7 +43,6 @@ static void opening(t_info *info)
                 i = 0;
                 while (((char *)tmp->value)[i])
                 {
-                    printf("%d\n", i);
                     if (((char *)tmp->value)[i] == '$')
                     {
                         i++;
