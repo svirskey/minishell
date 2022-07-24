@@ -80,6 +80,8 @@ int main(int argc, char **argv, char **envp)
 		lst_print(info.tokens);
 
 		parser(&info);
+		puts("");
+		lst_print(info.tokens);
 		// lexer = parsing input to grammar lexical units
 
 		// parser = expansion and check for correct cases

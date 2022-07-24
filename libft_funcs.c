@@ -67,6 +67,8 @@ char	*ft_substr(char *s, int start, int len)
 
 	if (s == NULL)
 		return (NULL);
+	if (len == 0)
+		return (ft_strdup(""));
 	len_to = 0;
 	if (ft_strlen(s) <= start)
 	{

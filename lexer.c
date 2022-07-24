@@ -87,10 +87,10 @@ static void lexer_quotes(t_info *info, char *str, int *i)
 {
 	(*i)++;
 	if (str[*i] == '\'')
-		lst_push_back(&info->tokens, lst_new(ft_strdup("squote"), ft_substr(str, *i, next_char(str, *i, str[*i]))));
+		lst_push_back(&info->tokens, lst_new(ft_strdup("squote"), ft_substr(str, *i, next_char(str, *i, str[*i - 1]))));
 	else
-		lst_push_back(&info->tokens, lst_new(ft_strdup("dquote"), ft_substr(str, *i, next_char(str, *i, str[*i]))));
-	*i += next_char(str, *i, str[*i]) + 1;
+		lst_push_back(&info->tokens, lst_new(ft_strdup("dquote"), ft_substr(str, *i, next_char(str, *i, str[*i - 1]))));
+	*i += next_char(str, *i, str[*i - 1]) + 1;
 }
 
 static void lexer_word(t_info *info, char *str, int *i)
