@@ -86,7 +86,7 @@ static void lexer_spec(t_info *info, char *str, int *i)
 static void lexer_quotes(t_info *info, char *str, int *i)
 {
 	(*i)++;
-	if (str[*i] == '\'')
+	if (str[*i - 1] == '\'')
 		lst_push_back(&info->tokens, lst_new(ft_strdup("squote"), ft_substr(str, *i, next_char(str, *i, str[*i - 1]))));
 	else
 		lst_push_back(&info->tokens, lst_new(ft_strdup("dquote"), ft_substr(str, *i, next_char(str, *i, str[*i - 1]))));
@@ -121,5 +121,4 @@ void lexer(t_info *info, char *str)
 			lexer_word(info, str, &i);
 	}
 	// separators : \f \n \r \t \v space < > << >> | ' ""
-
 }

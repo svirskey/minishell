@@ -109,3 +109,44 @@ int	ft_strcmp(const char *s1, const char *s2)
 	}
 	return (1);
 }
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (n == 0)
+		return ;
+	while (i < n)
+	{
+		((unsigned char *)s)[i] = 0;
+		i++;
+	}
+}
+
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+{
+	size_t	size;
+	size_t	i;
+
+	i = 0;
+	size = 0;
+	while (dst[size] && size <= dstsize)
+		size++;
+	while (size + i + 1 < dstsize && src[i])
+	{
+		dst[size + i] = src[i];
+		i++;
+	}
+	if (size + i < dstsize)
+		dst[size + i] = 0;
+	if (size > dstsize || dstsize == 0)
+		size = dstsize;
+	i = 0;
+	while (src[i])
+	{
+		size++;
+		i++;
+	}
+	return (size);
+}

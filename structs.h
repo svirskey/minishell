@@ -9,6 +9,7 @@
 /*   Updated: 2022/07/19 19:43:14 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stdlib.h>
 
 typedef struct s_info t_info;
 
@@ -67,6 +68,8 @@ char	*ft_substr(char const *s, int start, int len);
 void	env_init(t_info *info, char **env);
 int		ft_isspace(const char c);
 int		ft_strcmp(const char *s1, const char *s2);
+void	ft_bzero(void *s, size_t n);
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 
 //lexer and parser
 int		next_char(char *str, int begin, char origin);
