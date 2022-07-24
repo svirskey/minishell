@@ -72,3 +72,17 @@ void	lst_print(t_list *lst)
 		tmp = tmp->next;
 	}
 }
+
+void *lst_get_value(t_list *lst, void *key)
+{
+	t_list *tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		if (ft_strcmp((char *)tmp->key, (char *)key))
+			return (void *)ft_strdup(tmp->value);
+		tmp = tmp->next;
+	}
+	return ft_strdup("");
+}
