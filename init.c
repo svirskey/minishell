@@ -36,6 +36,7 @@ void	env_init(t_info *info, char **env)
 			j++;
 		}
 		key[j] = 0;
+		j++;
 		while (env[i][j + k])
 			k++;
 		value = malloc(k + 1);

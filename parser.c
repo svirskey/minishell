@@ -40,28 +40,39 @@ static void opening(t_info *info)
             }
             else
             {
-                i = 0
-                while (str[i])
+                i = 0;
+                while (((char *)tmp->value)[i])
                 {
+                    printf("%d\n", i);
                     if (((char *)tmp->value)[i] == '$')
                     {
                         i++;
                         if (!((char *)tmp->value)[i])
+                        {
                             lst_push_back(&opn, lst_new(ft_strdup("word"),ft_strdup("$")));
-                        if (((char *)tmp->value)[i] == '$')
+                            break;
+                        }
+                        else if (((char *)tmp->value)[i] == '$')
                         {
                              lst_push_back(&opn, lst_new(ft_strdup("pid"), ft_strdup("$"))); // todo itoa
+                             i++;
                         }
                         else if (((char *)tmp->value)[i] == '?')
                         {
                             lst_push_back(&opn, lst_new(ft_strdup("exit"), ft_strdup("?"))); // todo itoa 
+                            i++;
                         }
                         else
+                        {
                             lst_push_back(&opn, lst_new(ft_strdup("word"), lst_get_value(info->envp_list, ft_substr(tmp->value, i, till_sep(tmp->value, i)))));
+                            i += till_sep(tmp->value, i);
+                        }
                     }
                     else
+                    {
                         lst_push_back(&opn, lst_new(ft_strdup("word"), ft_substr(tmp->value, i, till_sep(tmp->value, i)))); 
-                    i += till_sep(tmp->value, i) + 1;
+                        i += till_sep(tmp->value, i);
+                    }
                 }
                 prev->next = opn;
                 while (opn->next)
