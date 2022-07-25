@@ -9,6 +9,7 @@
 /*   Updated: 2022/07/19 19:43:14 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stdlib.h>
 
 typedef struct s_info t_info;
 
@@ -53,18 +54,28 @@ struct s_info
 	//TODO more info data
 };
 
+//list funcs
 void	lst_push_back(t_list **lst, t_list *node);
 t_list	*lst_new(void *key, void *value);
 void	lst_clear(t_list **lst);
 void	lst_print(t_list *lst);
+void	*lst_get_value(t_list *lst, void *key);
+void	lst_free_node(t_list **node);
 
-
+//libft funcs
 int		ft_strlen(char *s);
 char	*ft_strdup(const char *s1);
 char	*ft_substr(char const *s, int start, int len);
 void	env_init(t_info *info, char **env);
 int		ft_isspace(const char c);
-int	ft_strcmp(const char *s1, const char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
+void	ft_bzero(void *s, size_t n);
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 
+//lexer and parser
+int		next_char(char *str, int begin, char origin);
 void	lexer(t_info *info, char *str);
+void	parser(t_info *info);
+
+//builtins
 int		ft_env(t_info *info);
