@@ -74,12 +74,19 @@ int main(int argc, char **argv, char **envp)
 			continue;
 		}
 		lexer(&info, str);
-		parser(&info);
-		
-    	lst_print(info->tokens);
 		// lexer = parsing input to grammar lexical units
 
-		// parser = expansion and check for correct cases
+		parser(&info);
+		// parser is :
+		// 1. opening the brackets with env // [done]
+		// 2. merge words in one word like 'e''c''h''o' => echo // [done]
+		// 3. check for correct grammar construction like  echo | | => incorrect 
+		// 4. fill grammar list of logical units like left and right parts of pipe
+
+    	lst_print(info.tokens);
+		
+
+		
 		
 		// executer
 		

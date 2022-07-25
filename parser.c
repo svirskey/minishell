@@ -149,10 +149,6 @@ void parser(t_info *info)
 {
     opening(info);
     merge(info);
-
-    //example input : 'e''c''h''o' "123$USER$$$?$" 123$USER ||| "1"
-
-    // check grammar
-    // fill grammars list
-    // creating list of grammar tokens united by highest priority token (pipe)
+    //TODO check and fill grammar
 }
+//example input : 'e''c''h''o' "123$USER$$$?$" 123$USER ||| "1"
