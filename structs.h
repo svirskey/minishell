@@ -60,6 +60,7 @@ t_list	*lst_new(void *key, void *value);
 void	lst_clear(t_list **lst);
 void	lst_print(t_list *lst);
 void	*lst_get_value(t_list *lst, void *key);
+void	lst_free_node(t_list **node);
 
 //libft funcs
 int		ft_strlen(char *s);
