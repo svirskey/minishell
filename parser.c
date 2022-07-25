@@ -99,15 +99,14 @@ static void merge(t_info *info)
     char *new_str;
 
     tmp = info->tokens;
-    new_str = NULL;
+    prev = NULL;
     while (tmp)
     {
         if (ft_strcmp(tmp->key, "word") && tmp->next && ft_strcmp(tmp->next->key, "word"))
         {
-            
             len = 0;
             begin = tmp;
-            while (ft_strcmp(tmp->key, "word"))
+            while (tmp && ft_strcmp(tmp->key, "word"))
             {
                 len += ft_strlen(tmp->value);
                 tmp = tmp->next;
@@ -115,7 +114,7 @@ static void merge(t_info *info)
             tmp = begin;
             new_str = malloc(sizeof(char) * (len + 1));
             ft_bzero(new_str, len + 1);
-            while (ft_strcmp(tmp->key, "word"))
+            while (tmp && ft_strcmp(tmp->key, "word"))
             {
                 ft_strlcat(new_str, tmp->value, len + 1);
                 tmp = tmp->next;
@@ -129,27 +128,31 @@ static void merge(t_info *info)
             {
                 prev->next = lst_new(ft_strdup("word"), new_str);
                 prev->next->next = tmp;
-            }
-            while (ft_strcmp(begin->key, "word"))
+           }
+            
+            while (begin && ft_strcmp(begin->key, "word"))
             {
                 tmp = begin;
                 begin = begin->next;
                 lst_free_node(&tmp);
             }
+            if (!begin)
+                break;
+            tmp = begin;
         }
         prev = tmp;
         tmp = tmp->next;
-        puts((char *)tmp->value);
     }
 }
 
 void parser(t_info *info)
 {
     opening(info);
-    puts("");
-    lst_print(info->tokens);
     merge(info);
-    
+
+    //example input : 'e''c''h''o' "123$USER$$$?$" 123$USER ||| "1"
+
     // check grammar
+    // fill grammars list
     // creating list of grammar tokens united by highest priority token (pipe)
 }
