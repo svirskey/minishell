@@ -42,6 +42,13 @@ void	lst_push_back(t_list **lst, t_list *node)
 	tmp->next = node;
 }
 
+void lst_free_node(t_list **node)
+{
+	free((*node)->key);
+	free((*node)->value);
+	free(*node);
+}
+
 void	lst_clear(t_list **lst)
 {
 	t_list	*curr;
@@ -54,9 +61,7 @@ void	lst_clear(t_list **lst)
 	{
 		tmp = curr;
 		curr = curr->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp);
+		lst_free_node(&tmp);
 	}
 	*lst = NULL;
 }

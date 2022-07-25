@@ -25,7 +25,6 @@ static void opening(t_info *info)
     t_list *opn;
     int i;
 
-    opn = NULL;
     prev = NULL;
     tmp = info->tokens;
     while (tmp)
@@ -44,6 +43,7 @@ static void opening(t_info *info)
             }
             else
             {
+                opn = NULL;
                 i = 0;
                 while (((char *)tmp->value)[i])
                 {
@@ -81,9 +81,7 @@ static void opening(t_info *info)
                 while (opn->next)
                     opn = opn->next;
                 opn->next = tmp->next;
-                free(tmp->key);
-                free(tmp->value);
-                free(tmp);
+                lst_free_node(&tmp);
                 tmp = opn;
             }
         }
@@ -136,12 +134,9 @@ static void merge(t_info *info)
             {
                 tmp = begin;
                 begin = begin->next;
-                free(begin->key);
-                free(begin->value);
-                free(begin);
+                lst_free_node(&tmp);
             }
         }
-
         prev = tmp;
         tmp = tmp->next;
         puts((char *)tmp->value);
