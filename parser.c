@@ -144,7 +144,7 @@ static void merge(t_info *info)
 
         prev = tmp;
         tmp = tmp->next;
-        puts((char *)tmp->value); //TODO SEGFAULT
+        puts((char *)tmp->value);
     }
 }
 
