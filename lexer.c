@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 18:39:43 by bfarm             #+#    #+#             */
-/*   Updated: 2022/07/19 19:40:40 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/04 22:07:57 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,20 @@ void lexer(t_info *info, char *str)
 		if (!str[i])
 			break;
 
-		if ((str[i] == '\'' || str[i] == '\"') && next_char(str, i + 1, str[i]) != -1)
-			lexer_quotes(info, str, &i);
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			if (next_char(str, i + 1, str[i]) == -1)
+			{
+				printf("minishell: Error! Unclosed brackets!\n");
+				lst_clear(&info->tokens);
+				return ;
+			}
+			else
+				lexer_quotes(info, str, &i);
+		}
 		else if (str[i] == '<' || str[i] == '|' || str[i] == '>')
 			lexer_spec(info, str, &i);
-		else 
+		else
 			lexer_word(info, str, &i);
 	}
 	// separators : \f \n \r \t \v space < > << >> | ' ""

@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/04 20:10:18 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/04 22:50:58 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*ft_readline()
 {
 	char	*str;
 
-	str = readline("minishell:");
+	str = readline("minishell$ ");
 	if (str && str[0] != 0)
 		add_history(str);
 	return (str);
@@ -28,9 +28,9 @@ static void ft_init(t_info *info, char **envp)
 	info->envp_list = NULL;
 	info->tokens = NULL;
 	info->grammemes = NULL;
-	info->up_envp = NULL;
+	info->envp_arr = NULL;
 	info->exit_status = 0;
-	info->env_change = 0;
+	info->envp_upd = 1;
 	
 	info->builtins[0] = ft_strdup("echo");
 	info->builtins[1] = ft_strdup("cd");
@@ -47,10 +47,10 @@ static void ft_init(t_info *info, char **envp)
 	info->foo_ptrs[4] = &ft_unset;
 	info->foo_ptrs[5] = &ft_env;
 	info->foo_ptrs[6] = &ft_exit;
-	env_init(info, envp);
+	envp_init(info, envp);
 }
 
-static void ft_free_info(t_info *info)
+void ft_free_info(t_info *info)
 {
 	write(1,"\n",1);
 	free(info->builtins[0]);
@@ -60,9 +60,9 @@ static void ft_free_info(t_info *info)
 	free(info->builtins[4]);
 	free(info->builtins[5]);
 	free(info->builtins[6]);
-	free(info->foo_ptrs);	
 	lst_clear(&info->envp_list);
 	lst_clear(&info->tokens);
+	envp_clear(&info->envp_arr);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -96,8 +96,7 @@ int main(int argc, char **argv, char **envp)
 		// 3. check for correct grammar construction like  echo | | => incorrect 
 		// 4. fill grammar list of logical units like left and right parts of pipe
 
-    	lst_print(info.tokens);
-
+		info.foo_ptrs[5](&info, info.tokens);
 		
 		
 		// executer
