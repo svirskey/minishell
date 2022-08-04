@@ -6,35 +6,22 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/07/19 19:43:14 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/04 20:06:36 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
+
+#ifndef STRUCTS_H
+# define STRUCTS_H
+
+# include <stdlib.h>
 
 typedef struct s_info t_info;
 
 typedef struct s_list t_list;
 
-enum free_type
-{
-	hard, // with key and value
-	soft // only value
-};
+typedef int (*fp)(t_info *, t_list *);
 
-// enum tokens
-// {
-// 	separator, // space tab < > << >> | ' ""
-// 	word,
-// 	singles, // ' '
-// 	doubles, // " "
-// 	single_left, // < redirect input
-// 	single_right, // > redirect output
-// 	double_left, // << here-document with stop-word
-// 	double_right, // >> redirect output in append mode
-// 	pipe_token // |
-// };
-// echo $aasdadad 123 = [123]
-// echo "" 123 = [ 123]
+//typedef struct s_builtin t_builtin;
 
 struct s_list
 {
@@ -43,15 +30,23 @@ struct s_list
 	void *value;
 };
 
+// struct s__builtin
+// {
+// 	t_builtin *next;
+// 	char *key;
+// 	int (*foo)(t_info *, t_list *);
+// };
+
 struct s_info
 {
-	char* builtins[7];
-	t_list *envp_list;
-	t_list *tokens;
-	t_list *grammars; // list of grammar tokens united by highest priority token (pipe)
-	int exit_status;
-	int env_change;
-	//TODO more info data
+	char	*builtins[7];
+	fp		foo_ptrs[7];
+	t_list	*envp_list;
+	t_list	*tokens;
+	t_list	*grammemes; 
+	char	**up_envp;
+	int		exit_status;
+	int		env_change;
 };
 
 //list funcs
@@ -65,17 +60,24 @@ void	lst_free_node(t_list **node);
 //libft funcs
 int		ft_strlen(char *s);
 char	*ft_strdup(const char *s1);
-char	*ft_substr(char const *s, int start, int len);
-void	env_init(t_info *info, char **env);
+char	*ft_substr(char *s, int start, int len);
 int		ft_isspace(const char c);
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_bzero(void *s, size_t n);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 
 //lexer and parser
+void	env_init(t_info *info, char **env);
 int		next_char(char *str, int begin, char origin);
 void	lexer(t_info *info, char *str);
 void	parser(t_info *info);
 
 //builtins
-int		ft_env(t_info *info);
+int		ft_env(t_info *info, t_list *grammeme);
+int		ft_export(t_info *info, t_list *grammeme);
+int		ft_unset(t_info *info, t_list *grammeme);
+int		ft_exit(t_info *info, t_list *grammeme);
+int		ft_echo(t_info *info, t_list *grammeme);
+int		ft_cd(t_info *info, t_list *grammeme);
+int		ft_pwd(t_info *info, t_list *grammeme);
+#endif

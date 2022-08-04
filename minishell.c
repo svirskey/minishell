@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/07/19 19:43:50 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/04 20:10:18 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,12 @@ static char	*ft_readline()
 static void ft_init(t_info *info, char **envp)
 {
 	info->envp_list = NULL;
+	info->tokens = NULL;
+	info->grammemes = NULL;
+	info->up_envp = NULL;
 	info->exit_status = 0;
 	info->env_change = 0;
+	
 	info->builtins[0] = ft_strdup("echo");
 	info->builtins[1] = ft_strdup("cd");
 	info->builtins[2] = ft_strdup("pwd");
@@ -35,10 +39,18 @@ static void ft_init(t_info *info, char **envp)
 	info->builtins[4] = ft_strdup("unset");
 	info->builtins[5] = ft_strdup("env");
 	info->builtins[6] = ft_strdup("exit");
+	
+	info->foo_ptrs[0] = &ft_echo;
+	info->foo_ptrs[1] = &ft_cd;
+	info->foo_ptrs[2] = &ft_pwd;
+	info->foo_ptrs[3] = &ft_export;
+	info->foo_ptrs[4] = &ft_unset;
+	info->foo_ptrs[5] = &ft_env;
+	info->foo_ptrs[6] = &ft_exit;
 	env_init(info, envp);
 }
 
-static void ft_exit(t_info *info)
+static void ft_free_info(t_info *info)
 {
 	write(1,"\n",1);
 	free(info->builtins[0]);
@@ -48,6 +60,7 @@ static void ft_exit(t_info *info)
 	free(info->builtins[4]);
 	free(info->builtins[5]);
 	free(info->builtins[6]);
+	free(info->foo_ptrs);	
 	lst_clear(&info->envp_list);
 	lst_clear(&info->tokens);
 }
@@ -84,7 +97,6 @@ int main(int argc, char **argv, char **envp)
 		// 4. fill grammar list of logical units like left and right parts of pipe
 
     	lst_print(info.tokens);
-		
 
 		
 		
@@ -92,6 +104,6 @@ int main(int argc, char **argv, char **envp)
 		
 		free(str);
 	}
-	ft_exit(&info);
+	ft_free_info(&info);
 	return 0;
 }

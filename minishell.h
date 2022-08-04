@@ -6,10 +6,12 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:55 by bfarm             #+#    #+#             */
-/*   Updated: 2022/07/15 21:03:07 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/04 19:25:17 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MINISHELL_H
+# define MINISHELL_H
 #include <stdio.h>
 //printf
 //perror, strerror -- system error messages
@@ -65,3 +67,4 @@
 #include <curses.h> 
 #include <term.h> 
 //tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs  - direct curses interface to the terminfo capability database
+#endif
