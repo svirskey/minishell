@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 22:01:04 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/04 22:01:07 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/04 23:31:55 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,9 +152,28 @@ static void merge(t_info *info)
     }
 }
 
+void create_grammemes(t_info *info)
+{
+    t_list *tmp;
+
+    tmp = info->tokens;
+    // while (tmp)
+    // {
+    //     lst_push_back(&tmp, lst_new(NULL, NULL));
+    //     tmp->key = malloc(sizeof(t_list *));
+    //     tmp->key = 
+    //     while (!ft_strcmp(tmp->key, "pipe"))
+    //     {
+            
+    //     }
+    // }
+}
+
 void parser(t_info *info)
 {
     opening(info);
     merge(info);
+    create_grammemes(info);
+    lst_clear(&info->tokens);
     //TODO check and fill grammar
 }

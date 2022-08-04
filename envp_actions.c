@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:17:28 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/04 22:52:50 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/04 23:03:10 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void envp_clear(char ***arr)
 	free(*arr);
 	*arr = NULL;
 }
+
 void envp_update(t_info *info)
 {
 	int len;

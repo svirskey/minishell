@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/04 22:50:58 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/04 23:21:19 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void ft_init(t_info *info, char **envp)
 	info->envp_arr = NULL;
 	info->exit_status = 0;
 	info->envp_upd = 1;
-	
+
 	info->builtins[0] = ft_strdup("echo");
 	info->builtins[1] = ft_strdup("cd");
 	info->builtins[2] = ft_strdup("pwd");
@@ -77,7 +77,6 @@ int main(int argc, char **argv, char **envp)
 	str = NULL;
 	while(!info.exit_status)
 	{
-		lst_clear(&info.tokens);
 		str = ft_readline(); 
 		if (!str) // ctrl-d in empty line
 			break;
@@ -87,16 +86,13 @@ int main(int argc, char **argv, char **envp)
 			continue;
 		}
 		lexer(&info, str);
-		// lexer = parsing input to grammar lexical units
 
 		parser(&info);
 		// parser is :
-		// 1. opening the brackets with env // [done]
-		// 2. merge words in one word like 'e''c''h''o' => echo // [done]
-		// 3. check for correct grammar construction like  echo | | => incorrect 
-		// 4. fill grammar list of logical units like left and right parts of pipe
+		// check for correct grammar construction like  echo | | => incorrect 
+		// fill grammar list of logical units like left and right parts of pipe
 
-		info.foo_ptrs[5](&info, info.tokens);
+		//info.foo_ptrs[5](&info, info.tokens); // example of using builtin env
 		
 		
 		// executer
