@@ -1,11 +1,18 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/04 22:01:04 by bfarm             #+#    #+#             */
+/*   Updated: 2022/08/04 22:01:07 by bfarm            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 #include "structs.h"
 
-// add separators between words for this case : 'e''c''h''o' == echo (correct)
-// echo asd'asd  -> unclosed quotes are not interpretating
-// echo $PWD != echo $P'W'D => read till spec symbol
 static int till_sep(char *str, int begin)
 {
     int c;
@@ -151,4 +158,3 @@ void parser(t_info *info)
     merge(info);
     //TODO check and fill grammar
 }
-//example input : 'e''c''h''o' "123$USER$$$?$" 123$USER ||| "1"
