@@ -1,6 +1,6 @@
 NAME = minishell
 
-SRC = ${wildcard *.c}
+SRC = $(shell find . -name '*.c')
 
 OBJS = ${patsubst %.c,%.o, ${SRC}}
 
@@ -16,7 +16,7 @@ ${NAME}: $(OBJS)
 	$(CC) $(OBJS) -lreadline -lncurses -o $@
 
 %.o : %.c $(HEADERS) Makefile
-	$(CC)  $(CFLAGS) -c $< 
+	$(CC)  $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)

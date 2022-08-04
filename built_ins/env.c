@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
+#include "../structs.h"
 #include <stdio.h>
 
 int ft_env(t_info *info) 
