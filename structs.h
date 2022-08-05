@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/04 22:39:44 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/05 23:30:14 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ typedef struct s_info t_info;
 
 typedef struct s_list t_list;
 
-typedef int (*fp)(t_info *, t_list *);
+typedef int (*foo_p)(t_info *, t_list *);
 
 struct s_list
 {
@@ -30,9 +30,8 @@ struct s_list
 
 struct s_info
 {
-	char	*builtins[7];
-	fp		foo_ptrs[7];
-
+	t_list	*builtins;
+	
 	t_list	*envp_list;
 	char	**envp_arr;
 	int		envp_upd;

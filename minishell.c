@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/04 23:21:19 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/05 23:31:56 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,43 +23,39 @@ static char	*ft_readline()
 	return (str);
 }
 
+static foo_p *builtin_node(foo_p built_foo)
+{
+	 foo_p *node;
+
+	 node = NULL;
+	 node = malloc(sizeof(foo_p));
+	 *node = built_foo;
+	 return node;
+}
+
 static void ft_init(t_info *info, char **envp)
 {
 	info->envp_list = NULL;
 	info->tokens = NULL;
 	info->grammemes = NULL;
 	info->envp_arr = NULL;
+	info->builtins = NULL;
 	info->exit_status = 0;
 	info->envp_upd = 1;
-
-	info->builtins[0] = ft_strdup("echo");
-	info->builtins[1] = ft_strdup("cd");
-	info->builtins[2] = ft_strdup("pwd");
-	info->builtins[3] = ft_strdup("export");
-	info->builtins[4] = ft_strdup("unset");
-	info->builtins[5] = ft_strdup("env");
-	info->builtins[6] = ft_strdup("exit");
-	
-	info->foo_ptrs[0] = &ft_echo;
-	info->foo_ptrs[1] = &ft_cd;
-	info->foo_ptrs[2] = &ft_pwd;
-	info->foo_ptrs[3] = &ft_export;
-	info->foo_ptrs[4] = &ft_unset;
-	info->foo_ptrs[5] = &ft_env;
-	info->foo_ptrs[6] = &ft_exit;
 	envp_init(info, envp);
+	lst_push_back(&info->builtins, lst_new(ft_strdup("env"), builtin_node(&ft_env)));
+	lst_push_back(&info->builtins, lst_new(ft_strdup("cd"), builtin_node(&ft_cd)));
+	lst_push_back(&info->builtins, lst_new(ft_strdup("pwd"), builtin_node(&ft_pwd)));
+	lst_push_back(&info->builtins, lst_new(ft_strdup("export"), builtin_node(&ft_export)));
+	lst_push_back(&info->builtins, lst_new(ft_strdup("unset"), builtin_node(&ft_unset)));
+	lst_push_back(&info->builtins, lst_new(ft_strdup("echo"), builtin_node(&ft_echo)));
+	lst_push_back(&info->builtins, lst_new(ft_strdup("exit"), builtin_node(&ft_exit)));
 }
 
 void ft_free_info(t_info *info)
 {
 	write(1,"\n",1);
-	free(info->builtins[0]);
-	free(info->builtins[1]);
-	free(info->builtins[2]);
-	free(info->builtins[3]);
-	free(info->builtins[4]);
-	free(info->builtins[5]);
-	free(info->builtins[6]);
+	lst_clear(&info->builtins);
 	lst_clear(&info->envp_list);
 	lst_clear(&info->tokens);
 	envp_clear(&info->envp_arr);
@@ -92,8 +88,7 @@ int main(int argc, char **argv, char **envp)
 		// check for correct grammar construction like  echo | | => incorrect 
 		// fill grammar list of logical units like left and right parts of pipe
 
-		//info.foo_ptrs[5](&info, info.tokens); // example of using builtin env
-		
+		//(*(foo_p *)(info.builtins->value))(&info, info.tokens); // example of using builtin env
 		
 		// executer
 		
