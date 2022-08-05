@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 22:01:04 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/05 22:27:53 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/05 23:44:31 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,6 @@ void parser(t_info *info)
     opening(info);
     merge(info);
     create_grammemes(info);
-    lst_clear(&info->tokens);
+    //lst_clear(&info->tokens); // add after creating grammemes foo
     //TODO check and fill grammar
 }

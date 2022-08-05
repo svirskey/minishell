@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/05 23:31:56 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/05 23:47:36 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void ft_free_info(t_info *info)
 	lst_clear(&info->builtins);
 	lst_clear(&info->envp_list);
 	lst_clear(&info->tokens);
+	lst_clear(&info->grammemes);
 	envp_clear(&info->envp_arr);
 }
 
@@ -82,12 +83,12 @@ int main(int argc, char **argv, char **envp)
 			continue;
 		}
 		lexer(&info, str);
-
 		parser(&info);
+		
 		// parser is :
 		// check for correct grammar construction like  echo | | => incorrect 
 		// fill grammar list of logical units like left and right parts of pipe
-
+		
 		//(*(foo_p *)(info.builtins->value))(&info, info.tokens); // example of using builtin env
 		
 		// executer
