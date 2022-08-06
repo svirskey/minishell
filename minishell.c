@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/05 23:47:36 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/06 19:00:28 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static void ft_init(t_info *info, char **envp)
 
 void ft_free_info(t_info *info)
 {
-	write(1,"\n",1);
 	lst_clear(&info->builtins);
 	lst_clear(&info->envp_list);
 	lst_clear(&info->tokens);
@@ -67,11 +66,9 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	t_info info;
-	
-	ft_init(&info, envp);
 	char *str;
 
-	str = NULL;
+	ft_init(&info, envp);
 	while(!info.exit_status)
 	{
 		str = ft_readline(); 
@@ -85,14 +82,18 @@ int main(int argc, char **argv, char **envp)
 		lexer(&info, str);
 		parser(&info);
 		
-		// parser is :
+		// if (parser(&info)) //add after merging with executor
+		// 	executor(info);
+
 		// check for correct grammar construction like  echo | | => incorrect 
 		// fill grammar list of logical units like left and right parts of pipe
 		
 		//(*(foo_p *)(info.builtins->value))(&info, info.tokens); // example of using builtin env
 		
-		// executer
-		
+		lst_clear(((t_list **)&(info.grammemes->key)));
+		lst_clear(((t_list **)&(info.grammemes->value)));
+		lst_clear(&info.grammemes);
+		lst_clear(&info.tokens);
 		free(str);
 	}
 	ft_free_info(&info);

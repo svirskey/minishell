@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 22:01:04 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/05 23:44:31 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/06 19:06:19 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,28 +152,123 @@ static void merge(t_info *info)
     }
 }
 
-void create_grammemes(t_info *info)
+static void remove_spaces(t_list **head)
 {
-    t_list *tmp;
-
-    tmp = info->tokens;
-    // while (tmp)
-    // {
-    //     lst_push_back(&tmp, lst_new(NULL, NULL));
-    //     tmp->key = malloc(sizeof(t_list *));
-    //     tmp->key = 
-    //     while (!ft_strcmp(tmp->key, "pipe"))
-    //     {
-            
-    //     }
-    // }
+    t_list *curr;
+    t_list *prev;
+    
+    if (ft_strcmp((*head)->key, "space"))
+    {
+        curr = *head;
+        *head = (*head)->next;
+        lst_free_node(&curr);
+    }
+    if (!(*head))
+        return ;
+    prev = *head;
+    curr = (*head)->next;
+    while (curr)
+    {
+        if (ft_strcmp(curr->key, "space"))
+        {
+            prev->next = curr->next;
+            lst_free_node(&curr);
+            curr = prev->next;
+            continue ;
+        }
+        prev = prev->next;
+        curr = curr->next;
+    }
 }
 
-void parser(t_info *info)
+static int is_redir(const char *str)
+{
+    if (ft_strcmp(str, "append") || ft_strcmp(str, "write") 
+        || ft_strcmp(str, "heredoc") || ft_strcmp(str, "read"))
+        return 1;
+    return 0;
+}
+
+static int check_parsing(t_info *info)
+{
+    t_list *curr;
+    t_list *next;
+    
+    if (!info->tokens)
+        return 1;
+    if (ft_strcmp(info->tokens->key, "pipe"))
+    {
+        printf("minishell: syntax error near unexpected token `|'\n");
+        return 1;
+    }
+    curr = info->tokens;
+    next = curr->next;
+    while (curr)
+    {
+        if (!next)
+        {
+            if (!ft_strcmp(curr->key, "word"))
+            {
+                printf("minishell: syntax error near unexpected token `%s'\n", (char *)curr->value);
+                return 1;
+            }
+            return 0;
+        }
+        if ((is_redir(curr->key) && !ft_strcmp(next->key, "word")) 
+            || (ft_strcmp(curr->key, "pipe") && ft_strcmp(next->key, "pipe")))
+        {
+            printf("minishell: syntax error near unexpected token `%s'\n", (char *)next->value);
+            return 1;
+        }
+        curr = next;
+        next = next->next;
+    }
+    return 0;
+}
+
+static void create_grammemes(t_info *info)
+{
+    t_list *tmp;
+    t_list *curr;
+    t_list *key_tmp, value_tmp;
+    
+    curr = info->tokens;
+    tmp = info->grammemes;
+    while (curr)
+    {
+        lst_push_back(&tmp, lst_new(NULL, NULL));
+        tmp->key = malloc(sizeof(t_list *));
+        tmp->value = malloc(sizeof(t_list *));
+
+        while (curr || !ft_strcmp(curr->key, "pipe"))
+        {
+            printf("check_gr\n");
+            if (is_redir(curr->key))
+            {
+                lst_push_back(&((t_list *)tmp->value), lst_new(curr->key, curr->next->value));
+                curr = curr->next->next;
+            }
+            else
+            {
+                lst_push_back((t_list **)tmp->key, lst_new(curr->key, curr->value));
+                curr = curr->next;
+            }
+        }
+    }
+}
+
+int parser(t_info *info)
 {
     opening(info);
     merge(info);
+    remove_spaces(&info->tokens);
+    lst_print(info->tokens);
+    if (check_parsing(info))
+        return 1;
     create_grammemes(info);
-    //lst_clear(&info->tokens); // add after creating grammemes foo
+    lst_print(((t_list *)(info->grammemes))->key);
+    lst_print(((t_list *)(info->grammemes))->value);
+ // add after creating grammemes foo
     //TODO check and fill grammar
+    return 0;
 }

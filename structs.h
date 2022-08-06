@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/05 23:30:14 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/06 18:03:28 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	envp_update(t_info *info);
 void	ft_free_info(t_info *info);
 int		next_char(char *str, int begin, char origin);
 void	lexer(t_info *info, char *str);
-void	parser(t_info *info);
+int		parser(t_info *info);
 
 //builtins
 int		ft_env(t_info *info, t_list *grammeme);
