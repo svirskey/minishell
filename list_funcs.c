@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:58:13 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/08 21:43:57 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/08 22:15:10 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,19 @@ void *lst_get_value(t_list *lst, void *key)
 		tmp = tmp->next;
 	}
 	return ft_strdup("");
+}
+
+int	lst_len(t_list *lst)
+{
+	int len;
+
+	len = 0;
+	if (!lst)
+		return len;
+	while (lst)
+	{
+		lst = lst->next;
+		len++;
+	}
+	return len;
 }

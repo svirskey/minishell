@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/08 21:44:10 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/08 22:14:06 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	lst_print(t_list *lst);
 void	*lst_get_value(t_list *lst, void *key);
 void	lst_free_node(t_list **node);
 void	lst_print_grammemes(t_list *grammemes);
+int 	lst_len(t_list *lst);
 
 //libft funcs
 int		ft_strlen(char *s);
@@ -60,6 +61,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	ft_bzero(void *s, size_t n);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 char	*ft_strjoin(char *s1, char *s2);
+long long	ft_atol(const char *str);
 
 // envp funcs
 void	envp_init(t_info *info, char **env);

@@ -1,31 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/15 21:42:56 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/08 22:10:43 by bfarm            ###   ########.fr       */
+/*   Created: 2022/08/08 22:01:07 by bfarm             #+#    #+#             */
+/*   Updated: 2022/08/08 22:13:23 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../structs.h"
-#include <stdio.h>
 
-int ft_env(t_info *info, t_list *grammeme) 
+long long	ft_atol(const char *str)
 {
-	int i;
+	long long	num;
+	int			i;
+	int			minus;
 
+	minus = 1;
 	i = 0;
-	if (!info || !grammeme || !info->envp_list)
-		return (1);
-	envp_update(info);
-	while (info->envp_arr[i])
+	num = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '-')
 	{
-		printf("%s\n", info->envp_arr[i]);
+		minus = -1;
 		i++;
 	}
-	info->exit_status = 0;
-	return 0;
+	else if (str[i] == '+')
+		i++;
+	while (str[i] == '0')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		num = num * 10 + (int)str[i] - 48;
+		i++;
+	}
+	return (num * minus);
 }
