@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 22:01:04 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/08 21:44:26 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/08 21:55:00 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ static int check_parsing(t_info *info)
         {
             if (!ft_strcmp(curr->key, "word"))
             {
-                printf("minishell: syntax error near unexpected token `%s'\n", (char *)curr->value);
+                printf("minishell: syntax error near unexpected token `newline'\n");
                 return 1;
             }
             return 0;
@@ -244,8 +244,7 @@ static void create_grammemes(t_info *info)
             if (is_redir(curr->key))
             {
                 lst_push_back(&values, lst_new(ft_strdup(curr->key), ft_strdup(curr->next->value)));
-                curr = curr->next->next;
-                
+                curr = curr->next->next; 
             }
             else
             {
