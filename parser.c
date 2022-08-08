@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 22:01:04 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/06 19:06:19 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/08 21:44:26 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,32 +228,32 @@ static int check_parsing(t_info *info)
 
 static void create_grammemes(t_info *info)
 {
-    t_list *tmp;
     t_list *curr;
-    t_list *key_tmp, value_tmp;
-    
+    t_list *keys;
+    t_list *values;
+
     curr = info->tokens;
-    tmp = info->grammemes;
     while (curr)
     {
-        lst_push_back(&tmp, lst_new(NULL, NULL));
-        tmp->key = malloc(sizeof(t_list *));
-        tmp->value = malloc(sizeof(t_list *));
-
-        while (curr || !ft_strcmp(curr->key, "pipe"))
+        keys = NULL;
+        values = NULL;
+        if (ft_strcmp(curr->key, "pipe"))
+            curr = curr->next;
+        while (curr && !ft_strcmp(curr->key, "pipe"))
         {
-            printf("check_gr\n");
             if (is_redir(curr->key))
             {
-                lst_push_back(&((t_list *)tmp->value), lst_new(curr->key, curr->next->value));
+                lst_push_back(&values, lst_new(ft_strdup(curr->key), ft_strdup(curr->next->value)));
                 curr = curr->next->next;
+                
             }
             else
             {
-                lst_push_back((t_list **)tmp->key, lst_new(curr->key, curr->value));
+                lst_push_back(&keys, lst_new(ft_strdup(curr->key), ft_strdup(curr->value)));
                 curr = curr->next;
             }
         }
+        lst_push_back(&info->grammemes, lst_new(keys, values));
     }
 }
 
@@ -262,12 +262,11 @@ int parser(t_info *info)
     opening(info);
     merge(info);
     remove_spaces(&info->tokens);
-    lst_print(info->tokens);
     if (check_parsing(info))
         return 1;
     create_grammemes(info);
-    lst_print(((t_list *)(info->grammemes))->key);
-    lst_print(((t_list *)(info->grammemes))->value);
+
+
  // add after creating grammemes foo
     //TODO check and fill grammar
     return 0;

@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:58:13 by bfarm             #+#    #+#             */
-/*   Updated: 2022/07/19 18:54:40 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/08 21:43:57 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,22 @@ void	lst_print(t_list *lst)
 		printf("[%s]  \t-> [%s]\n",(char *)tmp->key, (char *)tmp->value);
 		tmp = tmp->next;
 	}
+}
+
+void lst_print_grammemes(t_list *grammemes)
+{
+	t_list *tmp;
+
+	tmp = grammemes;
+    printf("Printing grammemes:\n");
+    while (tmp)
+    {
+        printf("\nNext Pipe Part:\n");
+        lst_print((t_list *)tmp->key);
+        printf("\n");
+        lst_print((t_list *)tmp->value);
+        tmp = tmp->next;
+    }
 }
 
 void *lst_get_value(t_list *lst, void *key)

@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/06 18:03:28 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/08 21:44:10 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	lst_clear(t_list **lst);
 void	lst_print(t_list *lst);
 void	*lst_get_value(t_list *lst, void *key);
 void	lst_free_node(t_list **node);
+void	lst_print_grammemes(t_list *grammemes);
 
 //libft funcs
 int		ft_strlen(char *s);

@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/06 19:00:28 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/08 21:47:30 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,26 @@ static void ft_init(t_info *info, char **envp)
 	lst_push_back(&info->builtins, lst_new(ft_strdup("exit"), builtin_node(&ft_exit)));
 }
 
+static void ft_free_grammemes(t_info *info)
+{
+	t_list *tmp;
+	
+	tmp = info->grammemes;
+	while (tmp)
+	{
+		lst_clear((t_list **)&tmp->key);
+		lst_clear((t_list **)&tmp->value);
+		tmp = tmp->next;
+	}
+	lst_clear(&info->grammemes);
+}
+
 void ft_free_info(t_info *info)
 {
 	lst_clear(&info->builtins);
 	lst_clear(&info->envp_list);
 	lst_clear(&info->tokens);
+	ft_free_grammemes(info);
 	lst_clear(&info->grammemes);
 	envp_clear(&info->envp_arr);
 }
@@ -81,18 +96,15 @@ int main(int argc, char **argv, char **envp)
 		}
 		lexer(&info, str);
 		parser(&info);
-		
 		// if (parser(&info)) //add after merging with executor
-		// 	executor(info);
+			// 	executor(info);
 
-		// check for correct grammar construction like  echo | | => incorrect 
-		// fill grammar list of logical units like left and right parts of pipe
+		lst_print_grammemes(info.grammemes);
+
 		
 		//(*(foo_p *)(info.builtins->value))(&info, info.tokens); // example of using builtin env
 		
-		lst_clear(((t_list **)&(info.grammemes->key)));
-		lst_clear(((t_list **)&(info.grammemes->value)));
-		lst_clear(&info.grammemes);
+		ft_free_grammemes(&info);
 		lst_clear(&info.tokens);
 		free(str);
 	}
