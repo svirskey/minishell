@@ -6,12 +6,12 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:32 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/08 22:16:25 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/08 22:37:48 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../structs.h"
-#include <stdio.h>
+#include "../minishell.h"
 
 int	ft_exit(t_info *info, t_list *grammeme)
 {
@@ -30,7 +30,7 @@ int	ft_exit(t_info *info, t_list *grammeme)
 	exit_status = ft_atol(grammeme->next->value);
 	printf("exit\n");
 	ft_free_info(info);
-	if (exit_status > 2147483647 || exit_status <= -2147483648)
+	if (exit_status > INT32_MAX || exit_status < INT32_MIN)
 		exit(2);
 	else
 		exit (exit_status % 256);

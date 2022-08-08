@@ -6,12 +6,12 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:42:56 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/08 22:10:43 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/08 22:23:26 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../structs.h"
-#include <stdio.h>
+#include "../minishell.h"
 
 int ft_env(t_info *info, t_list *grammeme) 
 {
