@@ -42,7 +42,7 @@ void	lst_push_back(t_list **lst, t_list *node)
 	tmp->next = node;
 }
 
-void lst_free_node(t_list **node)
+void	lst_free_node(t_list **node)
 {
 	free((*node)->key);
 	free((*node)->value);
@@ -68,7 +68,7 @@ void	lst_clear(t_list **lst)
 
 void	lst_print(t_list *lst)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = lst;
 	while (tmp)
@@ -78,25 +78,25 @@ void	lst_print(t_list *lst)
 	}
 }
 
-void lst_print_grammemes(t_list *grammemes)
+void	lst_print_grammemes(t_list *grammemes)
 {
 	t_list *tmp;
 
 	tmp = grammemes;
-    printf("Printing grammemes:\n");
-    while (tmp)
-    {
-        printf("\nNext Pipe Part:\n");
-        lst_print((t_list *)tmp->key);
-        printf("\n");
-        lst_print((t_list *)tmp->value);
-        tmp = tmp->next;
-    }
+	printf("Printing grammemes:\n");
+	while (tmp)
+	{
+		printf("\nNext Pipe Part:\n");
+		lst_print((t_list *)tmp->key);
+		printf("\n");
+		lst_print((t_list *)tmp->value);
+		tmp = tmp->next;
+	}
 }
 
-void *lst_get_value(t_list *lst, void *key)
+void	*lst_get_value(t_list *lst, void *key)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = lst;
 	while (tmp)
@@ -110,7 +110,7 @@ void *lst_get_value(t_list *lst, void *key)
 
 int	lst_len(t_list *lst)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	if (!lst)

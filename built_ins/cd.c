@@ -12,10 +12,10 @@
 
 #include "../structs.h"
 
-int		ft_cd(t_info *info, t_list *grammeme)
+int	ft_cd(t_info *info, t_list *grammeme)
 {
-    (void)info;
-    (void)grammeme;
+	(void)info;
+	(void)grammeme;
 
-    return 0;
+	return 0;
 }

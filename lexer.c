@@ -13,9 +13,9 @@
 #include "minishell.h"
 #include "structs.h"
 
-int next_char(char *str, int begin, char origin) // begin with next el
+int	next_char(char *str, int begin, char origin) // begin with next el
 {
-	int c;
+	int	c;
 
 	c = begin;
 	if (!str)
@@ -27,9 +27,8 @@ int next_char(char *str, int begin, char origin) // begin with next el
 	return c - begin;
 }
 
-static int is_sep(char *str, int i)
+static int	is_sep(char *str, int i)
 {
-	
 	if (ft_isspace(str[i]))
 		return 1;
 	if (str[i] == '<' || str[i] == '>' || str[i] == '|' )
@@ -39,7 +38,7 @@ static int is_sep(char *str, int i)
 	return 0;
 }
 
-static char *lst_last_key(t_list *lst)
+static char	*lst_last_key(t_list *lst)
 {
 	if (!lst)
 		return NULL;
@@ -48,7 +47,7 @@ static char *lst_last_key(t_list *lst)
 	return ((char *)lst->key);
 }
 
-static void lexer_space(t_info *info, char *str, int *i)
+static void	lexer_space(t_info *info, char *str, int *i)
 {
 	if (!ft_strcmp(lst_last_key(info->tokens),"space") && ft_isspace(str[*i]))
 		lst_push_back(&info->tokens, lst_new(ft_strdup("space"), ft_strdup(" ")));
@@ -56,7 +55,7 @@ static void lexer_space(t_info *info, char *str, int *i)
 		(*i)++;
 }
 
-static void lexer_spec(t_info *info, char *str, int *i)
+static void	lexer_spec(t_info *info, char *str, int *i)
 {
 	if (str[*i] == '|')
 		lst_push_back(&info->tokens, lst_new(ft_strdup("pipe"), ft_strdup("|")));
@@ -83,7 +82,7 @@ static void lexer_spec(t_info *info, char *str, int *i)
 	(*i)++;
 }
 
-static void lexer_quotes(t_info *info, char *str, int *i)
+static void	lexer_quotes(t_info *info, char *str, int *i)
 {
 	(*i)++;
 	if (str[*i - 1] == '\'')
@@ -93,7 +92,7 @@ static void lexer_quotes(t_info *info, char *str, int *i)
 	*i += next_char(str, *i, str[*i - 1]) + 1;
 }
 
-static void lexer_word(t_info *info, char *str, int *i)
+static void	lexer_word(t_info *info, char *str, int *i)
 {
 	int from = *i;
 	while (str[*i] && !is_sep(str, *i))
@@ -101,9 +100,9 @@ static void lexer_word(t_info *info, char *str, int *i)
 	lst_push_back(&info->tokens, lst_new(ft_strdup("word"), ft_substr(str, from, *i - from)));
 }
 
-void lexer(t_info *info, char *str)
+void	lexer(t_info *info, char *str)
 {
-	int i;
+	int	i;
 	
 	i = 0;
 	while (str[i])
@@ -129,5 +128,4 @@ void lexer(t_info *info, char *str)
 		else
 			lexer_word(info, str, &i);
 	}
-	// separators : \f \n \r \t \v space < > << >> | ' ""
 }

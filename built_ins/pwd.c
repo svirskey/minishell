@@ -13,10 +13,10 @@
 #include "../structs.h"
 #include "../minishell.h"
 
-int		ft_pwd(t_info *info, t_list *grammeme)
+int	ft_pwd(t_info *info, t_list *grammeme)
 {
-	char    *str;
-	char    buf[1000];
+	char	*str;
+	char	buf[1000];
 
 	(void)grammeme;
 	str = getcwd(buf, 1000);

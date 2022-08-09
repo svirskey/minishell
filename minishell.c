@@ -23,17 +23,17 @@ static char	*ft_readline()
 	return (str);
 }
 
-static foo_p *builtin_node(foo_p built_foo)
+static foo_p	*builtin_node(foo_p built_foo)
 {
-	 foo_p *node;
+	foo_p	*node;
 
-	 node = NULL;
-	 node = malloc(sizeof(foo_p));
-	 *node = built_foo;
-	 return node;
+	node = NULL;
+	node = malloc(sizeof(foo_p));
+	*node = built_foo;
+	return node;
 }
 
-static void ft_init(t_info *info, char **envp)
+static void	ft_init(t_info *info, char **envp)
 {
 	info->envp_list = NULL;
 	info->tokens = NULL;
@@ -52,9 +52,9 @@ static void ft_init(t_info *info, char **envp)
 	lst_push_back(&info->builtins, lst_new(ft_strdup("exit"), builtin_node(&ft_exit)));
 }
 
-static void ft_free_grammemes(t_info *info)
+static void	ft_free_grammemes(t_info *info)
 {
-	t_list *tmp;
+	t_list	*tmp;
 	
 	tmp = info->grammemes;
 	while (tmp)
@@ -66,7 +66,7 @@ static void ft_free_grammemes(t_info *info)
 	lst_clear(&info->grammemes);
 }
 
-void ft_free_info(t_info *info)
+void	ft_free_info(t_info *info)
 {
 	lst_clear(&info->builtins);
 	lst_clear(&info->envp_list);
@@ -76,17 +76,17 @@ void ft_free_info(t_info *info)
 	envp_clear(&info->envp_arr);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
+	t_info	info;
+	char	*str;
+
 	(void)argc;
 	(void)argv;
-	t_info info;
-	char *str;
-
 	ft_init(&info, envp);
 	while(!info.exit_status)
 	{
-		str = ft_readline(); 
+		str = ft_readline();
 		if (!str) // ctrl-d in empty line
 			break;
 		if (str[0] == 0)

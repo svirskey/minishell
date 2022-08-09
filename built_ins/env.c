@@ -15,7 +15,7 @@
 
 int ft_env(t_info *info, t_list *grammeme) 
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!info || !grammeme || !info->envp_list)
