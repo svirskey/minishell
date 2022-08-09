@@ -26,6 +26,5 @@ int ft_env(t_info *info, t_list *grammeme)
 		printf("%s\n", info->envp_arr[i]);
 		i++;
 	}
-	info->exit_status = 0;
 	return 0;
 }

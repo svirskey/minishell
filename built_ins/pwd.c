@@ -23,10 +23,8 @@ int	ft_pwd(t_info *info, t_list *grammeme)
 	if (!str)
 	{
 		printf("Error with pwd path\n");
-		info->exit_status = 1;
 		return 1;
 	}
 	printf("PWD : %s\n", str);
-	info->exit_status = 0;
 	return 0;
 }
