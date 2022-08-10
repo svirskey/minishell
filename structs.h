@@ -71,6 +71,7 @@ char		*ft_itoa(int n);
 void		envp_init(t_info *info, char **env);
 void		envp_clear(char ***arr);
 void		envp_update(t_info *info);
+void		env_parse(char **arr, char *str);
 
 //main funcs
 void		ft_free_info(t_info *info);

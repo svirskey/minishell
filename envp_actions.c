@@ -13,40 +13,50 @@
 #include "structs.h"
 #include <stdlib.h>
 
+void	env_parse(char **arr, char *str)
+{
+	int		j;
+	int		k;
+
+	j = 0;
+	k = 0;
+	while (str[j] && str[j] != '=')
+		j++;
+	arr[0] = malloc(j + 1);
+	j = 0;
+	while (str[j] && str[j] != '=')
+	{
+		arr[0][j] = str[j];
+		j++;
+	}
+	arr[0][j] = 0;
+	if (str[j] == '=')
+		arr[1] = ft_strdup("=");
+	else
+		arr[1] = ft_strdup("");
+	j++;
+	while (str[j + k])
+		k++;
+	arr[2] = malloc(k + 1);
+	k = 0;
+	while (str[j + k])
+	{
+		arr[2][k] = str[j + k];
+		k++;
+	}
+}
+
 void	envp_init(t_info *info, char **env)
 {
 	int		i;
-	int		j;
-	int		k;
-	char	*key;
-	char	*value;
+	char	*arr[3];
 
 	i = 0;
 	while (env[i])
 	{
-		j = 0;
-		k = 0;
-		while (env[i][j] != '=')
-			j++;
-		key = malloc(j + 1);
-		j = 0;
-		while (env[i][j] != '=')
-		{
-			key[j] = env[i][j];
-			j++;
-		}
-		key[j] = 0;
-		j++;
-		while (env[i][j + k])
-			k++;
-		value = malloc(k + 1);
-		k = 0;
-		while (env[i][j + k])
-		{
-			value[k] = env[i][j + k];
-			k++;
-		}
-		lst_push_back(&(info->envp_list), lst_new((void *)key, (void *)value));
+		env_parse(arr, env[i]);
+		lst_push_back(&(info->envp_list), lst_new(arr[0], arr[2]));
+		free(arr[1]);
 		i++;
 	}
 }

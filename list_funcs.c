@@ -156,8 +156,6 @@ void	lst_remove_node(t_list **head, char *key)
 	t_list	*curr;
 	t_list	*prev;
 
-	if (!(*head))
-		return ;
 	prev = NULL;
 	curr = *head;
 	while (curr)
