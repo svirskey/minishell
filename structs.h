@@ -47,11 +47,12 @@ void	lst_push_back(t_list **lst, t_list *node);
 t_list	*lst_new(void *key, void *value);
 void	lst_clear(t_list **lst);
 void	lst_print(t_list *lst);
-void	*lst_get_value(t_list *lst, void *key);
+void	*lst_copy_value(t_list *lst, void *key);
+char	*lst_get_value(t_list *lst, void *key);
 void	lst_free_node(t_list **node);
 void	lst_print_grammemes(t_list *grammemes);
 int 	lst_len(t_list *lst);
-
+void	lst_replace(t_info *info, char *key, char *new_value);
 //libft funcs
 int		ft_strlen(char *s);
 char	*ft_strdup(const char *s1);

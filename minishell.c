@@ -72,7 +72,6 @@ void	ft_free_info(t_info *info)
 	lst_clear(&info->envp_list);
 	lst_clear(&info->tokens);
 	ft_free_grammemes(info);
-	lst_clear(&info->grammemes);
 	envp_clear(&info->envp_arr);
 }
 
@@ -95,15 +94,8 @@ int	main(int argc, char **argv, char **envp)
 			continue;
 		}
 		lexer(&info, str);
-		parser(&info);
-		// if (parser(&info)) //add after merging with executor
-			// 	executor(info);
-
-		lst_print_grammemes(info.grammemes);
-
-		
-		//(*(foo_p *)(info.builtins->value))(&info, info.tokens); // example of using builtin env
-		
+		if (parser(&info))
+			 	executor(&info);
 		ft_free_grammemes(&info);
 		lst_clear(&info.tokens);
 		free(str);
@@ -111,3 +103,4 @@ int	main(int argc, char **argv, char **envp)
 	ft_free_info(&info);
 	return 0;
 }
+//(*(foo_p *)(info.builtins->value))(&info, info.tokens); // example of using builtin env

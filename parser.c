@@ -251,7 +251,7 @@ static void create_grammemes(t_info *info)
 				curr = curr->next;
 			}
 		}
-		lst_push_back(&info->grammemes, lst_new(keys, values));
+		lst_push_back(&info->grammemes, lst_new(keys, values)); //TODO malloc of pointer keys and values
 	}
 }
 
@@ -263,9 +263,6 @@ int parser(t_info *info)
 	if (check_parsing(info))
 		return 1;
 	create_grammemes(info);
-
-
-	// add after creating grammemes foo
-	//TODO check and fill grammar
+	lst_print_grammemes(info->grammemes); // for debugging
 	return 0;
 }

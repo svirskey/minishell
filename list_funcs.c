@@ -94,7 +94,7 @@ void	lst_print_grammemes(t_list *grammemes)
 	}
 }
 
-void	*lst_get_value(t_list *lst, void *key)
+void	*lst_copy_value(t_list *lst, void *key)
 {
 	t_list	*tmp;
 
@@ -106,6 +106,20 @@ void	*lst_get_value(t_list *lst, void *key)
 		tmp = tmp->next;
 	}
 	return ft_strdup("");
+}
+
+char	*lst_get_value(t_list *lst, void *key)
+{
+	t_list	*tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		if (ft_strcmp((char *)tmp->key, (char *)key))
+			return (char *)(tmp->value);
+		tmp = tmp->next;
+	}
+	return NULL;
 }
 
 int	lst_len(t_list *lst)
@@ -121,4 +135,18 @@ int	lst_len(t_list *lst)
 		len++;
 	}
 	return len;
+}
+
+void	lst_replace(t_list *lst, char *key, char *new_value)
+{
+    while (lst)
+    {
+        if (ft_strcmp(lst->key, key))
+        {
+            free(lst->value);
+            lst->value = ft_strdup(new_value);
+            return ;
+        }
+        lst = lst->next;
+    }
 }
