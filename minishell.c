@@ -104,8 +104,8 @@ int	main(int argc, char **argv, char **envp)
 		parser(&info);
 		//if (parser(&info))
 			 	//executor(&info);
-		ft_cd(&info, *(t_list **)info.grammemes->key);	 // for  ( cd somepath | pwd ) command 
-		ft_pwd(&info, *(t_list **)info.grammemes->key);
+		ft_export(&info, *(t_list **)info.grammemes->key);	 // for  ( cd somepath | pwd ) command 
+		ft_env(&info, *(t_list **)info.grammemes->next->key);
 		ft_free_grammemes(&info);
 		lst_clear(&info.tokens);
 		free(str);
