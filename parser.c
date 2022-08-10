@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 22:01:04 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/08 21:55:00 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/10 18:52:30 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,35 +151,6 @@ static void	merge(t_info *info)
 	}
 }
 
-static void	remove_spaces(t_list **head)
-{
-	t_list	*curr;
-	t_list	*prev;
-
-	if (ft_strcmp((*head)->key, "space"))
-	{
-		curr = *head;
-		*head = (*head)->next;
-		lst_free_node(&curr);
-	}
-	if (!(*head))
-		return ;
-	prev = *head;
-	curr = (*head)->next;
-	while (curr)
-	{
-		if (ft_strcmp(curr->key, "space"))
-		{
-			prev->next = curr->next;
-			lst_free_node(&curr);
-			curr = prev->next;
-			continue ;
-		}
-		prev = prev->next;
-		curr = curr->next;
-	}
-}
-
 static int is_redir(const char *str)
 {
 	if (ft_strcmp(str, "append") || ft_strcmp(str, "write") 
@@ -225,6 +196,15 @@ static int check_parsing(t_info *info)
 	return 0;
 }
 
+static void *ptr_malloc(t_list *head)
+{
+	t_list **ret;
+
+	ret = malloc(sizeof(t_list *));
+	*ret = head;
+	return (void *)ret;
+}
+
 static void create_grammemes(t_info *info)
 {
 	t_list *curr;
@@ -251,7 +231,7 @@ static void create_grammemes(t_info *info)
 				curr = curr->next;
 			}
 		}
-		lst_push_back(&info->grammemes, lst_new(keys, values)); //TODO malloc of pointer keys and values
+		lst_push_back(&info->grammemes, lst_new(ptr_malloc(keys), ptr_malloc(values)));
 	}
 }
 
@@ -259,7 +239,7 @@ int parser(t_info *info)
 {
 	opening(info);
 	merge(info);
-	remove_spaces(&info->tokens);
+	lst_remove_node(&info->tokens, "space");
 	if (check_parsing(info))
 		return 1;
 	create_grammemes(info);

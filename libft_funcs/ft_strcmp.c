@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:21:33 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/04 19:22:10 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/10 18:45:47 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	i = 0;
 	while (s1[i] || s2[i])
 	{
+
 		if (s1[i] > s2[i])
 			return (0);
 		else if (s1[i] < s2[i])

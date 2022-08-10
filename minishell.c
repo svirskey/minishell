@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/08 21:47:30 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/10 19:02:43 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static void	ft_free_grammemes(t_info *info)
 	tmp = info->grammemes;
 	while (tmp)
 	{
-		lst_clear((t_list **)&tmp->key);
-		lst_clear((t_list **)&tmp->value);
+		lst_clear((t_list **)tmp->key);
+		lst_clear((t_list **)tmp->value);
 		tmp = tmp->next;
 	}
 	lst_clear(&info->grammemes);
@@ -94,8 +94,11 @@ int	main(int argc, char **argv, char **envp)
 			continue;
 		}
 		lexer(&info, str);
-		if (parser(&info))
-			 	executor(&info);
+		parser(&info);
+		//if (parser(&info))
+			 	//executor(&info);
+		ft_cd(&info, *(t_list **)info.grammemes->key);	 
+		ft_pwd(&info, *(t_list **)info.grammemes->key);
 		ft_free_grammemes(&info);
 		lst_clear(&info.tokens);
 		free(str);

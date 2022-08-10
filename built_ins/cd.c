@@ -6,11 +6,12 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:38 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/04 19:39:25 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/10 17:54:07 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../structs.h"
+#include "../minishell.h"
 
 int	ft_cd(t_info *info, t_list *grammeme)
 {

@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:58:13 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/08 22:15:10 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/10 18:48:56 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	lst_print_grammemes(t_list *grammemes)
 	while (tmp)
 	{
 		printf("\nNext Pipe Part:\n");
-		lst_print((t_list *)tmp->key);
+		lst_print(*(t_list **)tmp->key);
 		printf("\n");
-		lst_print((t_list *)tmp->value);
+		lst_print(*(t_list **)tmp->value);
 		tmp = tmp->next;
 	}
 }
@@ -151,24 +151,18 @@ void	lst_replace(t_list *lst, char *key, char *new_value)
     }
 }
 
-static void	lst_remove_node(t_list **head, char *key)
+void	lst_remove_node(t_list **head, char *key)
 {
 	t_list	*curr;
 	t_list	*prev;
 
-	// if (ft_strcmp((*head)->key, key))
-	// {
-	// 	curr = *head;
-	// 	*head = (*head)->next;
-	// 	lst_free_node(&curr);
-	// }
 	if (!(*head))
 		return ;
 	prev = NULL;
 	curr = *head;
 	while (curr)
 	{
-		if (ft_strcmp(curr->key, "space"))
+		if (ft_strcmp(curr->key, key))
 		{
 			if (prev)
 			{
@@ -180,14 +174,14 @@ static void	lst_remove_node(t_list **head, char *key)
 			{
 				prev = curr;
 				curr = curr->next;
-				free(prev);
+				lst_free_node(&prev);
 				*head = curr;
 				prev = NULL;
 			}
 		}
 		else
 		{
-			prev = prev->next;
+			prev = curr;
 			curr = curr->next;
 		}
 	}
