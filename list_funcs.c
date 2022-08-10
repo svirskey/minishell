@@ -150,3 +150,45 @@ void	lst_replace(t_list *lst, char *key, char *new_value)
         lst = lst->next;
     }
 }
+
+static void	lst_remove_node(t_list **head, char *key)
+{
+	t_list	*curr;
+	t_list	*prev;
+
+	// if (ft_strcmp((*head)->key, key))
+	// {
+	// 	curr = *head;
+	// 	*head = (*head)->next;
+	// 	lst_free_node(&curr);
+	// }
+	if (!(*head))
+		return ;
+	prev = NULL;
+	curr = *head;
+	while (curr)
+	{
+		if (ft_strcmp(curr->key, "space"))
+		{
+			if (prev)
+			{
+				prev->next = curr->next;
+				lst_free_node(&curr);
+				curr = prev->next;
+			}
+			else
+			{
+				prev = curr;
+				curr = curr->next;
+				free(prev);
+				*head = curr;
+				prev = NULL;
+			}
+		}
+		else
+		{
+			prev = prev->next;
+			curr = curr->next;
+		}
+	}
+}
