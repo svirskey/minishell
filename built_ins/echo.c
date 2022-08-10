@@ -15,7 +15,15 @@
 int	ft_echo(t_info *info, t_list *grammeme)
 {
 	(void)info;
-	(void)grammeme;
 
+	grammeme = grammeme->next;
+	while (grammeme)
+	{
+		printf("%s", grammeme->value);
+		if (grammeme->next)
+			printf(" ");
+		grammeme = grammeme->next;
+	}
+	printf("\n");
 	return 0;
 }

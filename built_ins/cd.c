@@ -14,31 +14,21 @@
 
 int	ft_cd(t_info *info, t_list *grammeme)
 {
-	int		status;
 	int		len;
 	char	*dir;
 
 	len = lst_len(grammeme);
-	if (len > 2)
-	{
-		printf("minishell: cd: too many arguments\n");
-		return (1);
-	}
-	else if (len == 2)
+	if (len == 2)
 		dir = grammeme->next->value;
 	else
 	{
-		dir = lst_get_value(info->envp_list, "HOME");
-		if (!dir)
-		{
-			printf("minishell: cd: HOME not set\n");
-			return (1);
-		}
-		if (ft_strcmp(dir, ""))
-			return 0;
+		if (len > 2)
+			printf("minishell: cd: too many arguments\n");
+		else 
+			printf("minishell: cd: too few arguments\n");
+		return 1;
 	}
-	status = chdir(dir);
-	if (status == -1)
+	if (chdir(dir) == -1)
 	{
 		printf("minishell: cd: %s No such file or directory\n", dir);
 		return (1);

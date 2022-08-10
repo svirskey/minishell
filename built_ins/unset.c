@@ -15,7 +15,12 @@
 int	ft_unset(t_info *info, t_list *grammeme)
 {
 	(void)info;
-	(void)grammeme;
+	t_list *lst;
 
+	lst = grammeme->next;
+	while (lst)
+	{
+		//TODO lst_remove(t_list **lst, void *key); => remove node with key
+	}
 	return 0;
 }

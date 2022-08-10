@@ -20,8 +20,12 @@ int	ft_exit(t_info *info, t_list *grammeme)
 
 	word_count = lst_len(grammeme);
 	if (word_count > 2)
+	{
 		printf("exit\nminishell: exit: too many arguments\n");
-	if (word_count == 1)
+		ft_free_info(info);
+		exit (1);
+	}
+	else if (word_count == 1)
 	{
 		printf("exit\n");
 		ft_free_info(info);

@@ -20,6 +20,11 @@ int ft_env(t_info *info, t_list *grammeme)
 	i = 0;
 	if (!info || !grammeme || !info->envp_list)
 		return (1);
+	if (lst_len(grammeme) > 1)
+	{
+		printf("minishell: env: too many arguments\n");
+		return (1);
+	}
 	envp_update(info);
 	while (info->envp_arr[i])
 	{

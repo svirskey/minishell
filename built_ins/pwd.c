@@ -18,13 +18,12 @@ int	ft_pwd(t_info *info, t_list *grammeme)
 	char	*str;
 	char	buf[1000];
 
-	(void)grammeme;
 	str = getcwd(buf, 1000);
 	if (!str)
 	{
-		printf("Error with pwd path\n");
+		printf("minishell: pwd: error with pwd path\n");
 		return 1;
 	}
-	printf("PWD : %s\n", str);
+	printf("%s\n", str);
 	return 0;
 }
