@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:32 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/08 22:37:48 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/10 19:13:08 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ int	ft_exit(t_info *info, t_list *grammeme)
 		exit(2);
 	else
 		exit (exit_status % 256);
-	return 0;
+	return (0);
 }

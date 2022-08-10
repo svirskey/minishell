@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:21:49 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/04 19:23:08 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/10 19:08:41 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static int	fill_arr(char const *s, char *ret, int len_to, int start)
 char	*ft_substr(char *s, int start, int len)
 {
 	char	*ret;
-	int	i;
-	int	len_to;
+	int		i;
+	int		len_to;
 
 	if (s == NULL)
 		return (NULL);

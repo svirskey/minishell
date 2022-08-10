@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:23 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 18:37:26 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/10 19:11:11 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_unset(t_info *info, t_list *grammeme)
 	t_list	*lst;
 
 	if (lst_len(grammeme) == 1)
-		return 0;
+		return (0);
 	lst = grammeme->next;
 	while (lst)
 	{
@@ -25,5 +25,5 @@ int	ft_unset(t_info *info, t_list *grammeme)
 		lst = lst->next;
 	}
 	info->envp_upd = 1;
-	return 0;
+	return (0);
 }

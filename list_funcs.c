@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:58:13 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 18:48:56 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/10 19:31:54 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,14 @@ void	lst_print(t_list *lst)
 	tmp = lst;
 	while (tmp)
 	{
-		printf("[%s]  \t-> [%s]\n",(char *)tmp->key, (char *)tmp->value);
+		printf("[%s]  \t-> [%s]\n", (char *)tmp->key, (char *)tmp->value);
 		tmp = tmp->next;
 	}
 }
 
 void	lst_print_grammemes(t_list *grammemes)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = grammemes;
 	printf("Printing grammemes:\n");
@@ -102,10 +102,10 @@ void	*lst_copy_value(t_list *lst, void *key)
 	while (tmp)
 	{
 		if (ft_strcmp((char *)tmp->key, (char *)key))
-			return (void *)ft_strdup(tmp->value);
+			return ((void *)ft_strdup(tmp->value));
 		tmp = tmp->next;
 	}
-	return ft_strdup("");
+	return (ft_strdup(""));
 }
 
 char	*lst_get_value(t_list *lst, void *key)
@@ -116,10 +116,10 @@ char	*lst_get_value(t_list *lst, void *key)
 	while (tmp)
 	{
 		if (ft_strcmp((char *)tmp->key, (char *)key))
-			return (char *)(tmp->value);
+			return ((char *)(tmp->value));
 		tmp = tmp->next;
 	}
-	return NULL;
+	return (NULL);
 }
 
 int	lst_len(t_list *lst)
@@ -128,27 +128,27 @@ int	lst_len(t_list *lst)
 
 	len = 0;
 	if (!lst)
-		return len;
+		return (len);
 	while (lst)
 	{
 		lst = lst->next;
 		len++;
 	}
-	return len;
+	return (len);
 }
 
 void	lst_replace(t_list *lst, char *key, char *new_value)
 {
-    while (lst)
-    {
-        if (ft_strcmp(lst->key, key))
-        {
-            free(lst->value);
-            lst->value = ft_strdup(new_value);
-            return ;
-        }
-        lst = lst->next;
-    }
+	while (lst)
+	{
+		if (ft_strcmp(lst->key, key))
+		{
+			free(lst->value);
+			lst->value = ft_strdup(new_value);
+			return ;
+		}
+		lst = lst->next;
+	}
 }
 
 void	lst_remove_node(t_list **head, char *key)

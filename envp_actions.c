@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:17:28 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/04 23:03:10 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/10 19:24:38 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	envp_init(t_info *info, char **env)
 	int		k;
 	char	*key;
 	char	*value;
-	
+
 	i = 0;
 	while (env[i])
 	{
@@ -46,15 +46,15 @@ void	envp_init(t_info *info, char **env)
 			value[k] = env[i][j + k];
 			k++;
 		}
-		lst_push_back(&(info->envp_list) ,lst_new((void *)key, (void *)value));
+		lst_push_back(&(info->envp_list), lst_new((void *)key, (void *)value));
 		i++;
 	}
 }
 
-void envp_clear(char ***arr)
+void	envp_clear(char ***arr)
 {
-	int len;
-	char **tmp;
+	int		len;
+	char	**tmp;
 
 	tmp = *arr;
 	len = 0;
@@ -69,11 +69,11 @@ void envp_clear(char ***arr)
 	*arr = NULL;
 }
 
-void envp_update(t_info *info)
+void	envp_update(t_info *info)
 {
-	int len;
-	int i;
-	t_list *tmp;
+	int		len;
+	int		i;
+	t_list	*tmp;
 
 	tmp = info->envp_list;
 	len = 0;
@@ -90,7 +90,7 @@ void envp_update(t_info *info)
 	tmp = info->envp_list;
 	while (i < len)
 	{
-		info->envp_arr[i] = ft_strjoin(tmp->key, ft_strjoin("=",tmp->value));
+		info->envp_arr[i] = ft_strjoin(tmp->key, ft_strjoin("=", tmp->value));
 		tmp = tmp->next;
 		i++;
 	}

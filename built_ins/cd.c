@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:38 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 17:54:07 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/10 19:16:58 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	ft_cd(t_info *info, t_list *grammeme)
 	{
 		if (len > 2)
 			printf("minishell: cd: too many arguments\n");
-		else 
+		else
 			printf("minishell: cd: too few arguments\n");
-		return 1;
+		return (1);
 	}
 	if (chdir(dir) == -1)
 	{
@@ -37,7 +37,7 @@ int	ft_cd(t_info *info, t_list *grammeme)
 	else
 	{
 		if (!lst_get_value(info->envp_list, "OLDPWD"))
-			lst_push_back(&(info->envp_list) ,lst_new(ft_strdup("OLDPWD"), ft_strdup("")));
+			lst_push_back(&(info->envp_list), lst_new(ft_strdup("OLDPWD"), ft_strdup("")));
 		lst_replace(info->envp_list, "OLDPWD", lst_get_value(info->envp_list, "OLDPWD"));
 		lst_replace(info->envp_list, "PWD", dir);
 	}

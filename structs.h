@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 18:56:26 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/10 19:21:30 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 # include <stdlib.h>
 
-typedef struct s_info t_info;
+typedef struct s_info	t_info;
 
-typedef struct s_list t_list;
+typedef struct s_list	t_list;
 
-typedef int (*foo_p)(t_info *, t_list *);
+typedef int				(*t_foo_p)(t_info *, t_list *);
 
 struct s_list
 {
@@ -31,7 +31,7 @@ struct s_list
 struct s_info
 {
 	t_list	*builtins;
-	
+
 	t_list	*envp_list;
 	char	**envp_arr;
 	int		envp_upd;
@@ -51,7 +51,7 @@ void		*lst_copy_value(t_list *lst, void *key);
 char		*lst_get_value(t_list *lst, void *key);
 void		lst_free_node(t_list **node);
 void		lst_print_grammemes(t_list *grammemes);
-int 		lst_len(t_list *lst);
+int			lst_len(t_list *lst);
 void		lst_replace(t_list *list, char *key, char *new_value);
 void		lst_remove_node(t_list **head, char *key);
 

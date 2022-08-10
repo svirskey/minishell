@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 22:01:04 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 18:52:30 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/10 19:39:30 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	till_sep(char *str, int begin)
 
 	c = begin;
 	if (!str)
-		return 0;
+		return (0);
 	while (str[c] && str[c] != '$')
 		c++;
 	return (c - begin);
@@ -64,12 +64,12 @@ static void	opening(t_info *info)
 						}
 						else if (((char *)tmp->value)[i] == '$')
 						{
-							lst_push_back(&opn, lst_new(ft_strdup("word"), ft_strdup("[TODOPID]"))); // todo itoa
+							lst_push_back(&opn, lst_new(ft_strdup("word"), ft_itoa((int)getpid()))); // todo itoa
 							i++;
 						}
 						else if (((char *)tmp->value)[i] == '?')
 						{
-							lst_push_back(&opn, lst_new(ft_strdup("word"), ft_strdup("[TODOEXIT]"))); // todo itoa 
+							lst_push_back(&opn, lst_new(ft_strdup("word"), ft_itoa(info->exit_status)));
 							i++;
 						}
 						else
@@ -80,7 +80,7 @@ static void	opening(t_info *info)
 					}
 					else
 					{
-						lst_push_back(&opn, lst_new(ft_strdup("word"), ft_substr(tmp->value, i, till_sep(tmp->value, i)))); 
+						lst_push_back(&opn, lst_new(ft_strdup("word"), ft_substr(tmp->value, i, till_sep(tmp->value, i))));
 						i += till_sep(tmp->value, i);
 					}
 				}
@@ -143,7 +143,7 @@ static void	merge(t_info *info)
 				lst_free_node(&tmp);
 			}
 			if (!begin)
-				break;
+				break ;
 			tmp = begin;
 		}
 		prev = tmp;
@@ -151,25 +151,25 @@ static void	merge(t_info *info)
 	}
 }
 
-static int is_redir(const char *str)
+static int	is_redir(const char *str)
 {
-	if (ft_strcmp(str, "append") || ft_strcmp(str, "write") 
+	if (ft_strcmp(str, "append") || ft_strcmp(str, "write")
 		|| ft_strcmp(str, "heredoc") || ft_strcmp(str, "read"))
-		return 1;
-	return 0;
+		return (1);
+	return (0);
 }
 
-static int check_parsing(t_info *info)
+static int	check_parsing(t_info *info)
 {
 	t_list	*curr;
 	t_list	*next;
 
 	if (!info->tokens)
-		return 1;
+		return (1);
 	if (ft_strcmp(info->tokens->key, "pipe"))
 	{
 		printf("minishell: syntax error near unexpected token `|'\n");
-		return 1;
+		return (1);
 	}
 	curr = info->tokens;
 	next = curr->next;
@@ -180,36 +180,36 @@ static int check_parsing(t_info *info)
 			if (!ft_strcmp(curr->key, "word"))
 			{
 				printf("minishell: syntax error near unexpected token `newline'\n");
-				return 1;
+				return (1);
 			}
-			return 0;
+			return (0);
 		}
-		if ((is_redir(curr->key) && !ft_strcmp(next->key, "word")) 
+		if ((is_redir(curr->key) && !ft_strcmp(next->key, "word"))
 			|| (ft_strcmp(curr->key, "pipe") && ft_strcmp(next->key, "pipe")))
 		{
 			printf("minishell: syntax error near unexpected token `%s'\n", (char *)next->value);
-			return 1;
+			return (1);
 		}
 		curr = next;
 		next = next->next;
 	}
-	return 0;
+	return (0);
 }
 
-static void *ptr_malloc(t_list *head)
+static void	*ptr_malloc(t_list *head)
 {
-	t_list **ret;
+	t_list	**ret;
 
 	ret = malloc(sizeof(t_list *));
 	*ret = head;
-	return (void *)ret;
+	return ((void *)ret);
 }
 
-static void create_grammemes(t_info *info)
+static void	create_grammemes(t_info *info)
 {
-	t_list *curr;
-	t_list *keys;
-	t_list *values;
+	t_list	*curr;
+	t_list	*keys;
+	t_list	*values;
 
 	curr = info->tokens;
 	while (curr)
@@ -223,7 +223,7 @@ static void create_grammemes(t_info *info)
 			if (is_redir(curr->key))
 			{
 				lst_push_back(&values, lst_new(ft_strdup(curr->key), ft_strdup(curr->next->value)));
-				curr = curr->next->next; 
+				curr = curr->next->next;
 			}
 			else
 			{
@@ -235,14 +235,14 @@ static void create_grammemes(t_info *info)
 	}
 }
 
-int parser(t_info *info)
+int	parser(t_info *info)
 {
 	opening(info);
 	merge(info);
 	lst_remove_node(&info->tokens, "space");
 	if (check_parsing(info))
-		return 1;
+		return (1);
 	create_grammemes(info);
 	lst_print_grammemes(info->grammemes); // for debugging
-	return 0;
+	return (0);
 }
