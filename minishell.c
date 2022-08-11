@@ -101,11 +101,8 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		lexer(&info, str);
-		parser(&info);
-		//if (parser(&info))
-			 	//executor(&info);
-		ft_export(&info, *(t_list **)info.grammemes->key);	 // for  ( cd somepath | pwd ) command 
-		ft_env(&info, *(t_list **)info.grammemes->next->key);
+		if (parser(&info))
+			 	executor(&info);
 		ft_free_grammemes(&info);
 		lst_clear(&info.tokens);
 		free(str);
@@ -113,4 +110,8 @@ int	main(int argc, char **argv, char **envp)
 	ft_free_info(&info);
 	return (0);
 }
+
+//ft_export(&info, *(t_list **)info.grammemes->key);	 // for  ( cd somepath | pwd ) command 
+//ft_env(&info, *(t_list **)info.grammemes->next->key);
+
 //(*(foo_p *)(info.builtins->value))(&info, info.tokens); // example of using builtin env

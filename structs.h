@@ -38,6 +38,8 @@ struct s_info
 
 	t_list	*tokens;
 	t_list	*grammemes;
+	int		infd;
+	int		outfd;
 
 	int		exit_status;
 };
@@ -78,6 +80,7 @@ void		ft_free_info(t_info *info);
 int			next_char(char *str, int begin, char origin);
 void		lexer(t_info *info, char *str);
 int			parser(t_info *info);
+void		executor(t_info *info);
 
 //builtins
 int			ft_env(t_info *info, t_list *grammeme);
@@ -87,4 +90,20 @@ int			ft_exit(t_info *info, t_list *grammeme);
 int			ft_echo(t_info *info, t_list *grammeme);
 int			ft_cd(t_info *info, t_list *grammeme);
 int			ft_pwd(t_info *info, t_list *grammeme);
+
+//utils for execve (massive cmd, envp, check path, check bin-command)
+char	**make_massive_command(t_info *info, t_list *lst)
+char	*check_all_path(char **cmdargs, char **envp);
+
+//free massive for execve - if perror/exit(1)
+void    ft_free_cmdargs(char **cmdargs);
+
+//redir
+int    check_infile(t_info *str, t_list *lst);
+int    check_outfile(t_info *str, t_list *lst);
+
+//error
+int error_with_infile(char *message, int flag);
+int error_with_outfile(char *message);
+
 #endif
