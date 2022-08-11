@@ -31,35 +31,57 @@ static int	ft_exec(t_info *info, t_list *lst)
 	return (1);
 }
 
-static void	child_process(t_info *info, t_list *lst)
+static void	child_process(t_info *info, t_list *lst, int ffd)
 {
 	pid_t	pid;
 	int		fd[2];
 	int		infd;
 	int		outfd;
+	t_list	*tmp;
 
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
-		infd = check_infile(lst);
-		outfd = check_outfile(lst);
 		close(fd[0]);
+		infd = check_infile(lst);
 		if (infd > -1)
 		{
 			dup2(infd, STDIN_FILENO);
 			close(infd);
 		}
-		if (outfd != -1)
+		if (infd == -2)
+			exit(1);
+		outfd = check_outfile(lst);
+		if (outfd > -1)
 		{
 			dup2(outfd, 1);
 			close(outfd);
 		}
+		else if (outfd == -2)
+		{
+			if (infd > -1)
+				close(infd);
+			exit(1);
+		}
 		else
 			dup2(fd[1], 1);
 		close(fd[1]);
-		//if (check_built_in(str, line) == 1)
-		//	exit (0);
+		tmp = info->builtins;
+		(void)ffd;
+		while (tmp)
+		{
+			if (ft_strcmp(tmp->key, (char *)(*(t_list **)(info->grammemes->key))->value))
+			{
+				dup2(1, ffd);
+				close(1);
+				info->exit_status = (*(t_foo_p *)(tmp->value))(info, *(t_list **)(info->grammemes->key));
+				if (info->exit_status != 0)
+					exit(1);
+				exit (0);
+			}
+			tmp = tmp->next;
+		}
 		if (ft_exec(info, lst) == -1)
 			exit(0);
 		perror("Child process.\n");
@@ -69,14 +91,19 @@ static void	child_process(t_info *info, t_list *lst)
 	{
 		waitpid(pid, NULL, 0);
 		close(fd[1]);
+		dup2(ffd, 0);
+		close(ffd);
+		//close(1);////
 		dup2(fd[0], 0);
+		close(fd[0]);
 	}
 }
 
-static void	parent_process(t_info *info, t_list *lst)
+static void	parent_process(t_info *info, t_list *lst, int ffd)
 {
 	int	infd;
 	int	outfd;
+	t_list	*tmp;
 
 	infd = check_infile(lst);
 	outfd = check_outfile(lst);
@@ -85,12 +112,33 @@ static void	parent_process(t_info *info, t_list *lst)
     	dup2(infd, STDIN_FILENO);
     	close(infd);
     }
-	//if (check_built_in(str, line) == 1)
-	//	exit (0);
-	if (outfd != -1)
+	if (infd == -2)
+		exit(1);
+	if (outfd > -1)
 	{
 		dup2(outfd, STDOUT_FILENO);
 		close(outfd);
+	}
+	else if (outfd == -2)
+	{
+		if (infd > -1)
+			close(infd);
+		exit(1);
+	}
+	tmp = info->builtins;
+	(void)ffd;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, (char *)(*(t_list **)(info->grammemes->key))->value))
+		{
+			//close(0);
+			//close(1);
+			info->exit_status = (*(t_foo_p *)(tmp->value))(info, *(t_list **)(info->grammemes->key));
+			if (info->exit_status != 1)
+				exit(1);
+			exit (0);
+		}
+		tmp = tmp->next;
 	}
 	if (ft_exec(info, lst) == -1)
 		exit(0);
@@ -100,13 +148,13 @@ static void	parent_process(t_info *info, t_list *lst)
 
 static void	clean_dup_redir(t_info *info, int in_std, int out_std)
 {
-	if (info->fd_in != -1)
+	if (info->fd_in > -1)
 	{
 		dup2(in_std, 0);
 		close(info->fd_in);
 		info->fd_in = -1;
 	}
-	if (info->fd_out != -1)
+	if (info->fd_out > -1)
 	{
 		dup2(out_std, 1);
 		close(info->fd_out);
@@ -153,11 +201,19 @@ static int	one_not_builtin_process(t_info *info, t_list *lst)
 		close(fd[1]);
         close(fd[0]);
 		info->fd_in = check_infile(lst);
-		if (info->fd_in != -1)
+		if (info->fd_in > -1)
 			dup2(info->fd_in, STDIN_FILENO);
+		else if (info->fd_in == -2)
+			exit(1);
 		info->fd_out = check_outfile(lst);
-		if (info->fd_out != -1)
+		if (info->fd_out > -1)
 			dup2(info->fd_out, STDOUT_FILENO);
+		else if (info->fd_out == -2)
+		{
+			if (info->fd_in > -1)
+				close(info->fd_in);
+			exit(1);
+		}
 		close_redir(info);
 		ft_exec(info, lst);
         perror("ERROR with one command.\n");
@@ -177,10 +233,15 @@ static int	one_process(t_info *info)
 
     info->fd_in = check_infile(info->grammemes);
 	info->fd_out = check_outfile(info->grammemes);
-	if (info->fd_in != -1)
+	if (info->fd_in > -1)
 		in_std = redir_dup(info, 0);
-	if (info->fd_out != -1)
+	if (info->fd_out > -1)
 		out_std = redir_dup(info, 1);
+	if (info->fd_in == -2 || info->fd_out == -2)
+	{
+		clean_dup_redir(info, in_std, out_std);
+		return (0);
+	}
 	tmp = info->builtins;
 	while (tmp)
 	{
@@ -202,8 +263,10 @@ static void    pipe_process(t_info *info, int pipe_count)
     pid_t   pid0;
     int     fd[2];
     t_list *lst;
+	int		ffd;
 
-    lst = info->grammemes;
+    ffd = dup(0);
+	lst = info->grammemes;
     pipe(fd);
     pid0 = fork();
     if (pid0 == 0)
@@ -212,11 +275,11 @@ static void    pipe_process(t_info *info, int pipe_count)
         close(fd[1]);
         while (pipe_count > 0)
         {
-            child_process(info, lst);
+            child_process(info, lst, ffd);
             pipe_count--;
             lst = lst->next;
         }
-        parent_process(info, lst);
+        parent_process(info, lst, ffd);
     }
     close(fd[1]);
     close(fd[0]);

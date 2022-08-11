@@ -19,7 +19,8 @@ int error_with_infile(char *message, int flag)
         printf("minishell: %s: Not file or direction (or problem with file).\n", message);
     if (flag == 1)
         printf("%s", message);
-    exit (1);
+    return (-2);
+    //exit (1);
 }
 
 int error_with_outfile(char *message)

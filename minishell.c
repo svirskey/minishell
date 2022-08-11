@@ -90,7 +90,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	ft_init(&info, envp);
-	while (!info.exit_status)
+	//while (!info.exit_status)
+	while (true)
 	{
 		str = ft_readline();
 		if (!str) //ctrl-d in empty line
