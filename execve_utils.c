@@ -29,7 +29,7 @@ void    ft_free_cmdargs(char **cmdargs)
     }
 }
 
-char	**make_massive_command(t_info *info, t_list *lst)
+char	**make_massive_command(t_list *lst)
 {
 	t_list *words;
 	char	**command_line;

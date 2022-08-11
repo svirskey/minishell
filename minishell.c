@@ -114,4 +114,3 @@ int	main(int argc, char **argv, char **envp)
 //ft_export(&info, *(t_list **)info.grammemes->key);	 // for  ( cd somepath | pwd ) command 
 //ft_env(&info, *(t_list **)info.grammemes->next->key);
 
-//(*(foo_p *)(info.builtins->value))(&info, info.tokens); // example of using builtin env

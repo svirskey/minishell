@@ -78,7 +78,7 @@ static void    close_infile(int infd)
         close(infd);
 }
 
-int    check_infile(t_info *info, t_list *lst)
+int    check_infile(t_list *lst)
 {
     int infd;
     t_list *tmp;
@@ -106,7 +106,7 @@ int    check_infile(t_info *info, t_list *lst)
     return (infd);
 }
 
-int    check_outfile(t_info *str, t_list *lst)
+int    check_outfile(t_list *lst)
 {
     t_list  *tmp;
     int outfd;

@@ -38,8 +38,8 @@ struct s_info
 
 	t_list	*tokens;
 	t_list	*grammemes;
-	int		infd;
-	int		outfd;
+	int		fd_in;
+	int		fd_out;
 
 	int		exit_status;
 };
@@ -68,7 +68,8 @@ size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
 char		*ft_strjoin(char *s1, char *s2);
 long long	ft_atol(const char *str);
 char		*ft_itoa(int n);
-
+char		**ft_split(char const *s, char c);
+char		*ft_strnstr(const char *haystack, const char *needle, int len);
 // envp funcs
 void		envp_init(t_info *info, char **env);
 void		envp_clear(char ***arr);
@@ -92,15 +93,15 @@ int			ft_cd(t_info *info, t_list *grammeme);
 int			ft_pwd(t_info *info, t_list *grammeme);
 
 //utils for execve (massive cmd, envp, check path, check bin-command)
-char	**make_massive_command(t_info *info, t_list *lst)
+char	**make_massive_command(t_list *lst);
 char	*check_all_path(char **cmdargs, char **envp);
 
 //free massive for execve - if perror/exit(1)
 void    ft_free_cmdargs(char **cmdargs);
 
 //redir
-int    check_infile(t_info *str, t_list *lst);
-int    check_outfile(t_info *str, t_list *lst);
+int    check_infile(t_list *lst);
+int    check_outfile(t_list *lst);
 
 //error
 int error_with_infile(char *message, int flag);

@@ -19,7 +19,7 @@ static int	ft_exec(t_info *info, t_list *lst)
 	char	*fpath;
 
     envp_update(info);
-	cmdargs = make_massive_command(info, lst);
+	cmdargs = make_massive_command(lst);
     fpath = check_all_path(cmdargs, info->envp_arr);
 	if (!fpath)
 	{
@@ -42,8 +42,8 @@ static void	child_process(t_info *info, t_list *lst)
 	pid = fork();
 	if (pid == 0)
 	{
-		infd = check_infile(info, lst);
-		outfd = check_outfile(info, lst);
+		infd = check_infile(lst);
+		outfd = check_outfile(lst);
 		close(fd[0]);
 		if (infd > -1)
 		{
@@ -78,8 +78,8 @@ static void	parent_process(t_info *info, t_list *lst)
 	int	infd;
 	int	outfd;
 
-	infd = check_infile(info, lst);
-	outfd = check_outfile(info, lst);
+	infd = check_infile(lst);
+	outfd = check_outfile(lst);
 	if (infd > -1)
     {
     	dup2(infd, STDIN_FILENO);
@@ -98,53 +98,50 @@ static void	parent_process(t_info *info, t_list *lst)
 	exit(1);
 }
 
-static void	clean_dup_redir(t_info *str, int in_std, int out_std)
+static void	clean_dup_redir(t_info *info, int in_std, int out_std)
 {
-	t_info *tmp;
-
-	tmp = str;
-	if (tmp->redir_in != -1)
+	if (info->fd_in != -1)
 	{
 		dup2(in_std, 0);
-		close(tmp->redir_in);
-		tmp->redir_in = -1;
+		close(info->fd_in);
+		info->fd_in = -1;
 	}
-	if (tmp->redir_out != -1)
+	if (info->fd_out != -1)
 	{
 		dup2(out_std, 1);
-		close(tmp->redir_out);
-		tmp->redir_out = -1;
+		close(info->fd_out);
+		info->fd_out = -1;
 	}
 }
 
-static int	redir_dup(t_info *str, int flag)
+static int	redir_dup(t_info *info, int flag)
 {
 	int	fd;
 
     fd = dup(flag);
     close(flag);
 	if (flag == 0)
-		dup2(str->redir_in, flag);
-	else (flag == 1)
-		dup2(str->redir_out, flag);
+		dup2(info->fd_in, flag);
+	else
+		dup2(info->fd_out, flag);
     return (fd);
 }
 
 static void	close_redir(t_info *info)
 {
-	if (info->redir_in != -1)
+	if (info->fd_in != -1)
 	{
-		close(info->redir_in);
-		info->redir_in = -1;
+		close(info->fd_in);
+		info->fd_in = -1;
 	}
-	if (info->redir_out != -1)
+	if (info->fd_out != -1)
 	{
-		close(info->redir_out);
-		info->redir_out = -1;
+		close(info->fd_out);
+		info->fd_out = -1;
 	}
 }
 
-static int	one_not_builin_process(t_info *info, t_list *lst)
+static int	one_not_builtin_process(t_info *info, t_list *lst)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -155,12 +152,12 @@ static int	one_not_builin_process(t_info *info, t_list *lst)
 	{
 		close(fd[1]);
         close(fd[0]);
-		info->redir_in = check_infile(info, lst);
-		if (info->redir_in != -1)
-			dup2(info->redir_in, STDIN_FILENO);
-		info->redir_out = check_outfile(info, lst);
-		if (info->redir_out != -1)
-			dup2(info->redir_out, STDOUT_FILENO);
+		info->fd_in = check_infile(lst);
+		if (info->fd_in != -1)
+			dup2(info->fd_in, STDIN_FILENO);
+		info->fd_out = check_outfile(lst);
+		if (info->fd_out != -1)
+			dup2(info->fd_out, STDOUT_FILENO);
 		close_redir(info);
 		ft_exec(info, lst);
         perror("ERROR with one command.\n");
@@ -176,20 +173,27 @@ static int	one_process(t_info *info)
 {
 	int		in_std;
 	int		out_std;
+	t_list *tmp;
 
-    info->redir_in = check_infile(info, info->grammemes);
-	info->redir_out = check_outfile(info, info->grammemes);
-	if (info->redir_in != -1)
+    info->fd_in = check_infile(info->grammemes);
+	info->fd_out = check_outfile(info->grammemes);
+	if (info->fd_in != -1)
 		in_std = redir_dup(info, 0);
-	if (info->redir_out != -1)
+	if (info->fd_out != -1)
 		out_std = redir_dup(info, 1);
-	///if (check_built_in(str, line) == 1)	///and do built-in if he is there
-	//{
-	//	clean_dup_redir(str, in_std, out_std);
-	//	return (0);
-	//}
+	tmp = info->builtins;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, (char *)(*(t_list **)(info->grammemes->key))->value))
+		{
+			info->exit_status = (*(t_foo_p *)(tmp->value))(info, *(t_list **)(info->grammemes->key));
+			clean_dup_redir(info, in_std, out_std);
+			return (0);
+		}
+		tmp = tmp->next;
+	}
 	clean_dup_redir(info, in_std, out_std);
-	one_not_builin_process(info, info->grammemes);
+	one_not_builtin_process(info, info->grammemes);
 	return (0);
 }
 

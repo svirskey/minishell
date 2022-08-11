@@ -241,8 +241,8 @@ int	parser(t_info *info)
 	merge(info);
 	lst_remove_node(&info->tokens, "space");
 	if (check_parsing(info))
-		return (1);
+		return (0);
 	create_grammemes(info);
-	lst_print_grammemes(info->grammemes); // for debugging
-	return (0);
+	//lst_print_grammemes(info->grammemes);
+	return (1);
 }
