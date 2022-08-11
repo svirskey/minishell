@@ -73,8 +73,10 @@ static void	child_process(t_info *info, t_list *lst, int ffd)
 		{
 			if (ft_strcmp(tmp->key, (char *)(*(t_list **)(info->grammemes->key))->value))
 			{
-				dup2(1, ffd);
-				close(1);
+				//dup2(1, ffd);
+				//close(1);
+				//close(0);
+				//close(1);
 				info->exit_status = (*(t_foo_p *)(tmp->value))(info, *(t_list **)(info->grammemes->key));
 				if (info->exit_status != 0)
 					exit(1);
@@ -91,8 +93,8 @@ static void	child_process(t_info *info, t_list *lst, int ffd)
 	{
 		waitpid(pid, NULL, 0);
 		close(fd[1]);
-		dup2(ffd, 0);
-		close(ffd);
+		//dup2(ffd, fd[0]);
+		//close(ffd);
 		//close(1);////
 		dup2(fd[0], 0);
 		close(fd[0]);
