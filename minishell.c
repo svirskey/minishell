@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/12 13:33:51 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/12 18:29:26 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static void	ft_init(t_info *info, char **envp)
 	info->builtins = NULL;
 	info->exit_status = 0;
 	info->envp_upd = 1;
+	info->fd_in = -1;
+	info->fd_out = -1;
 	envp_init(info, envp);
 	lst_push_back(&info->builtins,
 		lst_new(ft_strdup("env"), builtin_node(&ft_env)));

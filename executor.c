@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 08:25:56 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/12 14:36:31 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/12 19:13:54 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,20 @@ static void	child_process(t_info *info, t_list *lst)
 	pid = fork();
 	if (pid == 0)
 	{
-		infd = check_infile(lst);
 		close(fd[0]);
+		
+		infd = check_infile(lst);
+		outfd = check_outfile(lst);
 		if (infd > -1)
 		{
 			dup2(infd, STDIN_FILENO);
 			close(infd);
 		}
-		if (infd == -2)
+		else if (infd == -2)
 			exit(1);
-		outfd = check_outfile(lst);
 		if (outfd > -1)
 		{
-			dup2(outfd, 1);
+			dup2(outfd, STDOUT_FILENO);
 			close(outfd);
 		}
 		else if (outfd == -2)
@@ -65,17 +66,16 @@ static void	child_process(t_info *info, t_list *lst)
 			exit(1);
 		}
 		else
-			dup2(fd[1], 1);
+			dup2(fd[1],STDOUT_FILENO);
 		close(fd[1]);
-		tmp = lst;
+		
+		tmp = info->builtins;
 		while (tmp)
 		{
 			if (ft_strcmp(tmp->key, (char *)(*(t_list **)(info->grammemes->key))->value))
 			{
 				info->exit_status = (*(t_foo_p *)(tmp->value))(info, *(t_list **)(info->grammemes->key));
-				if (info->exit_status != 0)
-					exit(1);
-				exit (0);
+				exit(info->exit_status);
 			}
 			tmp = tmp->next;
 		}
@@ -119,15 +119,14 @@ static void	parent_process(t_info *info, t_list *lst)
 			close(infd);
 		exit(1);
 	}
-	tmp = lst;
+	
+	tmp = info->builtins;
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->key, (char *)(*(t_list **)(info->grammemes->key))->value))
 		{
 			info->exit_status = (*(t_foo_p *)(tmp->value))(info, *(t_list **)(info->grammemes->key));
-			if (info->exit_status != 1)
-				exit(1);
-			exit (0);
+			exit(info->exit_status);
 		}
 		tmp = tmp->next;
 	}
@@ -182,15 +181,11 @@ static void	close_redir(t_info *info)
 
 static int	one_not_builtin_process(t_info *info, t_list *lst)
 {
-	int		fd[2];
 	pid_t	pid;
 
-	pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
-		close(fd[1]);
-        close(fd[0]);
 		info->fd_in = check_infile(lst);
 		if (info->fd_in > -1)
 			dup2(info->fd_in, STDIN_FILENO);
@@ -210,8 +205,6 @@ static int	one_not_builtin_process(t_info *info, t_list *lst)
         perror("ERROR with one command.\n");
         exit(1);
     }
-	close(fd[1]);
-    close(fd[0]);
 	waitpid(pid, NULL, 0);
 	return (0);
 }
@@ -227,12 +220,12 @@ static int	one_process(t_info *info)
 	{
 		if (ft_strcmp(tmp->key, (char *)(*(t_list **)(info->grammemes->key))->value))
 		{
-			info->fd_in = check_infile(info->grammemes);
+		 	info->fd_in = check_infile(info->grammemes);
 			info->fd_out = check_outfile(info->grammemes);
 			if (info->fd_in > -1)
-				in_std = redir_dup(info, 0);
+				in_std = redir_dup(info, STDIN_FILENO);
 			if (info->fd_out > -1)
-				out_std = redir_dup(info, 1);
+				out_std = redir_dup(info, STDOUT_FILENO);
 			if (info->fd_in == -2 || info->fd_out == -2)
 			{
 				clean_dup_redir(info, in_std, out_std);
@@ -251,16 +244,12 @@ static int	one_process(t_info *info)
 static void    pipe_process(t_info *info, int pipe_count)
 {
     pid_t   pid0;
-    int     fd[2];
     t_list *lst;
 
 	lst = info->grammemes;
-    pipe(fd);
     pid0 = fork();
     if (pid0 == 0)
     {
-        close(fd[0]);
-        close(fd[1]);
         while (pipe_count > 0)
         {
             child_process(info, lst);
@@ -269,8 +258,6 @@ static void    pipe_process(t_info *info, int pipe_count)
         }
         parent_process(info, lst);
     }
-    close(fd[1]);
-    close(fd[0]);
     waitpid(pid0, NULL, 0);
 }
 

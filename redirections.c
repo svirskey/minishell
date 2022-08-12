@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 13:15:18 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/12 15:03:42 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/12 19:44:38 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void    cycle_gnl(char *limiter, int infd)
     char    *line;
 
     //line = NULL;
+
     line = readline("here_doc> ");
     while (ft_strcmp(line, limiter) != 1)
     {
@@ -67,6 +68,11 @@ int here_doc(char *heredoc)
     if (infd == -1)
         return (-1);
     //cycle_gnl((char*)tmp->value, infd);
+    
+
+    // int out;
+    // dup2()
+    // close(STDOUT_FILENO);
     cycle_gnl(heredoc, infd);
     infd = open("/tmp/minishell_heredoc.txt", O_RDONLY, 0777);
     if (infd == -1)
