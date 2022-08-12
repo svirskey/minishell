@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer.c                                         :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 08:25:56 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/11 09:43:18 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/12 12:13:27 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	ft_exec(t_info *info, t_list *lst)
 	return (1);
 }
 
-static void	child_process(t_info *info, t_list *lst, int ffd)
+static void	child_process(t_info *info, t_list *lst)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -67,16 +67,11 @@ static void	child_process(t_info *info, t_list *lst, int ffd)
 		else
 			dup2(fd[1], 1);
 		close(fd[1]);
-		tmp = info->builtins;
-		(void)ffd;
+		tmp = lst;
 		while (tmp)
 		{
 			if (ft_strcmp(tmp->key, (char *)(*(t_list **)(info->grammemes->key))->value))
 			{
-				//dup2(1, ffd);
-				//close(1);
-				//close(0);
-				//close(1);
 				info->exit_status = (*(t_foo_p *)(tmp->value))(info, *(t_list **)(info->grammemes->key));
 				if (info->exit_status != 0)
 					exit(1);
@@ -91,17 +86,14 @@ static void	child_process(t_info *info, t_list *lst, int ffd)
 	}
 	else
 	{
-		waitpid(pid, NULL, 0);
 		close(fd[1]);
-		//dup2(ffd, fd[0]);
-		//close(ffd);
-		//close(1);////
+		waitpid(pid, NULL, 0);
 		dup2(fd[0], 0);
 		close(fd[0]);
 	}
 }
 
-static void	parent_process(t_info *info, t_list *lst, int ffd)
+static void	parent_process(t_info *info, t_list *lst)
 {
 	int	infd;
 	int	outfd;
@@ -127,14 +119,11 @@ static void	parent_process(t_info *info, t_list *lst, int ffd)
 			close(infd);
 		exit(1);
 	}
-	tmp = info->builtins;
-	(void)ffd;
+	tmp = lst;
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->key, (char *)(*(t_list **)(info->grammemes->key))->value))
 		{
-			//close(0);
-			//close(1);
 			info->exit_status = (*(t_foo_p *)(tmp->value))(info, *(t_list **)(info->grammemes->key));
 			if (info->exit_status != 1)
 				exit(1);
@@ -265,9 +254,7 @@ static void    pipe_process(t_info *info, int pipe_count)
     pid_t   pid0;
     int     fd[2];
     t_list *lst;
-	int		ffd;
 
-    ffd = dup(0);
 	lst = info->grammemes;
     pipe(fd);
     pid0 = fork();
@@ -277,11 +264,11 @@ static void    pipe_process(t_info *info, int pipe_count)
         close(fd[1]);
         while (pipe_count > 0)
         {
-            child_process(info, lst, ffd);
+            child_process(info, lst);
             pipe_count--;
             lst = lst->next;
         }
-        parent_process(info, lst, ffd);
+        parent_process(info, lst);
     }
     close(fd[1]);
     close(fd[0]);
