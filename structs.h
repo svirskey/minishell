@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 19:21:30 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/12 20:17:36 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ typedef struct s_info	t_info;
 typedef struct s_list	t_list;
 
 typedef int				(*t_foo_p)(t_info *, t_list *);
+
+enum
+{
+	PROMPT,
+	EXEC,
+	EXIT
+};
 
 struct s_list
 {
@@ -82,6 +89,7 @@ int			next_char(char *str, int begin, char origin);
 void		lexer(t_info *info, char *str);
 int			parser(t_info *info);
 void		executor(t_info *info);
+void		ft_signals(t_info *info, int sig);
 
 //builtins
 int			ft_env(t_info *info, t_list *grammeme);

@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 08:25:56 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/12 19:13:54 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/12 20:09:58 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,7 @@ void executor(t_info *info)
 	int	pipe_count;
 
 	pipe_count = lst_len(info->grammemes) - 1;
+	ft_signals(info, EXEC);
 	if (pipe_count == 0)
 		one_process(info);
 	else

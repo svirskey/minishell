@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 13:15:18 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/12 19:44:38 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/12 21:43:28 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void    cycle_gnl(char *limiter, int infd)
     close(infd);
 }
 
-//int here_doc(t_list *tmp)
 int here_doc(char *heredoc)
 {
     int infd;
@@ -67,14 +66,19 @@ int here_doc(char *heredoc)
     infd = open("/tmp/minishell_heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
     if (infd == -1)
         return (-1);
-    //cycle_gnl((char*)tmp->value, infd);
-    
 
     // int out;
-    // dup2()
+    int in_cpy = dup(0);
+     dup2(1, 0);
+
     // close(STDOUT_FILENO);
     cycle_gnl(heredoc, infd);
+    close(infd);
+    close(0);
+    dup2(in_cpy,0);
+    close(in_cpy);
     infd = open("/tmp/minishell_heredoc.txt", O_RDONLY, 0777);
+    printf("infd=>[%d]\n",infd);
     if (infd == -1)
         return (-1);
     return (infd);

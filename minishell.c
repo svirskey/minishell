@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/12 18:29:26 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/12 21:47:52 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,12 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	ft_init(&info, envp);
-	//while (!info.exit_status)
 	while (true)
 	{
+		ft_signals(&info, PROMPT);
 		str = ft_readline();
-		if (!str) //ctrl-d in empty line
-			break ;
+		if (!str)
+			ft_signals(&info, EXIT);
 		if (str[0] == 0)
 		{
 			free(str);
@@ -113,7 +113,3 @@ int	main(int argc, char **argv, char **envp)
 	ft_free_info(&info);
 	return (0);
 }
-
-//ft_export(&info, *(t_list **)info.grammemes->key);	 // for  ( cd somepath | pwd ) command 
-//ft_env(&info, *(t_list **)info.grammemes->next->key);
-
