@@ -6,7 +6,7 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 08:25:56 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/12 12:13:27 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/12 14:36:31 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static void	child_process(t_info *info, t_list *lst)
 	pid = fork();
 	if (pid == 0)
 	{
-		close(fd[0]);
 		infd = check_infile(lst);
+		close(fd[0]);
 		if (infd > -1)
 		{
 			dup2(infd, STDIN_FILENO);
@@ -86,8 +86,8 @@ static void	child_process(t_info *info, t_list *lst)
 	}
 	else
 	{
-		close(fd[1]);
 		waitpid(pid, NULL, 0);
+		close(fd[1]);
 		dup2(fd[0], 0);
 		close(fd[0]);
 	}
@@ -106,7 +106,7 @@ static void	parent_process(t_info *info, t_list *lst)
     	dup2(infd, STDIN_FILENO);
     	close(infd);
     }
-	if (infd == -2)
+	else if (infd == -2)
 		exit(1);
 	if (outfd > -1)
 	{
@@ -222,29 +222,28 @@ static int	one_process(t_info *info)
 	int		out_std;
 	t_list *tmp;
 
-    info->fd_in = check_infile(info->grammemes);
-	info->fd_out = check_outfile(info->grammemes);
-	if (info->fd_in > -1)
-		in_std = redir_dup(info, 0);
-	if (info->fd_out > -1)
-		out_std = redir_dup(info, 1);
-	if (info->fd_in == -2 || info->fd_out == -2)
-	{
-		clean_dup_redir(info, in_std, out_std);
-		return (0);
-	}
 	tmp = info->builtins;
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->key, (char *)(*(t_list **)(info->grammemes->key))->value))
 		{
+			info->fd_in = check_infile(info->grammemes);
+			info->fd_out = check_outfile(info->grammemes);
+			if (info->fd_in > -1)
+				in_std = redir_dup(info, 0);
+			if (info->fd_out > -1)
+				out_std = redir_dup(info, 1);
+			if (info->fd_in == -2 || info->fd_out == -2)
+			{
+				clean_dup_redir(info, in_std, out_std);
+				return (0);
+			}
 			info->exit_status = (*(t_foo_p *)(tmp->value))(info, *(t_list **)(info->grammemes->key));
 			clean_dup_redir(info, in_std, out_std);
 			return (0);
 		}
 		tmp = tmp->next;
 	}
-	clean_dup_redir(info, in_std, out_std);
 	one_not_builtin_process(info, info->grammemes);
 	return (0);
 }

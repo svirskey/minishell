@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection.c                                      :+:      :+:    :+:   */
+/*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 13:15:18 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/10 09:35:27 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/12 15:03:42 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void    cycle_gnl(char *limiter, int infd)
 {
     char    *line;
 
-    line = NULL;
+    //line = NULL;
     line = readline("here_doc> ");
     while (ft_strcmp(line, limiter) != 1)
     {
@@ -58,15 +58,17 @@ void    cycle_gnl(char *limiter, int infd)
     close(infd);
 }
 
-int here_doc(t_list *tmp)
+//int here_doc(t_list *tmp)
+int here_doc(char *heredoc)
 {
     int infd;
 
-    infd = open("minishell_heredoc.txt", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+    infd = open("/tmp/minishell_heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
     if (infd == -1)
         return (-1);
-    cycle_gnl((char*)tmp->value, infd);
-    infd = open("minishell_heredoc.txt", O_RDONLY, 0777);
+    //cycle_gnl((char*)tmp->value, infd);
+    cycle_gnl(heredoc, infd);
+    infd = open("/tmp/minishell_heredoc.txt", O_RDONLY, 0777);
     if (infd == -1)
         return (-1);
     return (infd);
@@ -97,9 +99,9 @@ int    check_infile(t_list *lst)
         if (ft_strcmp(tmp->key, "heredoc") == 1)
         {
             close_infile(infd);
-            infd = here_doc(tmp);
+            infd = here_doc((char*)tmp->value);
             if (infd == -1)
-                error_with_infile("Error with open temporary files (heredoc).\n", 1);
+                return (error_with_infile("Error with open temporary files (heredoc).\n", 1));
         }
         tmp = tmp->next;
     }
