@@ -109,7 +109,7 @@ char	*check_all_path(char **cmdargs, char **envp);
 void    ft_free_cmdargs(char **cmdargs);
 
 //redir
-int    check_infile(t_list *lst);
+int    check_infile(t_list *lst, t_info *info);
 int    check_outfile(t_list *lst);
 
 //error

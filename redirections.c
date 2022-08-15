@@ -39,8 +39,6 @@ void    cycle_gnl(char *limiter, int infd)
 {
     char    *line;
 
-    //line = NULL;
-
     line = readline("here_doc> ");
     while (ft_strcmp(line, limiter) != 1)
     {
@@ -59,7 +57,7 @@ void    cycle_gnl(char *limiter, int infd)
     close(infd);
 }
 
-int here_doc(char *heredoc)
+static int here_doc(char *heredoc, t_info *info)
 {
     int infd;
 
@@ -67,20 +65,17 @@ int here_doc(char *heredoc)
     if (infd == -1)
         return (-1);
 
-    // int out;
-    int in_cpy = dup(0);
-     dup2(1, 0);
-
-    // close(STDOUT_FILENO);
+    int copy_in = dup(STDIN_FILENO);
+    int copy_out = dup(STDOUT_FILENO);
+    dup2(info->std_in, STDIN_FILENO);
+    dup2(info->std_out, STDOUT_FILENO);
     cycle_gnl(heredoc, infd);
-    close(infd);
-    close(0);
-    dup2(in_cpy,0);
-    close(in_cpy);
+    dup2(copy_in, STDIN_FILENO);
+    dup2(copy_out, STDOUT_FILENO);
+    close(copy_in);
+    close(copy_out);
+
     infd = open("/tmp/minishell_heredoc.txt", O_RDONLY, 0777);
-    printf("infd=>[%d]\n",infd);
-    if (infd == -1)
-        return (-1);
     return (infd);
 }
 
@@ -90,7 +85,7 @@ static void    close_infile(int infd)
         close(infd);
 }
 
-int    check_infile(t_list *lst)
+int    check_infile(t_list *lst, t_info *info)
 {
     int infd;
     t_list *tmp;
@@ -107,11 +102,11 @@ int    check_infile(t_list *lst)
             if (infd == -1)
                 return (error_with_infile((char*)tmp->value, 0));
         }
-        if (ft_strcmp(tmp->key, "heredoc") == 1)
+        else if (ft_strcmp(tmp->key, "heredoc") == 1)
         {
             if (infd != -1)
                 close_infile(infd);
-            infd = here_doc((char*)tmp->value);
+            infd = here_doc((char*)tmp->value, info);
             if (infd == -1)
                 return (error_with_infile("Error with open temporary files (heredoc).\n", 1));
         }

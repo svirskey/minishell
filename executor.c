@@ -31,7 +31,7 @@ static int	ft_exec(t_info *info, t_list *lst)
 	return (1);
 }
 
-static void	child_process(t_info *info, t_list *lst)
+static void	pipe_process(t_info *info, t_list *lst)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -43,24 +43,29 @@ static void	child_process(t_info *info, t_list *lst)
 	{
 		close(fd[0]);
 		
-		info->fd_in = check_infile(lst);
+		info->fd_in = check_infile(lst, info);
 		info->fd_out = check_outfile(lst);
 		if (info->fd_in > -1)
 		{
 			dup2(info->fd_in, STDIN_FILENO);
 			close(info->fd_in);
 		}
-		else if (lst == info->grammemes)
-			dup2(info->std_in, STDIN_FILENO);
 		if (info->fd_out > -1)
 		{
+			perror("fd > -1");
 			dup2(info->fd_out, STDOUT_FILENO);
 			close(info->fd_out);
 		}
 		else if (!lst->next)
+		{
+			perror("!lst->next");
 			dup2(info->std_out, STDOUT_FILENO);
+		}
 		else
+		{
+			perror("else");
 			dup2(fd[1], STDOUT_FILENO);
+		}
 		close(fd[1]);
 		
 		tmp = info->builtins;
@@ -79,10 +84,10 @@ static void	child_process(t_info *info, t_list *lst)
 		exit(1);
 	}
 	else
-	{
-		waitpid(pid, NULL, 0);
+	{		
 		close(fd[1]);
-		dup2(fd[0], 0);
+		waitpid(pid, NULL, 0);
+		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 	}
 }
@@ -94,7 +99,7 @@ static void	execve_process(t_info *info, t_list *lst)
 	pid = fork();
 	if (pid == 0)
 	{
-		info->fd_in = check_infile(info->grammemes);
+		info->fd_in = check_infile(info->grammemes, info);
 		info->fd_out = check_outfile(info->grammemes);
 		if (info->fd_in > -1)
 		{
@@ -122,7 +127,7 @@ static int	single_process(t_info *info)
 	{
 		if (ft_strcmp(tmp->key, (char *)(*(t_list **)(info->grammemes->key))->value))
 		{
-		 	info->fd_in = check_infile(info->grammemes);
+		 	info->fd_in = check_infile(info->grammemes, info);
 			info->fd_out = check_outfile(info->grammemes);
 			if (info->fd_in > -1)
 			{
@@ -147,27 +152,22 @@ static int	single_process(t_info *info)
 	return (0);
 }
 
-static void    pipe_process(t_info *info, int pipe_count)
+void executor(t_info *info)
 {
     t_list *lst;
 
 	lst = info->grammemes;
-	while (pipe_count >= 0)
-	{
-		child_process(info, lst);
-		pipe_count--;
-		lst = lst->next;
-	}
-}
-
-void executor(t_info *info)
-{
-	int	pipe_count;
-
-	pipe_count = lst_len(info->grammemes) - 1;
 	ft_signals(info, EXEC);
-	if (pipe_count == 0)
+	if (lst_len(lst) == 1)
 		single_process(info);
 	else
-		pipe_process(info, pipe_count);
+	{
+		while (lst)
+		{
+			pipe_process(info, lst);
+			lst = lst->next;
+		}
+	}
+	dup2(info->std_in, STDIN_FILENO);
+	dup2(info->std_out, STDOUT_FILENO);
 }
