@@ -42,8 +42,8 @@ static void	ft_init(t_info *info, char **envp)
 	info->builtins = NULL;
 	info->exit_status = 0;
 	info->envp_upd = 1;
-	info->fd_in = -1;
-	info->fd_out = -1;
+	info->fd_in = 0;
+	info->fd_out = 1;
 	info->std_in = dup(STDIN_FILENO);
 	info->std_out = dup(STDOUT_FILENO);
 	envp_init(info, envp);

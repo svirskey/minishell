@@ -24,14 +24,14 @@ int	ft_cd(t_info *info, t_list *grammeme)
 	else
 	{
 		if (len > 2)
-			printf("minishell: cd: too many arguments\n");
+			write(STDERR_FILENO, "minishell: cd: too many arguments\n", 35);
 		else
-			printf("minishell: cd: too few arguments\n");
+			write(STDERR_FILENO, "minishell: cd: too few arguments\n", 34);
 		return (1);
 	}
 	if (chdir(dir) == -1)
 	{
-		printf("minishell: cd: %s No such file or directory\n", dir);
+		perror("minishell: cd");
 		return (1);
 	}
 	else
