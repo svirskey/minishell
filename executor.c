@@ -23,6 +23,7 @@ static int	ft_exec(t_info *info, t_list *lst)
     fpath = check_all_path(cmdargs, info->envp_arr);
 	if (!fpath)
 	{
+		perror("Error with path!");
 		ft_free_cmdargs(cmdargs);
 		return (-1);
 	}
@@ -42,7 +43,6 @@ static void	pipe_process(t_info *info, t_list *lst)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		
 		info->fd_in = check_infile(lst, info);
 		info->fd_out = check_outfile(lst);
 		if (info->fd_in > -1)
@@ -56,18 +56,12 @@ static void	pipe_process(t_info *info, t_list *lst)
 			dup2(info->fd_out, STDOUT_FILENO);
 			close(info->fd_out);
 		}
-		else if (!lst->next)
+		else if (lst->next)
 		{
-			perror("!lst->next");
-			dup2(info->std_out, STDOUT_FILENO);
-		}
-		else
-		{
-			perror("else");
+			perror("lst->next");
 			dup2(fd[1], STDOUT_FILENO);
 		}
 		close(fd[1]);
-		
 		tmp = info->builtins;
 		while (tmp)
 		{
@@ -79,9 +73,8 @@ static void	pipe_process(t_info *info, t_list *lst)
 			tmp = tmp->next;
 		}
 		if (ft_exec(info, lst) == -1)
-			exit(0);
-		perror("Child process.\n");
-		exit(1);
+			exit(1);
+		exit(0);
 	}
 	else
 	{		
