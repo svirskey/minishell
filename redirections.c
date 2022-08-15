@@ -100,7 +100,7 @@ int    check_infile(t_list *lst, t_info *info)
                 close_infile(infd);
             infd = open((char*)tmp->value, O_RDONLY, 0777);
             if (infd == -1)
-                return (error_with_infile((char*)tmp->value, 0));
+                error_with_infile((char*)tmp->value, 0);
         }
         else if (ft_strcmp(tmp->key, "heredoc") == 1)
         {
