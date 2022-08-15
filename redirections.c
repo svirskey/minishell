@@ -101,14 +101,16 @@ int    check_infile(t_list *lst)
     {
         if (ft_strcmp(tmp->key, "read") == 1)
         {
-            close_infile(infd);
+            if (infd != -1)
+                close_infile(infd);
             infd = open((char*)tmp->value, O_RDONLY, 0777);
             if (infd == -1)
                 return (error_with_infile((char*)tmp->value, 0));
         }
         if (ft_strcmp(tmp->key, "heredoc") == 1)
         {
-            close_infile(infd);
+            if (infd != -1)
+                close_infile(infd);
             infd = here_doc((char*)tmp->value);
             if (infd == -1)
                 return (error_with_infile("Error with open temporary files (heredoc).\n", 1));

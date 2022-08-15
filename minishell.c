@@ -44,6 +44,8 @@ static void	ft_init(t_info *info, char **envp)
 	info->envp_upd = 1;
 	info->fd_in = -1;
 	info->fd_out = -1;
+	info->std_in = dup(STDIN_FILENO);
+	info->std_out = dup(STDOUT_FILENO);
 	envp_init(info, envp);
 	lst_push_back(&info->builtins,
 		lst_new(ft_strdup("env"), builtin_node(&ft_env)));
@@ -80,6 +82,8 @@ void	ft_free_info(t_info *info)
 	lst_clear(&info->builtins);
 	lst_clear(&info->envp_list);
 	lst_clear(&info->tokens);
+	close(info->std_in);
+	close(info->std_out);
 	ft_free_grammemes(info);
 	envp_clear(&info->envp_arr);
 }

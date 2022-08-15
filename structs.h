@@ -45,9 +45,10 @@ struct s_info
 
 	t_list	*tokens;
 	t_list	*grammemes;
-	int		fd_in;
+	int		fd_in; // why
 	int		fd_out;
-
+	int		std_in;
+	int		std_out;
 	int		exit_status;
 };
 

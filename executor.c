@@ -35,8 +35,6 @@ static void	child_process(t_info *info, t_list *lst)
 {
 	pid_t	pid;
 	int		fd[2];
-	int		infd;
-	int		outfd;
 	t_list	*tmp;
 
 	pipe(fd);
@@ -45,28 +43,24 @@ static void	child_process(t_info *info, t_list *lst)
 	{
 		close(fd[0]);
 		
-		infd = check_infile(lst);
-		outfd = check_outfile(lst);
-		if (infd > -1)
+		info->fd_in = check_infile(lst);
+		info->fd_out = check_outfile(lst);
+		if (info->fd_in > -1)
 		{
-			dup2(infd, STDIN_FILENO);
-			close(infd);
+			dup2(info->fd_in, STDIN_FILENO);
+			close(info->fd_in);
 		}
-		else if (infd == -2)
-			exit(1);
-		if (outfd > -1)
+		else if (lst == info->grammemes)
+			dup2(info->std_in, STDIN_FILENO);
+		if (info->fd_out > -1)
 		{
-			dup2(outfd, STDOUT_FILENO);
-			close(outfd);
+			dup2(info->fd_out, STDOUT_FILENO);
+			close(info->fd_out);
 		}
-		else if (outfd == -2)
-		{
-			if (infd > -1)
-				close(infd);
-			exit(1);
-		}
+		else if (!lst->next)
+			dup2(info->std_out, STDOUT_FILENO);
 		else
-			dup2(fd[1],STDOUT_FILENO);
+			dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 		
 		tmp = info->builtins;
@@ -93,126 +87,34 @@ static void	child_process(t_info *info, t_list *lst)
 	}
 }
 
-static void	parent_process(t_info *info, t_list *lst)
-{
-	int	infd;
-	int	outfd;
-	t_list	*tmp;
-
-	infd = check_infile(lst);
-	outfd = check_outfile(lst);
-	if (infd > -1)
-    {
-    	dup2(infd, STDIN_FILENO);
-    	close(infd);
-    }
-	else if (infd == -2)
-		exit(1);
-	if (outfd > -1)
-	{
-		dup2(outfd, STDOUT_FILENO);
-		close(outfd);
-	}
-	else if (outfd == -2)
-	{
-		if (infd > -1)
-			close(infd);
-		exit(1);
-	}
-	
-	tmp = info->builtins;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->key, (char *)(*(t_list **)(info->grammemes->key))->value))
-		{
-			info->exit_status = (*(t_foo_p *)(tmp->value))(info, *(t_list **)(info->grammemes->key));
-			exit(info->exit_status);
-		}
-		tmp = tmp->next;
-	}
-	if (ft_exec(info, lst) == -1)
-		exit(0);
-    perror("Parent.\n");
-	exit(1);
-}
-
-static void	clean_dup_redir(t_info *info, int in_std, int out_std)
-{
-	if (info->fd_in > -1)
-	{
-		dup2(in_std, 0);
-		close(info->fd_in);
-		info->fd_in = -1;
-	}
-	if (info->fd_out > -1)
-	{
-		dup2(out_std, 1);
-		close(info->fd_out);
-		info->fd_out = -1;
-	}
-}
-
-static int	redir_dup(t_info *info, int flag)
-{
-	int	fd;
-
-    fd = dup(flag);
-    close(flag);
-	if (flag == 0)
-		dup2(info->fd_in, flag);
-	else
-		dup2(info->fd_out, flag);
-    return (fd);
-}
-
-static void	close_redir(t_info *info)
-{
-	if (info->fd_in != -1)
-	{
-		close(info->fd_in);
-		info->fd_in = -1;
-	}
-	if (info->fd_out != -1)
-	{
-		close(info->fd_out);
-		info->fd_out = -1;
-	}
-}
-
-static int	one_not_builtin_process(t_info *info, t_list *lst)
+static void	execve_process(t_info *info, t_list *lst)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		info->fd_in = check_infile(lst);
+		info->fd_in = check_infile(info->grammemes);
+		info->fd_out = check_outfile(info->grammemes);
 		if (info->fd_in > -1)
-			dup2(info->fd_in, STDIN_FILENO);
-		else if (info->fd_in == -2)
-			exit(1);
-		info->fd_out = check_outfile(lst);
-		if (info->fd_out > -1)
-			dup2(info->fd_out, STDOUT_FILENO);
-		else if (info->fd_out == -2)
 		{
-			if (info->fd_in > -1)
-				close(info->fd_in);
-			exit(1);
+			dup2(info->fd_in, STDIN_FILENO);
+			close(info->fd_in);
 		}
-		close_redir(info);
+		if (info->fd_out > -1)
+		{
+			dup2(info->fd_out, STDOUT_FILENO);
+			close(info->fd_out);
+		}
 		ft_exec(info, lst);
         perror("ERROR with one command.\n");
         exit(1);
     }
 	waitpid(pid, NULL, 0);
-	return (0);
 }
 
-static int	one_process(t_info *info)
+static int	single_process(t_info *info)
 {
-	int		in_std;
-	int		out_std;
 	t_list *tmp;
 
 	tmp = info->builtins;
@@ -223,42 +125,39 @@ static int	one_process(t_info *info)
 		 	info->fd_in = check_infile(info->grammemes);
 			info->fd_out = check_outfile(info->grammemes);
 			if (info->fd_in > -1)
-				in_std = redir_dup(info, STDIN_FILENO);
-			if (info->fd_out > -1)
-				out_std = redir_dup(info, STDOUT_FILENO);
-			if (info->fd_in == -2 || info->fd_out == -2)
 			{
-				clean_dup_redir(info, in_std, out_std);
-				return (0);
+				dup2(info->fd_in, STDIN_FILENO);
+				close(info->fd_in);
+			}
+			if (info->fd_out > -1)
+			{
+				dup2(info->fd_out, STDOUT_FILENO);
+				close(info->fd_out);
 			}
 			info->exit_status = (*(t_foo_p *)(tmp->value))(info, *(t_list **)(info->grammemes->key));
-			clean_dup_redir(info, in_std, out_std);
+			if (info->fd_in > -1)
+				dup2(info->std_in, STDIN_FILENO);
+			if (info->fd_out > -1)
+				dup2(info->std_out, STDOUT_FILENO);
 			return (0);
 		}
 		tmp = tmp->next;
 	}
-	one_not_builtin_process(info, info->grammemes);
+	execve_process(info, info->grammemes);
 	return (0);
 }
 
 static void    pipe_process(t_info *info, int pipe_count)
 {
-    pid_t   pid0;
     t_list *lst;
 
 	lst = info->grammemes;
-    pid0 = fork();
-    if (pid0 == 0)
-    {
-        while (pipe_count > 0)
-        {
-            child_process(info, lst);
-            pipe_count--;
-            lst = lst->next;
-        }
-        parent_process(info, lst);
-    }
-    waitpid(pid0, NULL, 0);
+	while (pipe_count >= 0)
+	{
+		child_process(info, lst);
+		pipe_count--;
+		lst = lst->next;
+	}
 }
 
 void executor(t_info *info)
@@ -268,7 +167,7 @@ void executor(t_info *info)
 	pipe_count = lst_len(info->grammemes) - 1;
 	ft_signals(info, EXEC);
 	if (pipe_count == 0)
-		one_process(info);
+		single_process(info);
 	else
 		pipe_process(info, pipe_count);
 }
