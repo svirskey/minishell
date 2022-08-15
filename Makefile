@@ -4,7 +4,7 @@ SRC = $(shell find . -name '*.c')
 
 OBJS = ${patsubst %.c,%.o, ${SRC}}
 
-HEADERS = minishell.h
+HEADERS = minishell.h structs.h
 
 CFLAGS = -Wall -Wextra -Werror
 

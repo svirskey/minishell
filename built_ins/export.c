@@ -45,7 +45,9 @@ int	ft_export(t_info *info, t_list *grammeme)
 	{
 		if (((char *)grammeme->value)[0] == '=')
 		{
-			printf("minishell: export: `%s': not a valid indentifier\n", (char *)grammeme->value);
+			write(STDERR_FILENO, "minishell: export: `" , 21);
+			write(STDERR_FILENO, (char *)grammeme->value, ft_strlen((char *)grammeme->value));
+			write(STDERR_FILENO, "': not a valid indentifier\n",28);
 			exit_code = 1;
 		}
 		else

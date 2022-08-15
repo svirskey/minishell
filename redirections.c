@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection.c                                      :+:      :+:    :+:   */
+/*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 13:15:18 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/10 09:35:27 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/12 21:43:28 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void    cycle_gnl(char *limiter, int infd)
 {
     char    *line;
 
-    line = NULL;
     line = readline("here_doc> ");
     while (ft_strcmp(line, limiter) != 1)
     {
@@ -58,17 +57,25 @@ void    cycle_gnl(char *limiter, int infd)
     close(infd);
 }
 
-int here_doc(t_list *tmp)
+static int here_doc(char *heredoc, t_info *info)
 {
     int infd;
 
-    infd = open("minishell_heredoc.txt", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+    infd = open("/tmp/minishell_heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
     if (infd == -1)
         return (-1);
-    cycle_gnl((char*)tmp->value, infd);
-    infd = open("minishell_heredoc.txt", O_RDONLY, 0777);
-    if (infd == -1)
-        return (-1);
+
+    int copy_in = dup(STDIN_FILENO);
+    int copy_out = dup(STDOUT_FILENO);
+    dup2(info->std_in, STDIN_FILENO);
+    dup2(info->std_out, STDOUT_FILENO);
+    cycle_gnl(heredoc, infd);
+    dup2(copy_in, STDIN_FILENO);
+    dup2(copy_out, STDOUT_FILENO);
+    close(copy_in);
+    close(copy_out);
+
+    infd = open("/tmp/minishell_heredoc.txt", O_RDONLY, 0777);
     return (infd);
 }
 
@@ -78,7 +85,7 @@ static void    close_infile(int infd)
         close(infd);
 }
 
-int    check_infile(t_list *lst)
+int    check_infile(t_list *lst, t_info *info)
 {
     int infd;
     t_list *tmp;
@@ -89,17 +96,19 @@ int    check_infile(t_list *lst)
     {
         if (ft_strcmp(tmp->key, "read") == 1)
         {
-            close_infile(infd);
+            if (infd != -1)
+                close_infile(infd);
             infd = open((char*)tmp->value, O_RDONLY, 0777);
             if (infd == -1)
                 error_with_infile((char*)tmp->value, 0);
         }
-        if (ft_strcmp(tmp->key, "heredoc") == 1)
+        else if (ft_strcmp(tmp->key, "heredoc") == 1)
         {
-            close_infile(infd);
-            infd = here_doc(tmp);
+            if (infd != -1)
+                close_infile(infd);
+            infd = here_doc((char*)tmp->value, info);
             if (infd == -1)
-                error_with_infile("Error with open temporary files (heredoc).\n", 1);
+                return (error_with_infile("Error with open temporary files (heredoc).\n", 1));
         }
         tmp = tmp->next;
     }

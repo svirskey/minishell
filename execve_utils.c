@@ -62,7 +62,7 @@ static void	ft_free_paths_from_envp(char **paths_from_envp)
 	int	i;
 
 	i = 0;
-	while (paths_from_envp[i] != 0)
+	while (paths_from_envp[i])
 	{
 		free(paths_from_envp[i]);
 		i++;
@@ -77,7 +77,7 @@ static char	*ft_check_access(char **paths_from_envp, char *cmdargs)
 	char	*one_path;
 
 	i = 0;
-	while (paths_from_envp[i] != 0)
+	while (paths_from_envp[i])
 	{
 		one_path = ft_strjoin(paths_from_envp[i], "/");
 		path = ft_strjoin(one_path, cmdargs);
