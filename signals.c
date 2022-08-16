@@ -20,7 +20,6 @@ void	restore_prompt(int signal_type)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-    //printf("%s\n",rl_);
 	(void)signal_type;
 }
 

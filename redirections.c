@@ -13,28 +13,6 @@
 #include "minishell.h"
 #include "structs.h"
 
-int amount_of_file(t_list *tmp, int flag)
-{
-    int amount;
-
-    amount = 0;
-    while (tmp && ft_strcmp(tmp->key, "pipe") != 1)
-    {
-        if (flag == 0)
-        {
-            if ((ft_strcmp(tmp->key, "read") == 1) || (ft_strcmp(tmp->key, "heredoc") == 1))
-                amount++;
-        }
-        else
-        {
-            if ((ft_strcmp(tmp->key, "write") == 1) || (ft_strcmp(tmp->key, "append") == 1))
-                amount++;   
-        }
-        tmp = tmp->next;
-    }
-    return (amount);
-}
-
 void    cycle_gnl(char *limiter, int infd)
 {
     char    *line;
@@ -43,11 +21,11 @@ void    cycle_gnl(char *limiter, int infd)
     while (ft_strcmp(line, limiter) != 1)
     {
         if (line[0] == '\n')
-            write(infd, "\n", 1);
+            write(infd, "\n", STDOUT_FILENO);
         else
         {
             write(infd, line, ft_strlen(line));
-            write(infd, "\n", 1);
+            write(infd, "\n", STDOUT_FILENO);
         }
         free(line);
         line = readline("here_doc> ");
@@ -60,13 +38,14 @@ void    cycle_gnl(char *limiter, int infd)
 static int here_doc(char *heredoc, t_info *info)
 {
     int infd;
+    int copy_in;
+    int copy_out;
 
     infd = open("/tmp/minishell_heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
     if (infd == -1)
         return (-1);
-
-    int copy_in = dup(STDIN_FILENO);
-    int copy_out = dup(STDOUT_FILENO);
+    copy_in = dup(STDIN_FILENO);
+    copy_out = dup(STDOUT_FILENO);
     dup2(info->std_in, STDIN_FILENO);
     dup2(info->std_out, STDOUT_FILENO);
     cycle_gnl(heredoc, infd);
@@ -74,15 +53,8 @@ static int here_doc(char *heredoc, t_info *info)
     dup2(copy_out, STDOUT_FILENO);
     close(copy_in);
     close(copy_out);
-
     infd = open("/tmp/minishell_heredoc.txt", O_RDONLY, 0777);
     return (infd);
-}
-
-static void    close_infile(int infd)
-{
-    if (infd > -1)
-        close(infd);
 }
 
 int    check_infile(t_list *lst, t_info *info)
@@ -96,19 +68,27 @@ int    check_infile(t_list *lst, t_info *info)
     {
         if (ft_strcmp(tmp->key, "read") == 1)
         {
-            if (infd != -1)
-                close_infile(infd);
+            if (infd > -1)
+                close(infd);
             infd = open((char*)tmp->value, O_RDONLY, 0777);
             if (infd == -1)
-                error_with_infile((char*)tmp->value, 0);
+            {
+                write(STDERR_FILENO, "minishell: ", 12);
+                write(STDERR_FILENO, (char *)tmp->value, ft_strlen((char *)tmp->value));
+                write(STDERR_FILENO, ": Cannot open file or directory.\n", 34);
+                return (-2);
+            }
         }
         else if (ft_strcmp(tmp->key, "heredoc") == 1)
         {
-            if (infd != -1)
-                close_infile(infd);
+            if (infd > -1)
+                close(infd);
             infd = here_doc((char*)tmp->value, info);
             if (infd == -1)
-                return (error_with_infile("Error with open temporary files (heredoc).\n", 1));
+            {
+                write(STDERR_FILENO, "minishell: Error with open tmp files (heredoc).\n", 44);
+                return (-2);
+            }
         }
         tmp = tmp->next;
     }
@@ -133,7 +113,10 @@ int    check_outfile(t_list *lst)
             else if (ft_strcmp(tmp->key, "append") == 1)
                 outfd = open((char*)tmp->value, O_WRONLY | O_CREAT | O_APPEND, 0777);
             if (outfd == -1)
-                return (error_with_outfile("minishell: error with output file.\n"));
+            {
+                write(STDERR_FILENO, "minishell: Error with output file.\n", 36);
+                return (-2);
+            }
         }
         tmp = tmp->next;
     }

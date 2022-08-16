@@ -19,17 +19,16 @@ void    ft_free_cmdargs(char **cmdargs)
 
     i = 0;
     if (!cmdargs)
-    {
-        while (cmdargs[i])
-        {
-            free(cmdargs[i]);
-            i++;
-        }
-        free(cmdargs);
-    }
+		return ;	
+	while (cmdargs[i])
+	{
+		free(cmdargs[i]);
+		i++;
+	}
+	free(cmdargs);
 }
 
-char	**make_massive_command(t_list *lst)
+char	**create_cmd_array(t_list *lst)
 {
 	t_list *words;
 	char	**command_line;
@@ -38,15 +37,15 @@ char	**make_massive_command(t_list *lst)
 
 	words = *(t_list **)lst->key;
 	word_count = lst_len(words);
-	command_line = (char**)malloc(sizeof(char*)*(word_count + 1));
+	command_line = (char **)malloc(sizeof(char*) * (word_count + 1));
 	word_count = 0;
     while (words)
     {
-		command_line[word_count] = (char*)malloc(sizeof(char)* ft_strlen((char*)words->value)+1);
+		command_line[word_count] = (char *)malloc(sizeof(char)* ft_strlen((char*)words->value) + 1);
 		len = 0;
-		while (((char*)words->value)[len])
+		while (((char *)words->value)[len])
 		{
-			command_line[word_count][len] = ((char*)words->value)[len];
+			command_line[word_count][len] = ((char *)words->value)[len];
 			len++;
 		}
 		command_line[word_count][len] = '\0';

@@ -19,11 +19,11 @@ static int	ft_exec(t_info *info, t_list *lst)
 	char	*fpath;
 
     envp_update(info);
-	cmdargs = make_massive_command(lst);
+	cmdargs = create_cmd_array(lst);
     fpath = check_all_path(cmdargs, info->envp_arr);
 	if (!fpath)
 	{
-		write(STDERR_FILENO, "minishell: execve: Error with path\n", 36);
+		write(STDERR_FILENO, "minishell: execve: Error with command\n", 39);
 		ft_free_cmdargs(cmdargs);
 		return (1);
 	}
@@ -46,6 +46,8 @@ static void	pipe_process(t_info *info, t_list *lst)
 		close(fd[0]);
 		info->fd_in = check_infile(lst, info);
 		info->fd_out = check_outfile(lst);
+		if (info->fd_in == -2 || info->fd_out == -2)
+			exit (1);
 		if (info->fd_in > -1)
 		{
 			dup2(info->fd_in, STDIN_FILENO);
@@ -63,7 +65,7 @@ static void	pipe_process(t_info *info, t_list *lst)
 		while (tmp)
 		{
 			if (ft_strcmp(tmp->key, (char *)(*(t_list **)(lst->key))->value))
-				exit (*(t_foo_p *)(tmp->value))(info, *(t_list **)(lst->key));
+				exit ((*(t_foo_p *)(tmp->value))(info, *(t_list **)(lst->key)));
 			tmp = tmp->next;
 		}
 		exit(ft_exec(info, lst));
@@ -101,6 +103,11 @@ static int	single_process(t_info *info)
 
 	info->fd_in = check_infile(info->grammemes, info);
 	info->fd_out = check_outfile(info->grammemes);
+	if (info->fd_in == -2 || info->fd_out == -2)
+	{
+		info->exit_status = 1;
+		return (info->exit_status);
+	}
 	if (info->fd_in > -1)
 	{
 		dup2(info->fd_in, STDIN_FILENO);
@@ -137,7 +144,7 @@ void executor(t_info *info)
 	{
 		while (lst)
 		{
-			pipe_process(info, lst); // have to handle last process exit status
+			pipe_process(info, lst);
 			lst = lst->next;
 		}
 	}
