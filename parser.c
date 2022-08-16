@@ -64,7 +64,7 @@ static void	opening(t_info *info)
 						}
 						else if (((char *)tmp->value)[i] == '$')
 						{
-							lst_push_back(&opn, lst_new(ft_strdup("word"), ft_itoa((int)getpid()))); // todo itoa
+							lst_push_back(&opn, lst_new(ft_strdup("word"), ft_itoa((int)getpid())));
 							i++;
 						}
 						else if (((char *)tmp->value)[i] == '?')

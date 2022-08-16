@@ -37,6 +37,7 @@ static void	pipe_process(t_info *info, t_list *lst)
 	pid_t	pid;
 	int		fd[2];
 	t_list	*tmp;
+	int status;
 
 	pipe(fd);
 	pid = fork();
@@ -62,10 +63,7 @@ static void	pipe_process(t_info *info, t_list *lst)
 		while (tmp)
 		{
 			if (ft_strcmp(tmp->key, (char *)(*(t_list **)(lst->key))->value))
-			{
-				info->exit_status = (*(t_foo_p *)(tmp->value))(info, *(t_list **)(lst->key));
-				exit(info->exit_status);
-			}
+				exit (*(t_foo_p *)(tmp->value))(info, *(t_list **)(lst->key));
 			tmp = tmp->next;
 		}
 		exit(ft_exec(info, lst));
@@ -73,63 +71,53 @@ static void	pipe_process(t_info *info, t_list *lst)
 	else
 	{		
 		close(fd[1]);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
+		if (WIFEXITED(status))
+			info->exit_status = WEXITSTATUS(status);
 	}
 }
 
 static void	execve_process(t_info *info, t_list *lst)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid == 0)
+		exit(ft_exec(info, lst));
+	else
 	{
-		info->fd_in = check_infile(info->grammemes, info);
-		info->fd_out = check_outfile(info->grammemes);
-		if (info->fd_in > -1)
-		{
-			dup2(info->fd_in, STDIN_FILENO);
-			close(info->fd_in);
-		}
-		if (info->fd_out > -1)
-		{
-			dup2(info->fd_out, STDOUT_FILENO);
-			close(info->fd_out);
-		}
-        exit(ft_exec(info, lst));
-    }
-	waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			info->exit_status = WEXITSTATUS(status);
+	}
 }
 
 static int	single_process(t_info *info)
 {
 	t_list *tmp;
 
+	info->fd_in = check_infile(info->grammemes, info);
+	info->fd_out = check_outfile(info->grammemes);
+	if (info->fd_in > -1)
+	{
+		dup2(info->fd_in, STDIN_FILENO);
+		close(info->fd_in);
+	}
+	if (info->fd_out > -1)
+	{
+		dup2(info->fd_out, STDOUT_FILENO);
+		close(info->fd_out);
+	}
 	tmp = info->builtins;
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->key, (char *)(*(t_list **)(info->grammemes->key))->value))
 		{
-		 	info->fd_in = check_infile(info->grammemes, info);
-			info->fd_out = check_outfile(info->grammemes);
-			if (info->fd_in > -1)
-			{
-				dup2(info->fd_in, STDIN_FILENO);
-				close(info->fd_in);
-			}
-			if (info->fd_out > -1)
-			{
-				dup2(info->fd_out, STDOUT_FILENO);
-				close(info->fd_out);
-			}
 			info->exit_status = (*(t_foo_p *)(tmp->value))(info, *(t_list **)(info->grammemes->key));
-			if (info->fd_in > -1)
-				dup2(info->std_in, STDIN_FILENO);
-			if (info->fd_out > -1)
-				dup2(info->std_out, STDOUT_FILENO);
-			return (0);
+			return (info->exit_status);
 		}
 		tmp = tmp->next;
 	}
