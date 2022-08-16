@@ -13,12 +13,12 @@
 #include "structs.h"
 #include "minishell.h"
 
-void    ft_free_cmdargs(char **cmdargs)
+void	ft_free_cmdargs(char **cmdargs)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (!cmdargs)
+	i = 0;
+	if (!cmdargs)
 		return ;	
 	while (cmdargs[i])
 	{
@@ -39,8 +39,8 @@ char	**create_cmd_array(t_list *lst)
 	word_count = lst_len(words);
 	command_line = (char **)malloc(sizeof(char*) * (word_count + 1));
 	word_count = 0;
-    while (words)
-    {
+	while (words)
+	{
 		command_line[word_count] = (char *)malloc(sizeof(char)* ft_strlen((char*)words->value) + 1);
 		len = 0;
 		while (((char *)words->value)[len])

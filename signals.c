@@ -40,7 +40,7 @@ void	ft_signals(t_info *info, int signal_type)
 	if (signal_type == PROMPT)
 	{
 		signal(SIGINT, restore_prompt);
-        signal(SIGQUIT, SIG_IGN); 
+		signal(SIGQUIT, SIG_IGN); 
 	}
 	if (signal_type == EXEC)
 	{
@@ -49,7 +49,7 @@ void	ft_signals(t_info *info, int signal_type)
 	}
 	if (signal_type == EXIT)
 	{
-        ft_free_info(info);
+		ft_free_info(info);
 		printf("exit\n");
 		exit(0);
 	}

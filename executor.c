@@ -18,9 +18,9 @@ static int	ft_exec(t_info *info, t_list *lst)
 	char	**cmdargs;
 	char	*fpath;
 
-    envp_update(info);
+	envp_update(info);
 	cmdargs = create_cmd_array(lst);
-    fpath = check_all_path(cmdargs, info->envp_arr);
+	fpath = check_all_path(cmdargs, info->envp_arr);
 	if (!fpath)
 	{
 		write(STDERR_FILENO, "minishell: execve: Error with command\n", 39);
@@ -37,7 +37,7 @@ static void	pipe_process(t_info *info, t_list *lst)
 	pid_t	pid;
 	int		fd[2];
 	t_list	*tmp;
-	int status;
+	int		status;
 
 	pipe(fd);
 	pid = fork();
@@ -99,7 +99,7 @@ static void	execve_process(t_info *info, t_list *lst)
 
 static int	single_process(t_info *info)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	info->fd_in = check_infile(info->grammemes, info);
 	info->fd_out = check_outfile(info->grammemes);
@@ -136,9 +136,9 @@ static int	single_process(t_info *info)
 	return (0);
 }
 
-void executor(t_info *info)
+void	executor(t_info *info)
 {
-    t_list *lst;
+	t_list	*lst;
 
 	lst = info->grammemes;
 	ft_signals(info, EXEC);
