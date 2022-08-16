@@ -105,6 +105,10 @@ static int	single_process(t_info *info)
 	info->fd_out = check_outfile(info->grammemes);
 	if (info->fd_in == -2 || info->fd_out == -2)
 	{
+		if (info->fd_in > - 1)
+			close(info->fd_in);
+		if (info->fd_out > - 1)
+			close(info->fd_out);
 		info->exit_status = 1;
 		return (info->exit_status);
 	}
