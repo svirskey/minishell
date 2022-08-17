@@ -129,7 +129,8 @@ void	lexer(t_info *info, char *str)
 		{
 			if (next_char(str, i + 1, str[i]) == -1)
 			{
-				printf("minishell: Error! Unclosed brackets!\n");
+				write(STDERR_FILENO, "minishell: Error! Unclosed brackets!\n", 38);
+				info->exit_status = 2;
 				lst_clear(&info->tokens);
 				return ;
 			}

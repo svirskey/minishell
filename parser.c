@@ -168,7 +168,7 @@ static int	check_parsing(t_info *info)
 		return (1);
 	if (ft_strcmp(info->tokens->key, "pipe"))
 	{
-		printf("minishell: syntax error near unexpected token `|'\n");
+		write(STDERR_FILENO, "minishell: syntax error near unexpected token `|'\n", 51);
 		return (1);
 	}
 	curr = info->tokens;
@@ -179,7 +179,7 @@ static int	check_parsing(t_info *info)
 		{
 			if (!ft_strcmp(curr->key, "word"))
 			{
-				printf("minishell: syntax error near unexpected token `newline'\n");
+				write(STDERR_FILENO, "minishell: syntax error near unexpected token `newline'\n", 57);
 				return (1);
 			}
 			return (0);
@@ -187,7 +187,9 @@ static int	check_parsing(t_info *info)
 		if ((is_redir(curr->key) && !ft_strcmp(next->key, "word"))
 			|| (ft_strcmp(curr->key, "pipe") && ft_strcmp(next->key, "pipe")))
 		{
-			printf("minishell: syntax error near unexpected token `%s'\n", (char *)next->value);
+			write(STDERR_FILENO, "minishell: syntax error near unexpected token `", 48);
+			write(STDERR_FILENO, (char *)next->value, ft_strlen((char *)next->value));
+			write(STDERR_FILENO, "'\n", 3);
 			return (1);
 		}
 		curr = next;
@@ -241,7 +243,10 @@ int	parser(t_info *info)
 	merge(info);
 	lst_remove_node(&info->tokens, "space");
 	if (check_parsing(info))
-		return (0);
+	{
+		info->exit_status = 2;
+		return (1);
+	}
 	create_grammemes(info);
 	//lst_print_grammemes(info->grammemes);
 	return (1);
