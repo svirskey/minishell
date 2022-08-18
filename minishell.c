@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/12 21:47:52 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/18 16:47:07 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		lexer(&info, str);
+		//lst_print(info.tokens);
 		if (parser(&info))
 			 	executor(&info);
 		ft_free_grammemes(&info);

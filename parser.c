@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 22:01:04 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 19:39:30 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/18 17:09:56 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ static void	opening(t_info *info)
 					if (((char *)tmp->value)[i] == '$')
 					{
 						i++;
-						if (!((char *)tmp->value)[i])
+						if (!((char *)tmp->value)[i] || ((char *)tmp->value)[i] == ' ')
 						{
 							lst_push_back(&opn, lst_new(ft_strdup("word"),ft_strdup("$")));
-							break;
+							//break;
 						}
 						else if (((char *)tmp->value)[i] == '$')
 						{
@@ -74,8 +74,12 @@ static void	opening(t_info *info)
 						}
 						else
 						{
-							lst_push_back(&opn, lst_new(ft_strdup("word"), lst_get_value(info->envp_list, ft_substr(tmp->value, i, till_sep(tmp->value, i)))));
+							char * ret = ft_substr(tmp->value, i, till_sep(tmp->value, i));
+							printf("[%s]\n", ret);
+							if (lst_get_value(info->envp_list, ret))
+								lst_push_back(&opn, lst_new(ft_strdup("word"), lst_get_value(info->envp_list, ret)));
 							i += till_sep(tmp->value, i);
+							free(ret);
 						}
 					}
 					else
@@ -239,7 +243,9 @@ static void	create_grammemes(t_info *info)
 
 int	parser(t_info *info)
 {
+	//lst_print(info->tokens);
 	opening(info);
+	lst_print(info->tokens);
 	merge(info);
 	lst_remove_node(&info->tokens, "space");
 	if (check_parsing(info))
