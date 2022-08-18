@@ -6,22 +6,30 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 22:01:04 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 17:09:56 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/18 20:08:12 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "structs.h"
 
-static int	till_sep(char *str, int begin)
+static int	chars_to_separ(char *str, int begin, int type)
 {
 	int	c;
 
 	c = begin;
 	if (!str)
 		return (0);
-	while (str[c] && str[c] != '$')
-		c++;
+	if (type == DOLLAR)
+	{
+		while (str[c] && str[c] != '$')
+			c++;
+	}
+	else if (type == BOTH)
+	{
+		while (str[c] && str[c] != '$' && str[c] != ' ')
+			c++;
+	}
 	return (c - begin);
 }
 
@@ -57,10 +65,15 @@ static void	opening(t_info *info)
 					if (((char *)tmp->value)[i] == '$')
 					{
 						i++;
-						if (!((char *)tmp->value)[i] || ((char *)tmp->value)[i] == ' ')
+						if (!((char *)tmp->value)[i])
 						{
 							lst_push_back(&opn, lst_new(ft_strdup("word"),ft_strdup("$")));
-							//break;
+							break;
+						}
+						else if (((char *)tmp->value)[i] == ' ')
+						{
+							lst_push_back(&opn, lst_new(ft_strdup("word"),ft_strdup("$ ")));
+							i++;
 						}
 						else if (((char *)tmp->value)[i] == '$')
 						{
@@ -74,26 +87,34 @@ static void	opening(t_info *info)
 						}
 						else
 						{
-							char * ret = ft_substr(tmp->value, i, till_sep(tmp->value, i));
-							printf("[%s]\n", ret);
-							if (lst_get_value(info->envp_list, ret))
-								lst_push_back(&opn, lst_new(ft_strdup("word"), lst_get_value(info->envp_list, ret)));
-							i += till_sep(tmp->value, i);
-							free(ret);
+							char * ret = ft_substr(tmp->value, i, chars_to_separ(tmp->value, i, BOTH));
+							if (ret)
+							{
+								if (lst_get_value(info->envp_list, ret))
+									lst_push_back(&opn, lst_new(ft_strdup("word"), ft_strdup(lst_get_value(info->envp_list, ret))));
+								else
+									lst_push_back(&opn, lst_new(ft_strdup("word"), ft_strdup("")));
+								free(ret);
+							}
+							i += chars_to_separ(tmp->value, i, BOTH);
 						}
 					}
 					else
 					{
-						lst_push_back(&opn, lst_new(ft_strdup("word"), ft_substr(tmp->value, i, till_sep(tmp->value, i))));
-						i += till_sep(tmp->value, i);
+						lst_push_back(&opn, lst_new(ft_strdup("word"), ft_substr(tmp->value, i, chars_to_separ(tmp->value, i, DOLLAR))));
+						i += chars_to_separ(tmp->value, i, DOLLAR);
 					}
 				}
-				prev->next = opn;
+				if (prev)
+					prev->next = opn;
 				while (opn->next)
 					opn = opn->next;
 				opn->next = tmp->next;
 				lst_free_node(&tmp);
-				tmp = opn;
+				if (tmp == info->tokens)
+					info->tokens = opn;
+				else
+					tmp = opn;
 			}
 		}
 		prev = tmp;
@@ -172,7 +193,7 @@ static int	check_parsing(t_info *info)
 		return (1);
 	if (ft_strcmp(info->tokens->key, "pipe"))
 	{
-		write(STDERR_FILENO, "minishell: syntax error near unexpected token `|'\n", 51);
+		print_error("minishell: syntax error near unexpected token `|'\n");
 		return (1);
 	}
 	curr = info->tokens;
@@ -183,7 +204,7 @@ static int	check_parsing(t_info *info)
 		{
 			if (!ft_strcmp(curr->key, "word"))
 			{
-				write(STDERR_FILENO, "minishell: syntax error near unexpected token `newline'\n", 57);
+				print_error("minishell: syntax error near unexpected token `newline'\n");
 				return (1);
 			}
 			return (0);
@@ -191,9 +212,9 @@ static int	check_parsing(t_info *info)
 		if ((is_redir(curr->key) && !ft_strcmp(next->key, "word"))
 			|| (ft_strcmp(curr->key, "pipe") && ft_strcmp(next->key, "pipe")))
 		{
-			write(STDERR_FILENO, "minishell: syntax error near unexpected token `", 48);
-			write(STDERR_FILENO, (char *)next->value, ft_strlen((char *)next->value));
-			write(STDERR_FILENO, "'\n", 3);
+			print_error("minishell: syntax error near unexpected token `");
+			print_error((char *)next->value);
+			print_error("'\n");
 			return (1);
 		}
 		curr = next;
@@ -243,9 +264,7 @@ static void	create_grammemes(t_info *info)
 
 int	parser(t_info *info)
 {
-	//lst_print(info->tokens);
 	opening(info);
-	lst_print(info->tokens);
 	merge(info);
 	lst_remove_node(&info->tokens, "space");
 	if (check_parsing(info))
@@ -254,6 +273,5 @@ int	parser(t_info *info)
 		return (1);
 	}
 	create_grammemes(info);
-	//lst_print_grammemes(info->grammemes);
 	return (1);
 }

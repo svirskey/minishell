@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:17:28 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 19:24:38 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/18 19:30:33 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,29 @@ void	envp_clear(char ***arr)
 	*arr = NULL;
 }
 
-void	envp_update(t_info *info)
+static char	*get_second_arg(t_list *tmp, int flag)
+{
+	char	*ret;
+	char	*tmp_str;
+
+	ret = NULL;
+	if (flag == ENV)
+		ret = ft_strjoin("=", tmp->value);
+	else
+	{
+		tmp_str = ft_strjoin("=\"", tmp->value);
+		ret = ft_strjoin(tmp_str, "\"");
+		free(tmp_str);
+	}
+	return (ret);
+}
+
+void	envp_update(t_info *info, int flag)
 {
 	int		len;
 	int		i;
 	t_list	*tmp;
+	char	*second;
 
 	tmp = info->envp_list;
 	len = 0;
@@ -99,8 +117,10 @@ void	envp_update(t_info *info)
 	i = 0;
 	tmp = info->envp_list;
 	while (i < len)
-	{
-		info->envp_arr[i] = ft_strjoin(tmp->key, ft_strjoin("=", tmp->value));
+	{	
+		second = get_second_arg(tmp, flag);
+		info->envp_arr[i] = ft_strjoin(tmp->key, get_second_arg(tmp, flag));
+		free(second);
 		tmp = tmp->next;
 		i++;
 	}

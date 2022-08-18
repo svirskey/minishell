@@ -6,13 +6,12 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 19:51:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/12 21:27:55 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/18 19:58:46 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "structs.h"
-
 
 void	restore_prompt(int signal_type)
 {
@@ -40,7 +39,7 @@ void	ft_signals(t_info *info, int signal_type)
 	if (signal_type == PROMPT)
 	{
 		signal(SIGINT, restore_prompt);
-		signal(SIGQUIT, SIG_IGN); 
+		signal(SIGQUIT, SIG_IGN);
 	}
 	if (signal_type == EXEC)
 	{

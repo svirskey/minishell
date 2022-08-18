@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 18:39:43 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 19:29:25 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/18 20:28:34 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,91 +28,50 @@ int	next_char(char *str, int begin, char origin)
 	return (c - begin);
 }
 
-static int	is_sep(char *str, int i)
+static void	spec_push(t_info *info, int type)
 {
-	if (ft_isspace(str[i]))
-		return (1);
-	if (str[i] == '<' || str[i] == '>' || str[i] == '|' )
-		return (1);
-	if ((str[i] == '\'' || str[i] == '\"')
-		&& next_char(str, i + 1, str[i]) != -1)
-		return (1);
-	return (0);
-}
-
-static char	*lst_last_key(t_list *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-		lst = lst ->next;
-	return ((char *)lst->key);
-}
-
-static void	lexer_space(t_info *info, char *str, int *i)
-{
-	if (!ft_strcmp(lst_last_key(info->tokens), "space") && ft_isspace(str[*i]))
-		lst_push_back(&info->tokens,
-			lst_new(ft_strdup("space"), ft_strdup(" ")));
-	while (str[*i] && ft_isspace(str[*i]))
-		(*i)++;
-}
-
-static void	lexer_spec(t_info *info, char *str, int *i)
-{
-	if (str[*i] == '|')
+	if (type == PIPE)
 		lst_push_back(&info->tokens,
 			lst_new(ft_strdup("pipe"), ft_strdup("|")));
+	else if (type == HEREDOC)
+		lst_push_back(&info->tokens,
+			lst_new(ft_strdup("heredoc"), ft_strdup("<<")));
+	else if (type == READ)
+		lst_push_back(&info->tokens,
+			lst_new(ft_strdup("read"), ft_strdup("<")));
+	else if (type == APPEND)
+		lst_push_back(&info->tokens,
+			lst_new(ft_strdup("append"), ft_strdup(">>")));
+	else if (type == WRITE)
+		lst_push_back(&info->tokens,
+			lst_new(ft_strdup("write"), ft_strdup(">")));
+}
+
+void	lexer_spec(t_info *info, char *str, int *i)
+{
+	if (str[*i] == '|')
+		spec_push(info, PIPE);
 	else if (str[*i] == '<')
 	{
 		if (str[*i + 1] && str[*i + 1] == '<')
 		{
-			lst_push_back(&info->tokens,
-				lst_new(ft_strdup("heredoc"), ft_strdup("<<")));
+			spec_push(info, HEREDOC);
 			(*i)++;
 		}
 		else
-			lst_push_back(&info->tokens,
-				lst_new(ft_strdup("read"), ft_strdup("<")));
+			spec_push(info, READ);
 	}
 	else if (str[*i] == '>')
 	{
 		if (str[*i + 1] && str[*i + 1] == '>')
 		{
-			lst_push_back(&info->tokens,
-				lst_new(ft_strdup("append"), ft_strdup(">>")));
+			spec_push(info, APPEND);
 			(*i)++;
 		}
 		else
-			lst_push_back(&info->tokens,
-				lst_new(ft_strdup("write"), ft_strdup(">")));
+			spec_push(info, WRITE);
 	}
 	(*i)++;
-}
-
-static void	lexer_quotes(t_info *info, char *str, int *i)
-{
-	(*i)++;
-	if (str[*i - 1] == '\'')
-		lst_push_back(&info->tokens,
-			lst_new(ft_strdup("squote"),
-				ft_substr(str, *i, next_char(str, *i, str[*i - 1]))));
-	else
-		lst_push_back(&info->tokens,
-			lst_new(ft_strdup("dquote"),
-				ft_substr(str, *i, next_char(str, *i, str[*i - 1]))));
-	*i += next_char(str, *i, str[*i - 1]) + 1;
-}
-
-static void	lexer_word(t_info *info, char *str, int *i)
-{
-	int	from;
-
-	from = *i;
-	while (str[*i] && !is_sep(str, *i))
-		(*i)++;
-	lst_push_back(&info->tokens,
-		lst_new(ft_strdup("word"), ft_substr(str, from, *i - from)));
 }
 
 void	lexer(t_info *info, char *str)
@@ -124,12 +83,12 @@ void	lexer(t_info *info, char *str)
 	{
 		lexer_space(info, str, &i);
 		if (!str[i])
-			break;
+			break ;
 		if (str[i] == '\'' || str[i] == '\"')
 		{
 			if (next_char(str, i + 1, str[i]) == -1)
 			{
-				write(STDERR_FILENO, "minishell: Error! Unclosed brackets!\n", 38);
+				print_error("minishell: Error! Unclosed brackets!\n");
 				info->exit_status = 2;
 				lst_clear(&info->tokens);
 				return ;

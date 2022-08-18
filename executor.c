@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 08:25:56 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/12 20:09:58 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/18 19:40:49 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static int	ft_exec(t_info *info, t_list *lst)
 	char	**cmdargs;
 	char	*fpath;
 
-	envp_update(info);
+	envp_update(info, ENV);
 	cmdargs = create_cmd_array(lst);
 	fpath = check_all_path(cmdargs, info->envp_arr);
 	if (!fpath)
 	{
-		write(STDERR_FILENO, "minishell: execve: Error with command\n", 39);
+		print_error("minishell: execve: Error with command\n");
 		ft_free_cmdargs(cmdargs);
-		return (1);
+		return (127);
 	}
 	execve(fpath, cmdargs, info->envp_arr);
 	ft_free_cmdargs(cmdargs);
@@ -105,9 +105,9 @@ static int	single_process(t_info *info)
 	info->fd_out = check_outfile(info->grammemes);
 	if (info->fd_in == -2 || info->fd_out == -2)
 	{
-		if (info->fd_in > - 1)
+		if (info->fd_in > -1)
 			close(info->fd_in);
-		if (info->fd_out > - 1)
+		if (info->fd_out > -1)
 			close(info->fd_out);
 		info->exit_status = 1;
 		return (info->exit_status);

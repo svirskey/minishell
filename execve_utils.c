@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_for_execve.c                                 :+:      :+:    :+:   */
+/*   execve_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 12:42:29 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/09 12:46:03 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/18 19:34:08 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_free_cmdargs(char **cmdargs)
 
 	i = 0;
 	if (!cmdargs)
-		return ;	
+		return ;
 	while (cmdargs[i])
 	{
 		free(cmdargs[i]);
@@ -30,30 +30,30 @@ void	ft_free_cmdargs(char **cmdargs)
 
 char	**create_cmd_array(t_list *lst)
 {
-	t_list *words;
-	char	**command_line;
-	int		word_count;
+	t_list	*words;
+	char	**cmd_line;
+	int		num;
 	int		len;
 
 	words = *(t_list **)lst->key;
-	word_count = lst_len(words);
-	command_line = (char **)malloc(sizeof(char*) * (word_count + 1));
-	word_count = 0;
+	num = lst_len(words);
+	cmd_line = (char **)malloc(sizeof(char *) * (num + 1));
+	num = 0;
 	while (words)
 	{
-		command_line[word_count] = (char *)malloc(sizeof(char)* ft_strlen((char*)words->value) + 1);
+		cmd_line[num] = (char *)malloc(ft_strlen((char *)words->value) + 1);
 		len = 0;
 		while (((char *)words->value)[len])
 		{
-			command_line[word_count][len] = ((char *)words->value)[len];
+			cmd_line[num][len] = ((char *)words->value)[len];
 			len++;
 		}
-		command_line[word_count][len] = '\0';
-		word_count++;
+		cmd_line[num][len] = '\0';
+		num++;
 		words = words->next;
 	}
-	command_line[word_count] = NULL;
-	return (command_line);
+	cmd_line[num] = NULL;
+	return (cmd_line);
 }
 
 static void	ft_free_paths_from_envp(char **paths_from_envp)

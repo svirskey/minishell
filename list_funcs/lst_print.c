@@ -1,31 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   lst_print.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/04 19:27:27 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 19:43:44 by bfarm            ###   ########.fr       */
+/*   Created: 2022/08/18 20:09:00 by bfarm             #+#    #+#             */
+/*   Updated: 2022/08/18 20:12:19 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../structs.h"
 #include "../minishell.h"
 
-int	ft_pwd(t_info *info, t_list *grammeme)
+void	lst_print(t_list *lst)
 {
-	char	*str;
-	char	buf[255];
+	t_list	*tmp;
 
-	(void)info;
-	(void)grammeme;
-	str = getcwd(buf, 255);
-	if (!str)
+	tmp = lst;
+	while (tmp)
 	{
-		print_error("minishell: pwd: Error with pwd path\n");
-		return (1);
+		printf("[%s]  \t-> [%s]\n", (char *)tmp->key, (char *)tmp->value);
+		tmp = tmp->next;
 	}
-	printf("%s\n", str);
-	return (0);
+	printf("\n");
+}
+
+void	lst_print_grammemes(t_list *grammemes)
+{
+	t_list	*tmp;
+
+	tmp = grammemes;
+	printf("Printing grammemes:\n");
+	while (tmp)
+	{
+		printf("\nNext Pipe Part:\n");
+		lst_print(*(t_list **)tmp->key);
+		printf("\n");
+		lst_print(*(t_list **)tmp->value);
+		tmp = tmp->next;
+	}
 }

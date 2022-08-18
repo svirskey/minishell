@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/12 20:17:36 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/18 20:24:33 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,27 @@ typedef struct s_info	t_info;
 typedef struct s_list	t_list;
 
 typedef int				(*t_foo_p)(t_info *, t_list *);
+
+enum
+{
+	DOLLAR,
+	BOTH
+};
+
+enum
+{
+	EXPORT,
+	ENV
+};
+
+enum
+{
+	PIPE,
+	HEREDOC,
+	READ,
+	APPEND,
+	WRITE
+};
 
 enum
 {
@@ -79,19 +100,27 @@ char		*ft_itoa(int n);
 char		**ft_split(char const *s, char c);
 char		*ft_strnstr(const char *haystack, const char *needle, int len);
 
+//lexer funcs
+int			next_char(char *str, int begin, char origin);
+void		lexer_word(t_info *info, char *str, int *i);
+void		lexer_space(t_info *info, char *str, int *i);
+void		lexer_spec(t_info *info, char *str, int *i);
+void		lexer_quotes(t_info *info, char *str, int *i);
+
 // envp funcs
 void		envp_init(t_info *info, char **env);
 void		envp_clear(char ***arr);
-void		envp_update(t_info *info);
+void		envp_update(t_info *info, int flag);
 void		env_parse(char **arr, char *str);
 
 //main funcs
 void		ft_free_info(t_info *info);
-int			next_char(char *str, int begin, char origin);
+
 void		lexer(t_info *info, char *str);
 int			parser(t_info *info);
 void		executor(t_info *info);
 void		ft_signals(t_info *info, int sig);
+void		print_error(char *str);
 
 //builtins
 int			ft_env(t_info *info, t_list *grammeme);
@@ -103,14 +132,14 @@ int			ft_cd(t_info *info, t_list *grammeme);
 int			ft_pwd(t_info *info, t_list *grammeme);
 
 //utils for execve (massive cmd, envp, check path, check bin-command)
-char	**create_cmd_array(t_list *lst);
-char	*check_all_path(char **cmdargs, char **envp);
+char		**create_cmd_array(t_list *lst);
+char		*check_all_path(char **cmdargs, char **envp);
 
 //free massive for execve - if perror/exit(1)
-void    ft_free_cmdargs(char **cmdargs);
+void		ft_free_cmdargs(char **cmdargs);
 
 //redir
-int    check_infile(t_list *lst, t_info *info);
-int    check_outfile(t_list *lst);
+int			check_infile(t_list *lst, t_info *info);
+int			check_outfile(t_list *lst);
 
 #endif

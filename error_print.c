@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   error_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/04 19:27:27 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 19:43:44 by bfarm            ###   ########.fr       */
+/*   Created: 2022/08/18 19:38:07 by bfarm             #+#    #+#             */
+/*   Updated: 2022/08/18 19:48:27 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
-#include "../minishell.h"
+#include "minishell.h"
+#include "structs.h"
 
-int	ft_pwd(t_info *info, t_list *grammeme)
+void	print_error(char *str)
 {
-	char	*str;
-	char	buf[255];
+	int	len;
 
-	(void)info;
-	(void)grammeme;
-	str = getcwd(buf, 255);
-	if (!str)
-	{
-		print_error("minishell: pwd: Error with pwd path\n");
-		return (1);
-	}
-	printf("%s\n", str);
-	return (0);
+	len = ft_strlen(str);
+	write(STDERR_FILENO, str, len);
 }

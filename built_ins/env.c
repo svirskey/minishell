@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:42:56 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 19:12:48 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/18 19:41:59 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	ft_env(t_info *info, t_list *grammeme)
 		return (1);
 	if (lst_len(grammeme) > 1)
 	{
-		write(STDERR_FILENO, "minishell: env: too many arguments\n", 36);
+		print_error("minishell: env: too many arguments\n");
 		return (1);
 	}
-	envp_update(info);
+	envp_update(info, ENV);
 	while (info->envp_arr[i])
 	{
 		printf("%s\n", info->envp_arr[i]);

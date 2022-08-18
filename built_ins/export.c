@@ -6,20 +6,20 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:30 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 19:14:15 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/18 19:43:32 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../structs.h"
 #include "../minishell.h"
 
-static int check_single(t_info *info, t_list *grammeme)
+static int	check_single(t_info *info, t_list *grammeme)
 {
 	int	i;
 
 	if (lst_len(grammeme) == 1)
 	{
-		envp_update(info);
+		envp_update(info, EXPORT);
 		i = 0;
 		while (info->envp_arr[i])
 		{
@@ -32,39 +32,46 @@ static int check_single(t_info *info, t_list *grammeme)
 		return (0);
 }
 
+static int	check_grammeme(t_info *info, t_list *grammeme, char **arr)
+{
+	if (((char *)grammeme->value)[0] == '=')
+	{
+		print_error("minishell: export: `");
+		print_error((char *)grammeme->value);
+		print_error("': not a valid indentifier\n");
+		return (1);
+	}
+	else
+	{
+		env_parse(arr, grammeme->value);
+		if (ft_strcmp(arr[1], "="))
+		{
+			lst_remove_node(&info->envp_list, arr[1]);
+			lst_push_back(&info->envp_list, lst_new(arr[0], arr[2]));
+		}
+		else
+		{
+			free(arr[0]);
+			free(arr[2]);
+		}
+		free(arr[1]);
+		return (0);
+	}
+}
+
 int	ft_export(t_info *info, t_list *grammeme)
 {
 	char	*arr[3];
 	int		exit_code;
 
 	if (check_single(info, grammeme))
-		return 0;
+		return (0);
 	exit_code = 0;
 	grammeme = grammeme->next;
 	while (grammeme)
 	{
-		if (((char *)grammeme->value)[0] == '=')
-		{
-			write(STDERR_FILENO, "minishell: export: `" , 21);
-			write(STDERR_FILENO, (char *)grammeme->value, ft_strlen((char *)grammeme->value));
-			write(STDERR_FILENO, "': not a valid indentifier\n",28);
+		if (check_grammeme(info, grammeme, arr))
 			exit_code = 1;
-		}
-		else
-		{
-			env_parse(arr, grammeme->value);
-			if (ft_strcmp(arr[1], "="))
-			{
-				lst_remove_node(&info->envp_list, arr[1]);
-				lst_push_back(&info->envp_list, lst_new(arr[0], arr[2]));
-			}
-			else
-			{
-				free(arr[0]);
-				free(arr[2]);
-			}
-			free(arr[1]);
-		}
 		grammeme = grammeme->next;
 	}
 	info->envp_upd = 1;

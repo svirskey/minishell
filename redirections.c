@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 13:15:18 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/12 21:43:28 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/18 19:47:12 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ int	check_infile(t_list *lst, t_info *info)
 			infd = open((char*)tmp->value, O_RDONLY, 0777);
 			if (infd == -1)
 			{
-				write(STDERR_FILENO, "minishell: ", 12);
-				write(STDERR_FILENO, (char *)tmp->value, ft_strlen((char *)tmp->value));
-				write(STDERR_FILENO, ": Cannot open file or directory.\n", 34);
+				print_error("minishell: ");
+				print_error((char *)tmp->value);
+				print_error(": Cannot open file or directory.\n");
 				return (-2);
 			}
 		}
@@ -86,7 +86,7 @@ int	check_infile(t_list *lst, t_info *info)
 			infd = here_doc((char*)tmp->value, info);
 			if (infd == -1)
 			{
-				write(STDERR_FILENO, "minishell: Error with open tmp files (heredoc).\n", 44);
+				print_error("minishell: Error with open tmp files (heredoc).\n");
 				return (-2);
 			}
 		}
@@ -114,7 +114,7 @@ int	check_outfile(t_list *lst)
 				outfd = open((char*)tmp->value, O_WRONLY | O_CREAT | O_APPEND, 0777);
 			if (outfd == -1)
 			{
-				write(STDERR_FILENO, "minishell: Error with output file.\n", 36);
+				print_error("minishell: Error with output file.\n");
 				return (-2);
 			}
 		}
