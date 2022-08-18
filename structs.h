@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 20:24:33 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/18 21:35:19 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,14 +113,21 @@ void		envp_clear(char ***arr);
 void		envp_update(t_info *info, int flag);
 void		env_parse(char **arr, char *str);
 
-//main funcs
-void		ft_free_info(t_info *info);
-
+//lexer and parser
 void		lexer(t_info *info, char *str);
+void		opening(t_info *info);
+void		merge(t_info *info);
 int			parser(t_info *info);
+
+//executor
+int			ft_exec(t_info *info, t_list *lst);
+void		pipe_process(t_info *info, t_list *lst);
 void		executor(t_info *info);
+
+//other funcs
 void		ft_signals(t_info *info, int sig);
 void		print_error(char *str);
+void		ft_free_info(t_info *info);
 
 //builtins
 int			ft_env(t_info *info, t_list *grammeme);
@@ -131,11 +138,9 @@ int			ft_echo(t_info *info, t_list *grammeme);
 int			ft_cd(t_info *info, t_list *grammeme);
 int			ft_pwd(t_info *info, t_list *grammeme);
 
-//utils for execve (massive cmd, envp, check path, check bin-command)
+//utils for execve 
 char		**create_cmd_array(t_list *lst);
 char		*check_all_path(char **cmdargs, char **envp);
-
-//free massive for execve - if perror/exit(1)
 void		ft_free_cmdargs(char **cmdargs);
 
 //redir
