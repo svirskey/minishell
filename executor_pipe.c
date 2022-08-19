@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 20:55:46 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 20:58:20 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/19 16:53:10 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_exec(t_info *info, t_list *lst)
 	if (!fpath)
 	{
 		perror("minishell:");
-		//print_error("minishell: execve: Error with command\n");
 		ft_free_cmdargs(cmdargs);
 		return (127);
 	}

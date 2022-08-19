@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 18:39:43 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 20:28:34 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/19 17:10:45 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ int	next_char(char *str, int begin, char origin)
 static void	spec_push(t_info *info, int type)
 {
 	if (type == PIPE)
-		lst_push_back(&info->tokens,
+		lst_pb(&info->tokens,
 			lst_new(ft_strdup("pipe"), ft_strdup("|")));
 	else if (type == HEREDOC)
-		lst_push_back(&info->tokens,
+		lst_pb(&info->tokens,
 			lst_new(ft_strdup("heredoc"), ft_strdup("<<")));
 	else if (type == READ)
-		lst_push_back(&info->tokens,
+		lst_pb(&info->tokens,
 			lst_new(ft_strdup("read"), ft_strdup("<")));
 	else if (type == APPEND)
-		lst_push_back(&info->tokens,
+		lst_pb(&info->tokens,
 			lst_new(ft_strdup("append"), ft_strdup(">>")));
 	else if (type == WRITE)
-		lst_push_back(&info->tokens,
+		lst_pb(&info->tokens,
 			lst_new(ft_strdup("write"), ft_strdup(">")));
 }
 
@@ -88,7 +88,7 @@ void	lexer(t_info *info, char *str)
 		{
 			if (next_char(str, i + 1, str[i]) == -1)
 			{
-				print_error("minishell: Error! Unclosed brackets!\n");
+				p_error("minishell: Error! Unclosed brackets!\n");
 				info->exit_status = 2;
 				lst_clear(&info->tokens);
 				return ;

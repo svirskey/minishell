@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:17:28 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 21:13:25 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/19 16:54:30 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	envp_init(t_info *info, char **env)
 	while (env[i])
 	{
 		env_parse(arr, env[i]);
-		lst_push_back(&(info->envp_list), lst_new(arr[0], arr[2]));
+		lst_pb(&(info->envp_list), lst_new(arr[0], arr[2]));
 		free(arr[1]);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 20:16:27 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 20:29:24 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/19 16:54:30 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ void	lexer_word(t_info *info, char *str, int *i)
 	from = *i;
 	while (str[*i] && !is_sep(str, *i))
 		(*i)++;
-	lst_push_back(&info->tokens,
+	lst_pb(&info->tokens,
 		lst_new(ft_strdup("word"), ft_substr(str, from, *i - from)));
 }
 
 void	lexer_space(t_info *info, char *str, int *i)
 {
 	if (!ft_strcmp(lst_last_key(info->tokens), "space") && ft_isspace(str[*i]))
-		lst_push_back(&info->tokens,
+		lst_pb(&info->tokens,
 			lst_new(ft_strdup("space"), ft_strdup(" ")));
 	while (str[*i] && ft_isspace(str[*i]))
 		(*i)++;
@@ -56,11 +56,11 @@ void	lexer_quotes(t_info *info, char *str, int *i)
 {
 	(*i)++;
 	if (str[*i - 1] == '\'')
-		lst_push_back(&info->tokens,
+		lst_pb(&info->tokens,
 			lst_new(ft_strdup("squote"),
 				ft_substr(str, *i, next_char(str, *i, str[*i - 1]))));
 	else
-		lst_push_back(&info->tokens,
+		lst_pb(&info->tokens,
 			lst_new(ft_strdup("dquote"),
 				ft_substr(str, *i, next_char(str, *i, str[*i - 1]))));
 	*i += next_char(str, *i, str[*i - 1]) + 1;

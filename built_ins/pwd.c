@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:27 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 19:43:44 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/19 17:10:45 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_pwd(t_info *info, t_list *grammeme)
 	str = getcwd(buf, 255);
 	if (!str)
 	{
-		print_error("minishell: pwd: Error with pwd path\n");
+		p_error("minishell: pwd: Error with pwd path\n");
 		return (1);
 	}
 	printf("%s\n", str);

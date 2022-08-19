@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:58:13 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 20:15:20 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/19 16:54:30 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_list	*lst_new(void *key, void *value)
 	return (node);
 }
 
-void	lst_push_back(t_list **lst, t_list *node)
+void	lst_pb(t_list **lst, t_list *node)
 {
 	t_list	*tmp;
 

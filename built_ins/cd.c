@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:38 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 19:41:28 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/19 17:10:45 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static int	check_len(t_list *grammeme)
 	if (len != 2)
 	{
 		if (len > 2)
-			print_error("minishell: cd: too many arguments\n");
+			p_error("minishell: cd: too many arguments\n");
 		else
-			print_error("minishell: cd: too few arguments\n");
+			p_error("minishell: cd: too few arguments\n");
 		return (1);
 	}
 	return (0);
@@ -41,7 +41,7 @@ int	ft_cd(t_info *info, t_list *grammeme)
 	else
 	{
 		if (!lst_get_value(info->envp_list, "OLDPWD"))
-			lst_push_back(&(info->envp_list),
+			lst_pb(&(info->envp_list),
 				lst_new(ft_strdup("OLDPWD"), ft_strdup("")));
 		lst_replace(info->envp_list, "OLDPWD",
 			lst_get_value(info->envp_list, "OLDPWD"));

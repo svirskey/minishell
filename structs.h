@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 21:35:19 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/19 18:38:35 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ struct s_info
 };
 
 //list funcs
-void		lst_push_back(t_list **lst, t_list *node);
+void		lst_pb(t_list **lst, t_list *node);
 t_list		*lst_new(void *key, void *value);
 void		lst_clear(t_list **lst);
 void		lst_print(t_list *lst);
@@ -115,8 +115,10 @@ void		env_parse(char **arr, char *str);
 
 //lexer and parser
 void		lexer(t_info *info, char *str);
-void		opening(t_info *info);
+void		inner_open(t_info *info, t_list **prev, t_list **tmp);
 void		merge(t_info *info);
+int			is_redir(const char *str);
+void		create_grammemes(t_info *info);
 int			parser(t_info *info);
 
 //executor
@@ -126,7 +128,8 @@ void		executor(t_info *info);
 
 //other funcs
 void		ft_signals(t_info *info, int sig);
-void		print_error(char *str);
+void		p_error(char *str);
+void		ft_free_grammemes(t_info *info);
 void		ft_free_info(t_info *info);
 
 //builtins
@@ -144,6 +147,7 @@ char		*check_all_path(char **cmdargs, char **envp);
 void		ft_free_cmdargs(char **cmdargs);
 
 //redir
+int			here_doc(char *heredoc, t_info *info);
 int			check_infile(t_list *lst, t_info *info);
 int			check_outfile(t_list *lst);
 
