@@ -13,25 +13,57 @@
 #include "../structs.h"
 #include "../minishell.h"
 
+static int get_str_len(char *str)
+{
+	int len;
+	int i;
+
+	i = 0;
+	len = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	while (str[i + len] && str[i + len] != ' ')
+		len++;
+	return (len);
+}
+
 static int	check_word_in_exit(t_info *info, t_list *grammeme)
 {
-	int		i;
-	int		exit_status;
-	char	*str;
+	int			i;
+	long long	exit_status;
+	char		*str;
 
 	str = (char *)grammeme->next->value;
 	i = 0;
+	if (get_str_len(str) > 10)
+	{
+		print_error("exit\nminishel: exit: ");
+		print_error(str);
+		print_error(" int argument required");
+		ft_free_info(info);
+		exit (2);
+	}
 	while (str[i])
 	{
-		if ((str[i] < 48) || (str[i] > 57))
+		if ((str[i] < 48 || str[i] > 57) && str[i] != '-' && str[i] != '+')
 		{
-			print_error("exit\n");
+			print_error("exit\nminishel: exit: ");
+			print_error(str);
+			print_error(" int argument required");
 			ft_free_info(info);
 			exit (2);
 		}
 		i++;
 	}
 	exit_status = ft_atol(grammeme->next->value);
+	if (exit_status > INT32_MAX || exit_status < INT32_MIN)
+	{
+		print_error("exit\nminishel: exit: ");
+		print_error(str);
+		print_error(" int argument required");
+		ft_free_info(info);
+		exit(2);
+	}
 	print_error("exit\n");
 	ft_free_info(info);
 	return (exit_status);
@@ -56,9 +88,6 @@ int	ft_exit(t_info *info, t_list *grammeme)
 		exit (0);
 	}
 	exit_status = check_word_in_exit(info, grammeme);
-	if (exit_status > INT32_MAX || exit_status < INT32_MIN)
-		exit(2);
-	else
-		exit (exit_status % 256);
+	exit (exit_status % 256);
 	return (0);
 }
