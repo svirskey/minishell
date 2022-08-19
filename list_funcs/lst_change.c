@@ -55,21 +55,21 @@ void	lst_replace(t_list *lst, char *key, char *new_value)
 	}
 }
 
-static void	lst_rm(t_list **head, t_list *prev, t_list *curr)
+static void	lst_rm(t_list **head, t_list **prev, t_list **curr)
 {
-	if (prev)
+	if (*prev)
 	{
-		prev->next = curr->next;
-		lst_free_node(&curr);
-		curr = prev->next;
+		(*prev)->next = (*curr)->next;
+		lst_free_node(curr);
+		*curr = (*prev)->next;
 	}
 	else
 	{
-		prev = curr;
-		curr = curr->next;
-		lst_free_node(&prev);
-		*head = curr;
-		prev = NULL;
+		*prev = *curr;
+		*curr = (*curr)->next;
+		lst_free_node(prev);
+		*head = *curr;
+		*prev = NULL;
 	}
 }
 
@@ -83,7 +83,7 @@ void	lst_remove_node(t_list **head, char *key)
 	while (curr)
 	{
 		if (ft_strcmp(curr->key, key))
-			lst_rm(head, prev, curr);
+			lst_rm(head, &prev, &curr);
 		else
 		{
 			prev = curr;

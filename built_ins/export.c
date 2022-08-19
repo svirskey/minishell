@@ -38,7 +38,7 @@ static int	check_grammeme(t_info *info, t_list *grammeme, char **arr)
 	{
 		print_error("minishell: export: `");
 		print_error((char *)grammeme->value);
-		print_error("': not a valid indentifier\n");
+		print_error("': not a valid identifier\n");
 		return (1);
 	}
 	else

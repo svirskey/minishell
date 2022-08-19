@@ -102,8 +102,11 @@ static void	create_grammemes(t_info *info)
 int	parser(t_info *info)
 {
 	opening(info);
+	//lst_print(info->tokens);
 	merge(info);
+	//lst_print(info->tokens);
 	lst_remove_node(&info->tokens, "space");
+	//lst_print(info->tokens);
 	if (check_parsing(info))
 	{
 		info->exit_status = 2;

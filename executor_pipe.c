@@ -23,7 +23,8 @@ int	ft_exec(t_info *info, t_list *lst)
 	fpath = check_all_path(cmdargs, info->envp_arr);
 	if (!fpath)
 	{
-		print_error("minishell: execve: Error with command\n");
+		perror("minishell:");
+		//print_error("minishell: execve: Error with command\n");
 		ft_free_cmdargs(cmdargs);
 		return (127);
 	}

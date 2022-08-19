@@ -13,24 +13,24 @@
 #include "minishell.h"
 #include "structs.h"
 
-static void	find_len(t_list *tmp, t_list *begin, char *new_str)
+static void	find_len(t_list **arr, char **new_str)
 {
 	int	len;
 
 	len = 0;
-	begin = tmp;
-	while (tmp && ft_strcmp(tmp->key, "word"))
+	arr[0] = arr[2];
+	while (arr[2] && ft_strcmp(arr[2]->key, "word"))
 	{
-		len += ft_strlen(tmp->value);
-		tmp = tmp->next;
+		len += ft_strlen(arr[2]->value);
+		arr[2] = arr[2]->next;
 	}
-	tmp = begin;
-	new_str = malloc(sizeof(char) * (len + 1));
-	ft_bzero(new_str, len + 1);
-	while (tmp && ft_strcmp(tmp->key, "word"))
+	arr[2] = arr[0];
+	*new_str = malloc(sizeof(char) * (len + 1));
+	ft_bzero(*new_str, len + 1);
+	while (arr[2] && ft_strcmp(arr[2]->key, "word"))
 	{
-		ft_strlcat(new_str, tmp->value, len + 1);
-		tmp = tmp->next;
+		ft_strlcat(*new_str, arr[2]->value, len + 1);
+		arr[2] = arr[2]->next;
 	}
 }
 
@@ -71,7 +71,7 @@ void	merge(t_info *info)
 		if (ft_strcmp(arr[2]->key, "word") && arr[2]->next
 			&& ft_strcmp(arr[2]->next->key, "word"))
 		{
-			find_len(arr[2], arr[0], new_str);
+			find_len(arr, &new_str);
 			add_nodes(info, arr, new_str);
 			if (!arr[0])
 				break ;

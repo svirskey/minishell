@@ -87,7 +87,8 @@ int	check_infile(t_list *lst, t_info *info)
 			infd = here_doc((char *)tmp->value, info);
 			if (infd == -1)
 			{
-				print_error("minishell: Error with open tmp files (heredoc).\n");
+				perror("minishell:");
+				//print_error("minishell: Error with open tmp files (heredoc).\n");
 				return (-2);
 			}
 		}
@@ -115,7 +116,8 @@ int	check_outfile(t_list *lst)
 				outfd = open((char *)tmp->value, O_WRONLY | O_CREAT | O_APPEND, 0777);
 			if (outfd == -1)
 			{
-				print_error("minishell: Error with output file.\n");
+				perror("minishell:");
+				//print_error("minishell: Error with output file.\n");
 				return (-2);
 			}
 		}
