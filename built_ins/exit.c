@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:32 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/19 18:42:00 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/20 13:36:21 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,20 @@ static void	print_required(t_info *info, char *str)
 	exit (2);
 }
 
+static int	check_signs(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (i > 1 && (str[i] == '-' || str[i] == '+') && str[i - 1] != ' ')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 static int	check_word_in_exit(t_info *info, t_list *grammeme)
 {
 	int			i;
@@ -44,11 +58,12 @@ static int	check_word_in_exit(t_info *info, t_list *grammeme)
 
 	str = (char *)grammeme->next->value;
 	i = 0;
-	if (get_str_len(str) > 10)
+	if (get_str_len(str) > 10 || check_signs(str))
 		print_required(info, str);
 	while (str[i])
 	{
-		if ((str[i] < 48 || str[i] > 57) && str[i] != '-' && str[i] != '+')
+		if ((str[i] < 48 || str[i] > 57) && str[i]
+			!= '-' && str[i] != '+' && str[i] != ' ')
 			print_required(info, str);
 		i++;
 	}

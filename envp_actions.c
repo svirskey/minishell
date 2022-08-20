@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:17:28 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/19 16:54:30 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/20 13:39:57 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	envp_update(t_info *info, int flag)
 	while (i < lst_len(info->envp_list))
 	{	
 		second = get_second_arg(tmp, flag);
-		info->envp_arr[i] = ft_strjoin(tmp->key, get_second_arg(tmp, flag));
+		info->envp_arr[i] = ft_strjoin(tmp->key, second);
 		free(second);
 		tmp = tmp->next;
 		i++;
