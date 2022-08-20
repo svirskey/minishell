@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 17:44:20 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/20 19:58:25 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/20 20:22:55 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ int	here_doc(char *heredoc, t_info *info)
 	copy_out = dup(STDOUT_FILENO);
 	dup2(info->std_in, STDIN_FILENO);
 	dup2(info->std_out, STDOUT_FILENO);
+	ft_signals(info, HERE);
 	cycle_gnl(heredoc, infd);
+	ft_signals(info, EXEC);
 	dup2(copy_in, STDIN_FILENO);
 	dup2(copy_out, STDOUT_FILENO);
 	close(copy_in);
