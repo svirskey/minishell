@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 17:44:20 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/19 17:56:59 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/20 19:58:25 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	cycle_gnl(char *limiter, int infd)
 	char	*line;
 
 	line = readline("here_doc> ");
-	while (ft_strcmp(line, limiter) != 1)
+	while (line && ft_strcmp(line, limiter) != 1)
 	{
 		if (line[0] == '\n')
 			write(infd, "\n", STDOUT_FILENO);

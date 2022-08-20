@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 19:51:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/19 17:25:00 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/20 20:14:25 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	ft_signals(t_info *info, int signal_type)
 	}
 	if (signal_type == EXIT)
 	{
-		ft_free_info(info);
 		printf("exit\n");
+		ft_free_info(info);
 		exit(0);
 	}
 }
