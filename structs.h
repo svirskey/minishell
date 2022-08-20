@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/19 18:38:35 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/20 19:22:25 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ enum
 
 enum
 {
+	ENV,
 	EXPORT,
-	ENV
+	KO
 };
 
 enum
@@ -62,7 +63,7 @@ struct s_info
 
 	t_list	*envp_list;
 	char	**envp_arr;
-	int		envp_upd;
+	int		envp_status;
 
 	t_list	*tokens;
 	t_list	*grammemes;

@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:17:28 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/20 13:39:57 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/20 19:22:51 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	envp_update(t_info *info, int flag)
 	char	*second;
 
 	tmp = info->envp_list;
-	if (!info->envp_upd)
+	if (info->envp_status == flag)
 		return ;
 	envp_clear(&info->envp_arr);
 	info->envp_arr = malloc(sizeof(char *) * (lst_len(info->envp_list) + 1));
@@ -85,5 +85,5 @@ void	envp_update(t_info *info, int flag)
 		i++;
 	}
 	info->envp_arr[i] = NULL;
-	info->envp_upd = 0;
+	info->envp_status = flag;
 }

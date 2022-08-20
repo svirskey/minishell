@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:23 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 19:11:11 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/20 19:23:31 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ int	ft_unset(t_info *info, t_list *grammeme)
 		lst_remove_node(&info->envp_list, lst->value);
 		lst = lst->next;
 	}
-	info->envp_upd = 1;
+	info->envp_status = KO;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/19 17:12:52 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/20 19:20:24 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	ft_init(t_info *info, char **envp, int argc, char **argv)
 	info->envp_arr = NULL;
 	info->builtins = NULL;
 	info->exit_status = 0;
-	info->envp_upd = 1;
+	info->envp_status = KO;
 	info->fd_in = 0;
 	info->fd_out = 1;
 	info->std_in = dup(STDIN_FILENO);
