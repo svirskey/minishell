@@ -6,34 +6,22 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:38 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/19 17:10:45 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/20 13:49:17 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../structs.h"
 #include "../minishell.h"
 
-static int	check_len(t_list *grammeme)
-{
-	int	len;
-
-	len = lst_len(grammeme);
-	if (len != 2)
-	{
-		if (len > 2)
-			p_error("minishell: cd: too many arguments\n");
-		else
-			p_error("minishell: cd: too few arguments\n");
-		return (1);
-	}
-	return (0);
-}
-
 int	ft_cd(t_info *info, t_list *grammeme)
 {
-	if (check_len(grammeme))
-		return (1);
-	if (chdir(grammeme->next->value) == -1)
+	char	*path;
+
+	if (!grammeme->next)
+		path = "/";
+	else
+		path = grammeme->next->value;
+	if (chdir(path) == -1)
 	{
 		perror("minishell: cd");
 		return (1);
@@ -45,7 +33,7 @@ int	ft_cd(t_info *info, t_list *grammeme)
 				lst_new(ft_strdup("OLDPWD"), ft_strdup("")));
 		lst_replace(info->envp_list, "OLDPWD",
 			lst_get_value(info->envp_list, "OLDPWD"));
-		lst_replace(info->envp_list, "PWD", grammeme->next->value);
+		lst_replace(info->envp_list, "PWD", path);
 	}
 	return (0);
 }
