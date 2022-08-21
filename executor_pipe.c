@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_pipe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 20:55:46 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/19 16:53:10 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/21 13:24:56 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@ int	ft_exec(t_info *info, t_list *lst)
 	fpath = check_all_path(cmdargs, info->envp_arr);
 	if (!fpath)
 	{
-		perror("minishell:");
+		printf("minishell: %s: command not found\n", cmdargs[0]);
 		ft_free_cmdargs(cmdargs);
-		return (127);
+		return (1);
 	}
 	execve(fpath, cmdargs, info->envp_arr);
 	ft_free_cmdargs(cmdargs);
-	return (0);
+	perror("minishell: error in execve:");
+	return (1);
 }
 
 static void	pipe_init(t_info *info, t_list *lst, int *fd)
@@ -52,6 +53,8 @@ static void	pipe_init(t_info *info, t_list *lst, int *fd)
 	else if (lst->next)
 		dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
+	if (!(*(t_list **)(lst->key)))
+		exit (0);
 }
 
 void	pipe_process(t_info *info, t_list *lst)

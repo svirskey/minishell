@@ -6,7 +6,7 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:38 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/21 11:50:11 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/21 13:22:32 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ char	*get_path(t_info *info, t_list *grammeme)
 		return (grammeme->next->value);
 }
 
-static char    *get_pwd(void)
+static char	*get_pwd(void)
 {
-    char    buf[1000];
-    char    *pwd;
+	char	buf[1000];
+	char	*pwd;
 
-    pwd = getcwd(buf, 1000);
-    return (pwd);
+	pwd = getcwd(buf, 1000);
+	return (pwd);
 }
 
 int	ft_cd(t_info *info, t_list *grammeme)
@@ -50,7 +50,8 @@ int	ft_cd(t_info *info, t_list *grammeme)
 		if (!lst_get_value(info->envp_list, "OLDPWD"))
 			lst_pb(&(info->envp_list),
 				lst_new(ft_strdup("OLDPWD"), ft_strdup("")));
-		lst_replace(info->envp_list, "OLDPWD", lst_get_value(info->envp_list, "PWD"));
+		lst_replace(info->envp_list, "OLDPWD", 
+			lst_get_value(info->envp_list, "PWD"));
 		lst_replace(info->envp_list, "PWD", get_pwd());
 	}
 	return (0);

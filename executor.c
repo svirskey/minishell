@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 08:25:56 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/18 20:57:06 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/21 12:58:32 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static int	single_process(t_info *info)
 
 	if (single_init(info))
 		return (info->exit_status);
+	if (!(*(t_list **)(info->grammemes->key)))
+		return (0);
 	tmp = info->builtins;
 	while (tmp)
 	{
