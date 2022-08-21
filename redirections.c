@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 13:15:18 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/19 17:53:30 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/21 14:11:34 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	check_outfile(t_list *lst)
 			opn_fd(&outfd, tmp);
 			if (outfd == -1)
 			{
-				perror("minishell:");
+				printf("minishell: %s: Permission denied\n", (char *)tmp->value);
 				return (-2);
 			}
 		}
