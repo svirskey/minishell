@@ -154,6 +154,6 @@ int			check_infile(t_list *lst, t_info *info);
 int			check_outfile(t_list *lst, t_info *info);
 
 int			error_files(char *path, int flag);
-void		three_lines(char *line, char *line2, char *line3);
+void		p_err_three(char *line, char *line2, char *line3);
 
 #endif

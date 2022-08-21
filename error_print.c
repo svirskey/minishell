@@ -21,7 +21,7 @@ void	p_error(char *str)
 	write(STDERR_FILENO, str, len);
 }
 
-void	three_lines(char *line, char *line2, char *line3)
+void	p_err_three(char *line, char *line2, char *line3)
 {
 	p_error(line);
 	p_error(line2);
@@ -30,19 +30,9 @@ void	three_lines(char *line, char *line2, char *line3)
 
 int	error_files(char *path, int flag)
 {
-	if (flag == 0)
-	{
-		if (access(path, F_OK))
-			three_lines("minishell: ", path, ": Not such file or directory.\n");
-		else if (access(path, R_OK))
-			three_lines("minishell: ", path, ": Permission denied.\n");
-	}
-	else
-	{
-		if (access(path, F_OK))
-			three_lines("minishell: ", path, ": Not such file or directory.\n");
-		else if (access(path, W_OK))
-			three_lines("minishell: ", path, ": Permission denied.\n");
-	}
+	if (access(path, F_OK))
+		p_err_three("minishell: ", path, ": No such file or directory\n");
+	else if (access(path, flag))
+		p_err_three("minishell: ", path, ": Permission denied\n");
 	return (-2);
 }
