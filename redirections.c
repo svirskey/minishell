@@ -6,7 +6,7 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 13:15:18 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/21 14:11:34 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/21 14:55:50 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,7 @@ static int	check_infd(t_info *info, t_list *tmp, int *infd)
 			close(*infd);
 		*infd = open((char *)tmp->value, O_RDONLY, 0777);
 		if ((*infd) == -1)
-		{
-			p_error("minishell: ");
-			p_error((char *)tmp->value);
-			p_error(": Cannot open file or directory.\n");
-			return (-2);
-		}
+			return (error_files((char *)tmp->value, 0));
 	}
 	else if (ft_strcmp(tmp->key, "heredoc") == 1)
 	{
@@ -84,10 +79,7 @@ int	check_outfile(t_list *lst)
 		{
 			opn_fd(&outfd, tmp);
 			if (outfd == -1)
-			{
-				printf("minishell: %s: Permission denied\n", (char *)tmp->value);
-				return (-2);
-			}
+				return (error_files((char *)tmp->value, 1));
 		}
 		tmp = tmp->next;
 	}

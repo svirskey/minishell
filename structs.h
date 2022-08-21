@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/20 20:21:28 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/21 14:54:14 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,7 @@ void		ft_free_cmdargs(char **cmdargs);
 int			here_doc(char *heredoc, t_info *info);
 int			check_infile(t_list *lst, t_info *info);
 int			check_outfile(t_list *lst);
+
+int			error_files(char *path, int flag);
 
 #endif
