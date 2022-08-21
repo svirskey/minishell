@@ -6,7 +6,7 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 20:55:46 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/21 13:24:56 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/21 15:22:21 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_exec(t_info *info, t_list *lst)
 	fpath = check_all_path(cmdargs, info->envp_arr);
 	if (!fpath)
 	{
-		printf("minishell: %s: command not found\n", cmdargs[0]);
+		three_lines("minishell: ", cmdargs[0], ": command not found\n");
 		ft_free_cmdargs(cmdargs);
 		return (1);
 	}
@@ -37,7 +37,7 @@ static void	pipe_init(t_info *info, t_list *lst, int *fd)
 {
 	close(fd[0]);
 	info->fd_in = check_infile(lst, info);
-	info->fd_out = check_outfile(lst);
+	info->fd_out = check_outfile(lst, info);
 	if (info->fd_in == -2 || info->fd_out == -2)
 		exit (1);
 	if (info->fd_in > -1)

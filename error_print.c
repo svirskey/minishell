@@ -6,7 +6,7 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 19:38:07 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/21 14:55:13 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/21 15:16:05 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,28 @@ void	p_error(char *str)
 	write(STDERR_FILENO, str, len);
 }
 
+void	three_lines(char *line, char *line2, char *line3)
+{
+	p_error(line);
+	p_error(line2);
+	p_error(line3);
+}
+
 int	error_files(char *path, int flag)
 {
 	if (flag == 0)
 	{
 		if (access(path, F_OK))
-			printf("minishell: %s: Not such file or directory.\n", path);
+			three_lines("minishell: ", path, ": Not such file or directory.\n");
 		else if (access(path, R_OK))
-			printf("minishell: %s: Permission denied.\n", path);
+			three_lines("minishell: ", path, ": Permission denied.\n");
 	}
 	else
 	{
 		if (access(path, F_OK))
-			printf("minishell: %s: Not such file or directory.\n", path);
+			three_lines("minishell: ", path, ": Not such file or directory.\n");
 		else if (access(path, W_OK))
-			printf("minishell: %s: Permission denied.\n", path);
+			three_lines("minishell: ", path, ": Permission denied.\n");
 	}
 	return (-2);
 }

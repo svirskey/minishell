@@ -6,7 +6,7 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 13:15:18 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/21 14:55:50 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/21 15:24:00 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,15 @@ static void	opn_fd(int *outfd, t_list *tmp)
 				O_WRONLY | O_CREAT | O_APPEND, 0777);
 }
 
-int	check_outfile(t_list *lst)
+int	check_outfile(t_list *lst, t_info *info)
 {
 	t_list	*tmp;
 	int		outfd;
 
 	tmp = *(t_list **)lst->value;
 	outfd = -1;
+	if (info->fd_in == -2)
+		return (outfd);
 	while (tmp)
 	{
 		if ((ft_strcmp(tmp->key, "write") == 1)

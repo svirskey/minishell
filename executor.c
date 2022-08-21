@@ -6,7 +6,7 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 08:25:56 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/21 12:58:32 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/21 15:18:22 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	execve_process(t_info *info, t_list *lst)
 static int	single_init(t_info *info)
 {
 	info->fd_in = check_infile(info->grammemes, info);
-	info->fd_out = check_outfile(info->grammemes);
+	info->fd_out = check_outfile(info->grammemes, info);
 	if (info->fd_in == -2 || info->fd_out == -2)
 	{
 		if (info->fd_in > -1)

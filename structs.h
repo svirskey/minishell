@@ -6,7 +6,7 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/21 14:54:14 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/21 15:21:35 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,9 @@ void		ft_free_cmdargs(char **cmdargs);
 //redir
 int			here_doc(char *heredoc, t_info *info);
 int			check_infile(t_list *lst, t_info *info);
-int			check_outfile(t_list *lst);
+int			check_outfile(t_list *lst, t_info *info);
 
 int			error_files(char *path, int flag);
+void		three_lines(char *line, char *line2, char *line3);
 
 #endif
