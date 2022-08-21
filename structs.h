@@ -6,7 +6,7 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/21 15:21:35 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/21 20:07:23 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ long long	ft_atol(const char *str);
 char		*ft_itoa(int n);
 char		**ft_split(char const *s, char c);
 char		*ft_strnstr(const char *haystack, const char *needle, int len);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
 
 //lexer funcs
 int			next_char(char *str, int begin, char origin);

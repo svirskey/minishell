@@ -6,7 +6,7 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 20:55:46 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/21 15:22:21 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/21 20:17:21 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,24 @@ int	ft_exec(t_info *info, t_list *lst)
 {
 	char	**cmdargs;
 	char	*fpath;
+	struct stat buff;
 
 	envp_update(info, ENV);
 	cmdargs = create_cmd_array(lst);
 	fpath = check_all_path(cmdargs, info->envp_arr);
-	if (!fpath)
-	{
-		p_err_three("minishell: ", cmdargs[0], ": command not found\n");
-		ft_free_cmdargs(cmdargs);
-		return (1);
-	}
 	execve(fpath, cmdargs, info->envp_arr);
+	if (stat(fpath, &buff) == 0)
+	{
+		if (S_ISDIR(buff.st_mode) && ft_strncmp(fpath, "./", 2) == 0)
+			p_err_three("minishell: ", cmdargs[0], ": This is a directory\n");
+		else if (S_ISREG(buff.st_mode))
+			p_err_three("minishell: ", cmdargs[0], ": Command not found\n");
+		else if ((!S_ISDIR(buff.st_mode)) && (!S_ISREG(buff.st_mode)))
+			p_err_three("minishell: ", cmdargs[0], ": No such file or directory\n");
+	}
+	else
+		p_err_three("minishell: ", cmdargs[0], ": Command not found!\n");
 	ft_free_cmdargs(cmdargs);
-	perror("minishell: error in execve:");
 	return (1);
 }
 
