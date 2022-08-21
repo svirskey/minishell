@@ -26,16 +26,28 @@ int	ft_exec(t_info *info, t_list *lst)
 	if (stat(fpath, &buff) == 0)
 	{
 		if (S_ISDIR(buff.st_mode) && ft_strncmp(fpath, "./", 2) == 0)
-			p_err_three("minishell: ", cmdargs[0], ": This is a directory\n");
+		{
+			p_err_three("minishell: ", cmdargs[0], ": Is a directory\n");
+			info->exit_status = 126;
+		}
 		else if (S_ISREG(buff.st_mode))
-			p_err_three("minishell: ", cmdargs[0], ": Command not found\n");
+		{
+			p_err_three("minishell: ", cmdargs[0], ": command not found\n");
+			info->exit_status = 127;
+		}
 		else if ((!S_ISDIR(buff.st_mode)) && (!S_ISREG(buff.st_mode)))
+		{
 			p_err_three("minishell: ", cmdargs[0], ": No such file or directory\n");
+			info->exit_status = 1;
+		}
 	}
 	else
-		p_err_three("minishell: ", cmdargs[0], ": Command not found!\n");
+	{
+		p_err_three("minishell: ", cmdargs[0], ": command not found\n");
+		info->exit_status = 127;
+	}
 	ft_free_cmdargs(cmdargs);
-	return (1);
+	return (info->exit_status);
 }
 
 static void	pipe_init(t_info *info, t_list *lst, int *fd)
