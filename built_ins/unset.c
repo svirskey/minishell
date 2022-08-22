@@ -21,7 +21,7 @@ int	ft_unset(t_info *info, t_list *grammeme)
 	lst = grammeme->next;
 	while (lst)
 	{
-		lst_remove_node(&info->envp_list, lst->value);
+		lst_remove_nodes(&info->envp_list, lst->value);
 		lst = lst->next;
 	}
 	info->envp_status = KO;

@@ -91,6 +91,7 @@ static void	find_type(t_info *info, t_list *tmp, t_list **opn, int *i)
 void	inner_open(t_info *info, t_list **prev, t_list **tmp)
 {
 	t_list	*opn;
+	t_list	*cur;
 	int		i;
 
 	i = 0;
@@ -99,12 +100,12 @@ void	inner_open(t_info *info, t_list **prev, t_list **tmp)
 		find_type(info, *tmp, &opn, &i);
 	if (*prev)
 		(*prev)->next = opn;
-	while (opn->next)
-		opn = opn->next;
-	opn->next = (*tmp)->next;
-	lst_free_node(tmp);
+	cur = opn;
+	while (cur->next)
+		cur = cur->next;
+	cur->next = (*tmp)->next;
 	if (*tmp == info->tokens)
 		info->tokens = opn;
-	else
-		*tmp = opn;
+	lst_free_node(tmp);
+	*tmp = cur;	
 }

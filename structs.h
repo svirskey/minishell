@@ -86,7 +86,8 @@ void		lst_free_node(t_list **node);
 void		lst_print_grammemes(t_list *grammemes);
 int			lst_len(t_list *lst);
 void		lst_replace(t_list *list, char *key, char *new_value);
-void		lst_remove_node(t_list **head, char *key);
+void		lst_remove(t_list **head, t_list **del);
+void		lst_remove_nodes(t_list **head, char *key);
 
 //libft funcs
 int			ft_strlen(char *s);

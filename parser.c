@@ -85,7 +85,7 @@ static int	check_parsing(t_info *info)
 	t_list	*next;
 
 	if (!info->tokens)
-		return (1);
+		return (0);
 	if (ft_strcmp(info->tokens->key, "pipe"))
 	{
 		p_error("minishell: syntax error near unexpected token `|'\n");
@@ -98,11 +98,21 @@ static int	check_parsing(t_info *info)
 	return (0);
 }
 
+static void remove_empties(t_list **tokens)
+{
+	t_list *tmp;
+
+	tmp = *tokens;
+	while(tmp && ft_strcmp(tmp->key, "word") && ((char *)tmp->value)[0] == 0)
+		lst_remove(tokens, &tmp);
+}
+
 int	parser(t_info *info)
 {
 	opening(info);
 	merge(info);
-	lst_remove_node(&info->tokens, "space");
+	lst_remove_nodes(&info->tokens, "space");
+	remove_empties(&info->tokens);
 	if (check_parsing(info))
 	{
 		info->exit_status = 2;
