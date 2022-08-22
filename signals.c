@@ -15,7 +15,7 @@
 
 void	restore_prompt(int signal_type)
 {
-	write(1, "\n", 1);
+	write(STDERR_FILENO, "\n", 1); // todo write in std out
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
@@ -24,13 +24,13 @@ void	restore_prompt(int signal_type)
 
 void	next_line(int signal_type)
 {
-	write(1, "\n", 1); // todo write in std out
+	write(STDERR_FILENO, "\n", 1); // todo write in std out
 	(void)signal_type;
 }
 
 void	back_slash(int signal_type)
 {
-	write(1, "quit\n", 6); // todo write in std out
+	write(STDERR_FILENO, "quit\n", 6);
 	(void)signal_type;
 }
 
@@ -53,7 +53,7 @@ void	ft_signals(t_info *info, int signal_type)
 	}
 	if (signal_type == EXIT)
 	{
-		printf("exit\n");
+		printf("exit\n"); // todo in std_out
 		ft_free_info(info);
 		exit(0);
 	}
