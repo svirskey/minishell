@@ -43,7 +43,7 @@ int	ft_exec(t_info *info, t_list *lst)
 	}
 	else
 	{
-		p_err_three("minishell: ", cmdargs[0], ": command not found!\n");
+		p_err_three("minishell: ", cmdargs[0], ": command not found\n");
 		info->exit_status = 127;
 	}
 	ft_free_cmdargs(cmdargs);
