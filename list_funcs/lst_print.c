@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
+#include "lst_funcs.h"
 #include <stdio.h>
 
 void	lst_print(t_list *lst)

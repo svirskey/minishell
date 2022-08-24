@@ -23,7 +23,7 @@ int	ft_pwd(t_info *info, t_list *grammeme)
 	str = getcwd(buf, 255);
 	if (!str)
 	{
-		p_error("minishell: pwd: Error with pwd path\n");
+		p_err("minishell: pwd: Error with pwd path\n");
 		return (1);
 	}
 	printf("%s\n", str);

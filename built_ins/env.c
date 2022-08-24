@@ -22,7 +22,7 @@ int	ft_env(t_info *info, t_list *grammeme)
 		return (1);
 	if (lst_len(grammeme) > 1)
 	{
-		p_error("minishell: env: too many arguments\n");
+		p_err("minishell: env: too many arguments\n");
 		return (1);
 	}
 	envp_update(info, ENV);

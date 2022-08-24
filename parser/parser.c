@@ -59,8 +59,8 @@ static int	check_error(t_list **curr, t_list **next)
 		{
 			if (!ft_strcmp((*curr)->key, "word"))
 			{
-				p_error("minishell: syntax error near ");
-				p_error("unexpected token `newline'\n");
+				p_err("minishell: syntax error near ");
+				p_err("unexpected token `newline'\n");
 				return (1);
 			}
 			return (0);
@@ -69,9 +69,9 @@ static int	check_error(t_list **curr, t_list **next)
 			|| (ft_strcmp((*curr)->key, "pipe")
 				&& ft_strcmp((*next)->key, "pipe")))
 		{
-			p_error("minishell: syntax error near unexpected token `");
-			p_error((char *)(*next)->value);
-			p_error("'\n");
+			p_err("minishell: syntax error near unexpected token `");
+			p_err((char *)(*next)->value);
+			p_err("'\n");
 			return (1);
 		}
 		*curr = *next;
@@ -89,7 +89,7 @@ static int	check_parsing(t_info *info)
 		return (0);
 	if (ft_strcmp(info->tokens->key, "pipe"))
 	{
-		p_error("minishell: syntax error near unexpected token `|'\n");
+		p_err("minishell: syntax error near unexpected token `|'\n");
 		return (1);
 	}
 	curr = info->tokens;

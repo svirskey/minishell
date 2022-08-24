@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
+#include "lst_funcs.h"
+#include <stdlib.h>
 
 void	lst_free_node(t_list **node)
 {

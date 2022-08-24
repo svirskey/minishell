@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
+#include "lst_funcs.h"
 #include "libft_funcs.h"
 
 void	*lst_copy_value(t_list *lst, void *key)

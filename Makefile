@@ -1,11 +1,14 @@
 NAME = minishell
 
-SRC	=	minishell.c		signals.c		ft_free.c		error_print.c	\
-		lexer.c			lexer_cases.c	opening.c		merging.c		\
-		grammemes.c						parser.c						\
-		executor.c		redirections.c	execve_utils.c	executor_pipe.c	\
-		heredoc.c														\
-		env_parse.c						envp_actions.c					\
+SRC	=	main/minishell.c												\
+		main/ft_free.c					main/signals.c					\
+		main/env_parse.c				main/envp_actions.c				\
+		parser/lexer.c					parser/lexer_cases.c			\
+		parser/opening.c				parser/merging.c				\
+		parser/grammemes.c				parser/parser.c					\
+		executor/executor.c				executor/redirections.c			\
+		executor/execve_utils.c			executor/executor_pipe.c		\
+		executor/heredoc.c				executor/error_print.c			\
 		list_funcs/lst_change.c			list_funcs/lst_clear.c			\
 		list_funcs/lst_get.c			list_funcs/lst_print.c			\
 		built_ins/cd.c					built_ins/echo.c				\

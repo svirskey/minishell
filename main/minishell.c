@@ -13,6 +13,7 @@
 #include "structs.h"
 #include "minishell.h"
 #include "libft_funcs.h"
+#include "built_ins.h"
 
 static char	*ft_readline(void)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
+#include "lst_funcs.h"
 #include "libft_funcs.h"
 
 t_list	*lst_new(void *key, void *value)

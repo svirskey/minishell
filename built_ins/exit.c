@@ -31,9 +31,9 @@ static int	get_str_len(char *str)
 static void	print_required(t_info *info, char *str)
 {
 	write(info->std_out, "exit\n", 5);
-	p_error("minishell: exit: ");
-	p_error(str);
-	p_error(": numeric argument required\n");
+	p_err("minishell: exit: ");
+	p_err(str);
+	p_err(": numeric argument required\n");
 	ft_free_info(info);
 	exit (255);
 }
@@ -86,7 +86,7 @@ int	ft_exit(t_info *info, t_list *grammeme)
 	if (word_count > 2)
 	{
 		write(info->std_out, "exit\n", 5);
-		p_error("minishell: exit: too many arguments\n");
+		p_err("minishell: exit: too many arguments\n");
 		ft_free_info(info);
 		exit (1);
 	}

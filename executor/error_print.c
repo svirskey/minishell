@@ -14,7 +14,7 @@
 #include "structs.h"
 #include "libft_funcs.h"
 
-void	p_error(char *str)
+void	p_err(char *str)
 {
 	int	len;
 
@@ -24,9 +24,9 @@ void	p_error(char *str)
 
 void	p_err_three(char *line, char *line2, char *line3)
 {
-	p_error(line);
-	p_error(line2);
-	p_error(line3);
+	p_err(line);
+	p_err(line2);
+	p_err(line3);
 }
 
 int	error_files(char *path, int flag)

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "structs.h"
-#include <stdlib.h>
 #include "libft_funcs.h"
 
 void	envp_init(t_info *info, char **env)

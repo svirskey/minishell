@@ -38,7 +38,7 @@ int	ft_cd(t_info *info, t_list *grammeme)
 	path = get_path(info, grammeme);
 	if (!path || path[0] == 0)
 	{
-		p_error("minishell: cd: HOME not set\n");
+		p_err("minishell: cd: HOME not set\n");
 		return (1);
 	}
 	if (chdir(path) == -1)

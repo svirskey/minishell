@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "structs.h"
-#include <stdlib.h>
 #include "libft_funcs.h"
 
 static void	env_strdup(char **arr, char *str, int *j)

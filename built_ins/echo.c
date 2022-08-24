@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
+#include "lst_funcs.h"
 #include "minishell.h"
+#include <stdio.h>
 
 int	ft_echo(t_info *info, t_list *grammeme)
 {

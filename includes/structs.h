@@ -14,12 +14,7 @@
 # define STRUCTS_H
 
 # include <stdlib.h>
-
-typedef struct s_info	t_info;
-
-typedef struct s_list	t_list;
-
-typedef int				(*t_foo_p)(t_info *, t_list *);
+# include "lst_funcs.h"
 
 enum
 {
@@ -51,44 +46,6 @@ enum
 	HERE
 };
 
-struct s_list
-{
-	t_list	*next;
-	void	*key;
-	void	*value;
-};
-
-struct s_info
-{
-	t_list	*builtins;
-
-	t_list	*envp_list;
-	char	**envp_arr;
-	int		envp_status;
-
-	t_list	*tokens;
-	t_list	*grammemes;
-	int		fd_in;
-	int		fd_out;
-	int		std_in;
-	int		std_out;
-	int		exit_status;
-};
-
-//list funcs
-void		lst_pb(t_list **lst, t_list *node);
-t_list		*lst_new(void *key, void *value);
-void		lst_clear(t_list **lst);
-void		lst_print(t_list *lst);
-void		*lst_copy_value(t_list *lst, void *key);
-char		*lst_get_value(t_list *lst, void *key);
-void		lst_free_node(t_list **node);
-void		lst_print_grammemes(t_list *grammemes);
-int			lst_len(t_list *lst);
-void		lst_replace(t_list *list, char *key, char *new_value);
-void		lst_remove(t_list **head, t_list **del);
-void		lst_remove_nodes(t_list **head, char *key);
-
 //lexer funcs
 int			next_char(char *str, int begin, char origin);
 void		lexer_word(t_info *info, char *str, int *i);
@@ -117,18 +74,9 @@ void		executor(t_info *info);
 
 //other funcs
 void		ft_signals(t_info *info, int sig);
-void		p_error(char *str);
+void		p_err(char *str);
 void		ft_free_grammemes(t_info *info);
 void		ft_free_info(t_info *info);
-
-//builtins
-int			ft_env(t_info *info, t_list *grammeme);
-int			ft_export(t_info *info, t_list *grammeme);
-int			ft_unset(t_info *info, t_list *grammeme);
-int			ft_exit(t_info *info, t_list *grammeme);
-int			ft_echo(t_info *info, t_list *grammeme);
-int			ft_cd(t_info *info, t_list *grammeme);
-int			ft_pwd(t_info *info, t_list *grammeme);
 
 //utils for execve 
 char		**create_cmd_array(t_list *lst);

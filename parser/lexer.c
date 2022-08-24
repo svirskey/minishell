@@ -89,7 +89,7 @@ void	lexer(t_info *info, char *str)
 		{
 			if (next_char(str, i + 1, str[i]) == -1)
 			{
-				p_error("minishell: Error! Unclosed brackets!\n");
+				p_err("minishell: Error! Unclosed brackets!\n");
 				info->exit_status = 2;
 				lst_clear(&info->tokens);
 				return ;
