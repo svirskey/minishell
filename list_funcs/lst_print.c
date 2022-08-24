@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
-#include "../minishell.h"
+#include "structs.h"
+#include <stdio.h>
 
 void	lst_print(t_list *lst)
 {

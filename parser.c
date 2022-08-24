@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "structs.h"
+#include "libft_funcs.h"
 
 static void	opening(t_info *info)
 {

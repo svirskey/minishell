@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "structs.h"
+#include "libft_funcs.h"
 
 // begin with next el
 int	next_char(char *str, int begin, char origin)

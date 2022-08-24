@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
+#include "libft_funcs.h"
 
 static int	fill_arr(char const *s, char *ret, int len_to, int start)
 {

@@ -24,7 +24,7 @@ OBJS = $(patsubst %.c,%.o, $(SRC))
 
 DEPS = $(patsubst %.c,%.d, $(SRC))
 
-HEADERS = minishell.h structs.h
+INCLUDE = ./includes
 
 CFLAGS = -MMD -Wall -Wextra -Werror
 
@@ -36,7 +36,7 @@ $(NAME): $(OBJS)
 	$(CC) $(OBJS) -lreadline -lncurses -o $@
 
 %.o : %.c
-	$(CC)  $(CFLAGS) -c $< -o $@ 
+	$(CC)  $(CFLAGS) -c $< -o $@ -I$(INCLUDE)
 
 clean:
 	rm -f $(OBJS) $(DEPS)

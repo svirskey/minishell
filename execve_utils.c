@@ -12,6 +12,7 @@
 
 #include "structs.h"
 #include "minishell.h"
+#include "libft_funcs.h"
 
 void	ft_free_cmdargs(char **cmdargs)
 {

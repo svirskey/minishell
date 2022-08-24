@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
-#include "../minishell.h"
+#include "structs.h"
+#include "libft_funcs.h"
 
 void	*lst_copy_value(t_list *lst, void *key)
 {

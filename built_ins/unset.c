@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
+#include "structs.h"
 
 int	ft_unset(t_info *info, t_list *grammeme)
 {

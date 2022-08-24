@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "structs.h"
+#include "libft_funcs.h"
 
 static int	c_to_sep(char *str, int begin, int type)
 {

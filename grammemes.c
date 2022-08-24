@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "structs.h"
+#include "libft_funcs.h"
 
 static void	*p_malloc(t_list *head)
 {

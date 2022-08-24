@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "structs.h"
+#include "libft_funcs.h"
 
 static char	*lst_last_key(t_list *lst)
 {

@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "structs.h"
+#include "libft_funcs.h"
 
 static void	cycle_gnl(char *limiter, int infd)
 {

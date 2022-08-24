@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
-#include "../minishell.h"
+#include "structs.h"
+#include "minishell.h"
+#include "libft_funcs.h"
 
 static int	get_str_len(char *str)
 {

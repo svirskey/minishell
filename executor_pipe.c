@@ -12,6 +12,7 @@
 
 #include "structs.h"
 #include "minishell.h"
+#include "libft_funcs.h"
 
 int	ft_exec(t_info *info, t_list *lst)
 {

@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
-#include "../minishell.h"
+#include "structs.h"
 
 void	lst_free_node(t_list **node)
 {

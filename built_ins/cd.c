@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
-#include "../minishell.h"
+#include "structs.h"
+#include "minishell.h"
+#include "libft_funcs.h"
 
 char	*get_path(t_info *info, t_list *grammeme)
 {

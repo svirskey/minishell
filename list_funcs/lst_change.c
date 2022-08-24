@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
-#include "../minishell.h"
+#include "structs.h"
+#include "libft_funcs.h"
 
 t_list	*lst_new(void *key, void *value)
 {

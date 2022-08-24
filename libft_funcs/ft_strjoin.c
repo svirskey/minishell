@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
+#include "libft_funcs.h"
 
 static void	fill_first(char const *s1, char *ret, int *i)
 {

@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "structs.h"
+#include "libft_funcs.h"
 
 static int	check_infd(t_info *info, t_list *tmp, int *infd)
 {

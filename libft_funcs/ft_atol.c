@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
+#include "libft_funcs.h"
 
 long long	ft_atol(const char *str)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
+#include <stdlib.h>
 
 static int	count_size(int n)
 {
