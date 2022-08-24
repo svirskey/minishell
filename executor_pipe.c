@@ -6,7 +6,7 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 20:55:46 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/21 20:17:21 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/24 18:01:12 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,20 @@ int	ft_exec(t_info *info, t_list *lst)
 			p_err_three("minishell: ", cmdargs[0], ": Is a directory\n");
 			info->exit_status = 126;
 		}
-		else if (S_ISREG(buff.st_mode))
+		else if (S_ISREG(buff.st_mode) && access(fpath, X_OK) != 0 && ft_strncmp(fpath, "./", 2) == 0)
+		{
+			p_err_three("minishell: ", cmdargs[0], ": access denied\n");
+			info->exit_status = 126;
+		}
+		else
 		{
 			p_err_three("minishell: ", cmdargs[0], ": command not found\n");
 			info->exit_status = 127;
 		}
-		else if ((!S_ISDIR(buff.st_mode)) && (!S_ISREG(buff.st_mode)))
-		{
-			p_err_three("minishell: ", cmdargs[0], ": No such file or directory\n");
-			info->exit_status = 1;
-		}
 	}
 	else
 	{
-		p_err_three("minishell: ", cmdargs[0], ": command not found\n");
+		p_err_three("minishell: ", cmdargs[0], ": command not found!\n");
 		info->exit_status = 127;
 	}
 	ft_free_cmdargs(cmdargs);
