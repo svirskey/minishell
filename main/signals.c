@@ -38,17 +38,17 @@ void	ft_signals(t_info *info, int signal_type)
 {
 	if (signal_type == PROMPT)
 	{
-		signal(SIGINT, restore_prompt);
-		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, restore_prompt); // ok
+		signal(SIGQUIT, SIG_IGN); // ok
 	}
 	if (signal_type == HERE)
 	{
 		signal(SIGINT, next_line); // TODO
-		signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN); // ok
 	}
 	if (signal_type == EXEC)
 	{
-		signal(SIGINT, next_line); // TODO
+		signal(SIGINT, next_line); // need to check in mac
 		signal(SIGQUIT, back_slash);
 	}
 	if (signal_type == EXIT)
