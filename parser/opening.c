@@ -108,5 +108,5 @@ void	inner_open(t_info *info, t_list **prev, t_list **tmp)
 	if (*tmp == info->tokens)
 		info->tokens = opn;
 	lst_free_node(tmp);
-	*tmp = cur;	
+	*tmp = cur;
 }

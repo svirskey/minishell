@@ -6,7 +6,7 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:38 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/21 13:22:32 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/25 09:53:27 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_cd(t_info *info, t_list *grammeme)
 		if (!lst_get_value(info->envp_list, "OLDPWD"))
 			lst_pb(&(info->envp_list),
 				lst_new(ft_strdup("OLDPWD"), ft_strdup("")));
-		lst_replace(info->envp_list, "OLDPWD", 
+		lst_replace(info->envp_list, "OLDPWD",
 			lst_get_value(info->envp_list, "PWD"));
 		lst_replace(info->envp_list, "PWD", get_pwd());
 	}

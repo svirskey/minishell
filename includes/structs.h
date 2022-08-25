@@ -6,7 +6,7 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/21 20:07:23 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/25 09:44:16 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ int			check_outfile(t_list *lst, t_info *info);
 
 int			error_files(char *path, int flag);
 void		p_err_three(char *line, char *line2, char *line3);
+void		bash_error_output(char *fpath, t_info *info, char **cmdargs);
 
 #endif

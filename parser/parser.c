@@ -99,12 +99,12 @@ static int	check_parsing(t_info *info)
 	return (0);
 }
 
-static void remove_empties(t_list **tokens)
+static void	remove_empties(t_list **tokens)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = *tokens;
-	while(tmp && ft_strcmp(tmp->key, "word") && ((char *)tmp->value)[0] == 0)
+	while (tmp && ft_strcmp(tmp->key, "word") && ((char *)tmp->value)[0] == 0)
 		lst_remove(tokens, &tmp);
 }
 

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft_funcs.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/25 09:44:00 by sshana            #+#    #+#             */
+/*   Updated: 2022/08/25 09:55:42 by sshana           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBFT_FUNCS_H
 
 # define LIBFT_FUNCS_H
 
-#include <stdlib.h>
+# include <stdlib.h>
 
 int			ft_strlen(char *s);
 char		*ft_strdup(const char *s1);
@@ -18,4 +30,4 @@ char		**ft_split(char const *s, char c);
 char		*ft_strnstr(const char *haystack, const char *needle, int len);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 
-# endif
+#endif

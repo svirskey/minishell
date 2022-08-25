@@ -6,15 +6,13 @@
 /*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 20:05:20 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/21 20:07:08 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/25 09:55:03 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <stdlib.h>
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(const char *s1, const char *s2, int n)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i != n)
