@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:30 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/25 16:56:22 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 17:20:05 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,31 @@ static int	check_minus(char *ref)
 	return (0);
 }
 
+static int	concate_free(t_info *info, t_list *grammeme, char **arr)
+{
+	if (check_minus(arr[0]))
+	{
+		free(arr[0]);
+		free(arr[1]);
+		free(arr[2]);
+		p_err_three("minishell: export: `", (char *)grammeme->value,
+			"': not a valid identifier\n");
+		return (1);
+	}
+	if (ft_strcmp(arr[1], "="))
+	{
+		lst_remove_nodes(&info->envp_list, arr[1]);
+		lst_pb(&info->envp_list, lst_new(arr[0], arr[2]));
+	}
+	else
+	{
+		free(arr[0]);
+		free(arr[2]);
+	}
+	free(arr[1]);
+	return (0);
+}
+
 static int	check_grammeme(t_info *info, t_list *grammeme, char **arr)
 {
 	char	c;
@@ -64,26 +89,8 @@ static int	check_grammeme(t_info *info, t_list *grammeme, char **arr)
 	else
 	{
 		env_parse(arr, grammeme->value);
-		if (check_minus(arr[0]))
-		{
-			free(arr[0]);
-			free(arr[1]);
-			free(arr[2]);
-			p_err_three("minishell: export: `", (char *)grammeme->value,
-				"': not a valid identifier\n");
+		if (concate_free(info, grammeme, arr))
 			return (1);
-		}
-		if (ft_strcmp(arr[1], "="))
-		{
-			lst_remove_nodes(&info->envp_list, arr[1]);
-			lst_pb(&info->envp_list, lst_new(arr[0], arr[2]));
-		}
-		else
-		{
-			free(arr[0]);
-			free(arr[2]);
-		}
-		free(arr[1]);
 		return (0);
 	}
 }
