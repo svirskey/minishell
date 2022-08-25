@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 13:15:18 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/21 15:24:00 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/25 16:36:46 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ static int	check_infd(t_info *info, t_list *tmp, int *infd)
 		if ((*infd) > -1)
 			close(*infd);
 		*infd = here_doc((char *)tmp->value, info);
-		if ((*infd) == -1)
+		if ((*infd) < 0)
 		{
-			perror("minishell:");
+			if ((*infd) == -1)
+				perror("minishell:");
 			return (-2);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:56:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/20 19:20:24 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 16:35:44 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "minishell.h"
 #include "libft_funcs.h"
 #include "built_ins.h"
+
+t_signals	g_sig;
 
 static char	*ft_readline(void)
 {
@@ -31,6 +33,8 @@ static t_foo_p	*b_node(t_foo_p built_foo)
 
 	node = NULL;
 	node = malloc(sizeof(t_foo_p));
+	if (!node)
+		malloc_err();
 	*node = built_foo;
 	return (node);
 }
@@ -68,6 +72,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_init(&info, envp, argc, argv);
 	while (true)
 	{
+		g_sig.is_quit = 0;
 		ft_signals(&info, PROMPT);
 		str = ft_readline();
 		if (!str)

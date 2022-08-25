@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 22:01:04 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/20 19:51:22 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 14:42:22 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,6 @@ static void	opening(t_info *info)
 		prev = tmp;
 		tmp = tmp->next;
 	}
-}
-
-int	is_redir(const char *str)
-{
-	if (ft_strcmp(str, "append") || ft_strcmp(str, "write")
-		|| ft_strcmp(str, "heredoc") || ft_strcmp(str, "read"))
-		return (1);
-	return (0);
 }
 
 static int	check_error(t_list **curr, t_list **next)

@@ -6,13 +6,21 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 21:21:08 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 21:42:22 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 14:42:33 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "structs.h"
 #include "libft_funcs.h"
+
+int	is_redir(const char *str)
+{
+	if (ft_strcmp(str, "append") || ft_strcmp(str, "write")
+		|| ft_strcmp(str, "heredoc") || ft_strcmp(str, "read"))
+		return (1);
+	return (0);
+}
 
 static void	find_len(t_list **arr, char **new_str)
 {
@@ -27,6 +35,8 @@ static void	find_len(t_list **arr, char **new_str)
 	}
 	arr[2] = arr[0];
 	*new_str = malloc(sizeof(char) * (len + 1));
+	if (!(*new_str))
+		malloc_err();
 	ft_bzero(*new_str, len + 1);
 	while (arr[2] && ft_strcmp(arr[2]->key, "word"))
 	{

@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 12:42:29 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/18 19:34:08 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 14:34:30 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	**create_cmd_array(t_list *lst)
 	words = *(t_list **)lst->key;
 	num = lst_len(words);
 	cmd_line = (char **)malloc(sizeof(char *) * (num + 1));
+	if (!cmd_line)
+		malloc_err();
 	num = 0;
 	while (words)
 	{

@@ -9,6 +9,7 @@ SRC	=	main/minishell.c												\
 		executor/executor.c				executor/redirections.c			\
 		executor/execve_utils.c			executor/executor_pipe.c		\
 		executor/heredoc.c				executor/error_print.c			\
+		executor/error_write.c											\
 		list_funcs/lst_change.c			list_funcs/lst_clear.c			\
 		list_funcs/lst_get.c			list_funcs/lst_print.c			\
 		built_ins/cd.c					built_ins/echo.c				\

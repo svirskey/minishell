@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 08:25:56 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/21 15:18:22 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/25 16:32:28 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	single_process(t_info *info)
 	if (!(*(t_list **)(info->grammemes->key)))
 		return (0);
 	tmp = info->builtins;
-	while (tmp)
+	while (tmp && !g_sig.is_quit)
 	{
 		if (ft_strcmp(tmp->key,
 				(char *)(*(t_list **)(info->grammemes->key))->value))
@@ -86,11 +86,13 @@ void	executor(t_info *info)
 
 	lst = info->grammemes;
 	ft_signals(info, EXEC);
+	g_sig.is_pipe = 0;
 	if (lst_len(lst) == 1)
 		single_process(info);
 	else
 	{
-		while (lst)
+		g_sig.is_pipe = 1;
+		while (lst && !g_sig.is_quit)
 		{
 			pipe_process(info, lst);
 			lst = lst->next;

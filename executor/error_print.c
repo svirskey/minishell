@@ -3,31 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 19:38:07 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/25 09:51:37 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/25 14:45:34 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "structs.h"
 #include "libft_funcs.h"
-
-void	p_err(char *str)
-{
-	int	len;
-
-	len = ft_strlen(str);
-	write(STDERR_FILENO, str, len);
-}
-
-void	p_err_three(char *line, char *line2, char *line3)
-{
-	p_err(line);
-	p_err(line2);
-	p_err(line3);
-}
 
 int	error_files(char *path, int flag)
 {
@@ -57,7 +42,7 @@ void	bash_error_output(char *fpath, t_info *info, char **cmdargs)
 		if (S_ISDIR(buff.st_mode) && ((ft_strncmp(fpath, "./", 2) == 0) \
 		|| (ft_strncmp(fpath, "/", 1) == 0)))
 		{
-			p_err_three("minishell: ", cmdargs[0], ": Is a directory\n");
+			p_err_three("minishell: ", cmdargs[0], ": is a directory\n");
 			info->exit_status = 126;
 		}
 		else if (S_ISREG(buff.st_mode) && access(fpath, X_OK) != 0 \

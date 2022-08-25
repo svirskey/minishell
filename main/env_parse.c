@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 21:13:14 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/18 21:13:35 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 14:37:16 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	env_parse(char **arr, char *str)
 	while (str[j] && str[j] != '=')
 		j++;
 	arr[0] = malloc(j + 1);
+	if (!arr[0])
+		malloc_err();
 	j = 0;
 	while (str[j] && str[j] != '=')
 	{
@@ -43,6 +45,8 @@ void	env_parse(char **arr, char *str)
 	while (str[j + k])
 		k++;
 	arr[2] = malloc(k + 1);
+	if (!arr[2])
+		malloc_err();
 	k = 0;
 	while (str[j + k])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_pipe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 20:55:46 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/25 09:22:28 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/25 15:02:39 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	pipe_process(t_info *info, t_list *lst)
 	{
 		pipe_init(info, lst, fd);
 		tmp = info->builtins;
-		while (tmp)
+		while (tmp && !g_sig.is_quit)
 		{
 			if (ft_strcmp(tmp->key, (char *)(*(t_list **)(lst->key))->value))
 				exit ((*(t_foo_p *)(tmp->value))(info, *(t_list **)(lst->key)));

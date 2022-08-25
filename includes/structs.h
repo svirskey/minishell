@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:06:06 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/25 09:44:16 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/25 16:40:52 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,17 @@
 
 # include <stdlib.h>
 # include "lst_funcs.h"
+
+typedef struct s_signals	t_signals;
+
+struct s_signals
+{
+	int				heredoc;
+	int				is_quit;
+	int				is_pipe;
+};
+
+extern t_signals			g_sig;
 
 enum
 {
@@ -88,6 +99,7 @@ int			here_doc(char *heredoc, t_info *info);
 int			check_infile(t_list *lst, t_info *info);
 int			check_outfile(t_list *lst, t_info *info);
 
+void		malloc_err(void);
 int			error_files(char *path, int flag);
 void		p_err_three(char *line, char *line2, char *line3);
 void		bash_error_output(char *fpath, t_info *info, char **cmdargs);

@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 17:00:57 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/19 17:08:57 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 14:37:49 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void	*p_malloc(t_list *head)
 	t_list	**ret;
 
 	ret = malloc(sizeof(t_list *));
+	if (!ret)
+		malloc_err();
 	*ret = head;
 	return ((void *)ret);
 }

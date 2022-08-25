@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lst_change.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:58:13 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/25 09:43:34 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/25 14:38:32 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lst_funcs.h"
+#include "structs.h"
 #include "libft_funcs.h"
 
 t_list	*lst_new(void *key, void *value)
@@ -19,7 +19,7 @@ t_list	*lst_new(void *key, void *value)
 
 	node = (t_list *)malloc(sizeof(t_list));
 	if (node == NULL)
-		return (NULL);
+		malloc_err();
 	node->key = key;
 	node->value = value;
 	node->next = NULL;
