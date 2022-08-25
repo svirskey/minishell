@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 17:44:20 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/25 16:37:00 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 17:03:26 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ static void	cycle_gnl(char *limiter, int infd)
 		if (g_sig.is_quit)
 			break ;
 		if (line[0] == '\n')
-			write(infd, "\n", 2);
+			write(infd, "\n", 1);
 		else
 		{
 			write(infd, line, ft_strlen(line));
-			write(infd, "\n", 2);
+			write(infd, "\n", 1);
 		}
 		free(line);
 		if (!g_sig.is_quit)
 			line = readline("here_doc> ");
 		else
-			return ;
+			break ;
 	}
 	if (line)
 		free(line);

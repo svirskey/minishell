@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 21:13:14 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/25 14:37:16 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 16:52:18 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,29 @@ static void	env_strdup(char **arr, char *str, int *j)
 	(*j)++;
 }
 
+void	cpy_first(char **arr, char **str, int *j)
+{
+	*j = 0;
+	while ((*str)[*j] && (*str)[*j] != '=')
+		(*j)++;
+	arr[0] = malloc(*j + 1);
+	if (!arr[0])
+		malloc_err();
+	*j = 0;
+	while ((*str)[*j] && (*str)[*j] != '=')
+	{
+		arr[0][*j] = (*str)[*j];
+		(*j)++;
+	}
+}
+
 void	env_parse(char **arr, char *str)
 {
 	int		j;
 	int		k;
 
-	j = 0;
 	k = 0;
-	while (str[j] && str[j] != '=')
-		j++;
-	arr[0] = malloc(j + 1);
-	if (!arr[0])
-		malloc_err();
-	j = 0;
-	while (str[j] && str[j] != '=')
-	{
-		arr[0][j] = str[j];
-		j++;
-	}
+	cpy_first(arr, &str, &j);
 	env_strdup(arr, str, &j);
 	while (str[j + k])
 		k++;

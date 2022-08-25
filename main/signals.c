@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 19:51:47 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/25 16:42:23 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 17:04:03 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	next_line(int signal_type)
 void	back_slash(int signal_type)
 {
 	g_sig.is_quit = 1;
-	write(STDERR_FILENO, "quit\n", 6);
+	write(STDERR_FILENO, "quit\n", 5);
 	(void)signal_type;
 }
 

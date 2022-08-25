@@ -6,7 +6,7 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:30 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/20 19:51:47 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 16:56:22 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,8 @@ static int	check_grammeme(t_info *info, t_list *grammeme, char **arr)
 	c = ((char *)grammeme->value)[0];
 	if ((c < 'a' || c > 'z') && c != '_' && (c < 'A' || c > 'Z'))
 	{
-		p_err("minishell: export: `");
-		p_err((char *)grammeme->value);
-		p_err("': not a valid identifier\n");
+		p_err_three("minishell: export: `", (char *)grammeme->value,
+			"': not a valid identifier\n");
 		return (1);
 	}
 	else
@@ -70,9 +69,8 @@ static int	check_grammeme(t_info *info, t_list *grammeme, char **arr)
 			free(arr[0]);
 			free(arr[1]);
 			free(arr[2]);
-			p_err("minishell: export: `");
-			p_err((char *)grammeme->value);
-			p_err("': not a valid identifier\n");
+			p_err_three("minishell: export: `", (char *)grammeme->value,
+				"': not a valid identifier\n");
 			return (1);
 		}
 		if (ft_strcmp(arr[1], "="))
