@@ -12,6 +12,7 @@
 
 #include "lst_funcs.h"
 #include "minishell.h"
+#include "libft_funcs.h"
 #include <stdio.h>
 
 int	ft_echo(t_info *info, t_list *grammeme)
@@ -23,8 +24,11 @@ int	ft_echo(t_info *info, t_list *grammeme)
 	grammeme = grammeme->next;
 	if (grammeme)
 	{
-		if (ft_strncmp(grammeme->value, "-n") == 1)
+		if (ft_strncmp(grammeme->value, "-n", 2) == 0)
+		{
 			is_param = 1;
+			grammeme = grammeme->next;
+		}
 		else
 			is_param = 0;
 	}
