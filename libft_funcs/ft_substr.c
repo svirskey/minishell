@@ -6,11 +6,12 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:21:49 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 19:08:41 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 14:39:35 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
+#include "libft_funcs.h"
+#include "structs.h"
 
 static int	fill_arr(char const *s, char *ret, int len_to, int start)
 {
@@ -39,6 +40,8 @@ char	*ft_substr(char *s, int start, int len)
 	if (ft_strlen(s) <= start)
 	{
 		ret = (char *)malloc(sizeof(char));
+		if (!ret)
+			malloc_err();
 		ret[0] = 0;
 		return (ret);
 	}
@@ -46,7 +49,7 @@ char	*ft_substr(char *s, int start, int len)
 		len_to++;
 	ret = (char *)malloc((len_to + 1) * sizeof(char));
 	if (ret == NULL)
-		return (NULL);
+		malloc_err();
 	i = fill_arr(s, ret, len_to, start);
 	ret[i] = 0;
 	return (ret);

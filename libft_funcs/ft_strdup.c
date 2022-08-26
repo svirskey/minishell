@@ -6,11 +6,12 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:21:38 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/04 19:22:08 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 14:39:17 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "structs.h"
 
 char	*ft_strdup(const char *s1)
 {
@@ -23,7 +24,7 @@ char	*ft_strdup(const char *s1)
 		size++;
 	ret = (char *)malloc((size + 1) * (sizeof(char)));
 	if (ret == NULL)
-		return (NULL);
+		malloc_err();
 	i = 0;
 	while (s1[i])
 	{

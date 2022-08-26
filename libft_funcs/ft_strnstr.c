@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 12:34:16 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/09 12:34:27 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/18 19:11:03 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
+#include "libft_funcs.h"
 
 char	*ft_strnstr(const char *haystack, const char *needle, int len)
 {
@@ -18,7 +18,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, int len)
 	int	j;
 	int	needle_len;
 
-	needle_len = ft_strlen((char*)needle);
+	needle_len = ft_strlen((char *)needle);
 	if (needle_len == 0)
 		return ((char *)(haystack));
 	i = 0;

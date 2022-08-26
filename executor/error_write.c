@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   error_write.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/04 19:27:27 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/19 17:10:45 by bfarm            ###   ########.fr       */
+/*   Created: 2022/08/25 14:43:39 by bfarm             #+#    #+#             */
+/*   Updated: 2022/08/25 14:45:38 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
 #include "minishell.h"
+#include "libft_funcs.h"
 
-int	ft_pwd(t_info *info, t_list *grammeme)
+void	p_err(char *str)
 {
-	char	*str;
-	char	buf[255];
+	int	len;
 
-	(void)info;
-	(void)grammeme;
-	str = getcwd(buf, 255);
-	if (!str)
-	{
-		p_err("minishell: pwd: Error with pwd path\n");
-		return (1);
-	}
-	printf("%s\n", str);
-	return (0);
+	len = ft_strlen(str);
+	write(STDERR_FILENO, str, len);
+}
+
+void	p_err_three(char *line, char *line2, char *line3)
+{
+	p_err(line);
+	p_err(line2);
+	p_err(line3);
+}
+
+void	malloc_err(void)
+{
+	p_err("minishell: error with malloc\n");
+	exit (1);
 }

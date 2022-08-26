@@ -3,33 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:27:38 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 19:16:58 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 09:53:27 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
-#include "../minishell.h"
+#include "structs.h"
+#include "minishell.h"
+#include "libft_funcs.h"
+
+char	*get_path(t_info *info, t_list *grammeme)
+{
+	if (!grammeme->next)
+		return (lst_get_value(info->envp_list, "HOME"));
+	else
+		return (grammeme->next->value);
+}
+
+static char	*get_pwd(void)
+{
+	char	buf[1000];
+	char	*pwd;
+
+	pwd = getcwd(buf, 1000);
+	return (pwd);
+}
 
 int	ft_cd(t_info *info, t_list *grammeme)
 {
-	int		len;
-	char	*dir;
+	char	*path;
 
-	len = lst_len(grammeme);
-	if (len == 2)
-		dir = grammeme->next->value;
-	else
+	path = get_path(info, grammeme);
+	if (!path || path[0] == 0)
 	{
-		if (len > 2)
-			write(STDERR_FILENO, "minishell: cd: too many arguments\n", 35);
-		else
-			write(STDERR_FILENO, "minishell: cd: too few arguments\n", 34);
+		p_err("minishell: cd: HOME not set\n");
 		return (1);
 	}
-	if (chdir(dir) == -1)
+	if (chdir(path) == -1)
 	{
 		perror("minishell: cd");
 		return (1);
@@ -37,9 +49,11 @@ int	ft_cd(t_info *info, t_list *grammeme)
 	else
 	{
 		if (!lst_get_value(info->envp_list, "OLDPWD"))
-			lst_push_back(&(info->envp_list), lst_new(ft_strdup("OLDPWD"), ft_strdup("")));
-		lst_replace(info->envp_list, "OLDPWD", lst_get_value(info->envp_list, "OLDPWD"));
-		lst_replace(info->envp_list, "PWD", dir);
+			lst_pb(&(info->envp_list),
+				lst_new(ft_strdup("OLDPWD"), ft_strdup("")));
+		lst_replace(info->envp_list, "OLDPWD",
+			lst_get_value(info->envp_list, "PWD"));
+		lst_replace(info->envp_list, "PWD", get_pwd());
 	}
 	return (0);
 }

@@ -1,41 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   lst_print.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/04 19:27:36 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 19:12:15 by bfarm            ###   ########.fr       */
+/*   Created: 2022/08/18 20:09:00 by bfarm             #+#    #+#             */
+/*   Updated: 2022/08/18 20:12:19 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lst_funcs.h"
-#include "minishell.h"
 #include <stdio.h>
 
-int	ft_echo(t_info *info, t_list *grammeme)
+void	lst_print(t_list *lst)
 {
-	(void)info;
-	int is_param;
+	t_list	*tmp;
 
-	is_param = 0;
-	grammeme = grammeme->next;
-	if (grammeme)
+	tmp = lst;
+	while (tmp)
 	{
-		if (ft_strncmp(grammeme->value, "-n") == 1)
-			is_param = 1;
-		else
-			is_param = 0;
+		printf("[%s]  \t-> [%s]\n", (char *)tmp->key, (char *)tmp->value);
+		tmp = tmp->next;
 	}
-	while (grammeme)
+	printf("\n");
+}
+
+void	lst_print_grammemes(t_list *grammemes)
+{
+	t_list	*tmp;
+
+	tmp = grammemes;
+	printf("Printing grammemes:\n");
+	while (tmp)
 	{
-		printf("%s", (char *)grammeme->value);
-		if (grammeme->next)
-			printf(" ");
-		grammeme = grammeme->next;
-	}
-	if (!is_param)
+		printf("\nNext Pipe Part:\n");
+		lst_print(*(t_list **)tmp->key);
 		printf("\n");
-	return (0);
+		lst_print(*(t_list **)tmp->value);
+		tmp = tmp->next;
+	}
 }

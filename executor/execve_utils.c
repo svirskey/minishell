@@ -1,59 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_for_execve.c                                 :+:      :+:    :+:   */
+/*   execve_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 12:42:29 by sshana            #+#    #+#             */
-/*   Updated: 2022/08/09 12:46:03 by sshana           ###   ########.fr       */
+/*   Updated: 2022/08/25 17:31:15 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "minishell.h"
+#include "libft_funcs.h"
 
-void	ft_free_cmdargs(char **cmdargs)
+static void	fill_line(char *word, char *line)
 {
-	int	i;
+	int	len;
 
-	i = 0;
-	if (!cmdargs)
-		return ;	
-	while (cmdargs[i])
+	len = 0;
+	while (word[len])
 	{
-		free(cmdargs[i]);
-		i++;
+		line[len] = word[len];
+		len++;
 	}
-	free(cmdargs);
+	line[len] = '\0';
 }
 
 char	**create_cmd_array(t_list *lst)
 {
-	t_list *words;
-	char	**command_line;
-	int		word_count;
-	int		len;
+	t_list	*words;
+	char	**cmd_line;
+	int		num;
 
 	words = *(t_list **)lst->key;
-	word_count = lst_len(words);
-	command_line = (char **)malloc(sizeof(char*) * (word_count + 1));
-	word_count = 0;
+	num = lst_len(words);
+	cmd_line = (char **)malloc(sizeof(char *) * (num + 1));
+	if (!cmd_line)
+		malloc_err();
+	num = 0;
 	while (words)
 	{
-		command_line[word_count] = (char *)malloc(sizeof(char)* ft_strlen((char*)words->value) + 1);
-		len = 0;
-		while (((char *)words->value)[len])
-		{
-			command_line[word_count][len] = ((char *)words->value)[len];
-			len++;
-		}
-		command_line[word_count][len] = '\0';
-		word_count++;
+		cmd_line[num] = (char *)malloc(ft_strlen((char *)words->value) + 1);
+		if (!cmd_line[num])
+			malloc_err();
+		fill_line((char *)words->value, cmd_line[num]);
+		num++;
 		words = words->next;
 	}
-	command_line[word_count] = NULL;
-	return (command_line);
+	cmd_line[num] = NULL;
+	return (cmd_line);
 }
 
 static void	ft_free_paths_from_envp(char **paths_from_envp)

@@ -6,11 +6,12 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 18:54:59 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/10 18:55:15 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 14:38:48 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
+#include <stdlib.h>
+#include <structs.h>
 
 static int	count_size(int n)
 {
@@ -63,7 +64,7 @@ char	*ft_itoa(int n)
 	size = count_size(n);
 	ret = (char *)malloc(sizeof(char) * (size + 1));
 	if (ret == NULL)
-		return (NULL);
+		malloc_err();
 	i = -1;
 	tmp = n;
 	sign = 0;

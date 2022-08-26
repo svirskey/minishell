@@ -6,11 +6,12 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:08:56 by bfarm             #+#    #+#             */
-/*   Updated: 2021/10/13 22:26:36 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 14:39:04 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
+#include <stdlib.h>
+#include <structs.h>
 
 static int	count_strs(char const *s, char c)
 {
@@ -45,7 +46,7 @@ static void	fill_strs(char *ret, char const *s, int *str_len, int *i)
 	(*i)--;
 }
 
-static int	check_null(char **ret, int *num_of_str, int str_len, int *j)
+static void	check_null(char **ret, int *num_of_str, int str_len, int *j)
 {
 	int	i;
 
@@ -60,10 +61,9 @@ static int	check_null(char **ret, int *num_of_str, int str_len, int *j)
 			i++;
 		}
 		free(ret);
-		return (0);
+		malloc_err();
 	}
 	(*num_of_str)++;
-	return (1);
 }
 
 static void	check_for_strs(char const *s, int i, char c, int *str_len)
@@ -87,7 +87,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	ret = (char **)malloc(sizeof(char *) * (count_strs(s, c) + 1));
 	if (ret == NULL)
-		return (NULL);
+		malloc_err();
 	i = 0;
 	num_of_str = 0;
 	while (s[i])
@@ -95,8 +95,7 @@ char	**ft_split(char const *s, char c)
 		check_for_strs(s, i, c, &str_len);
 		if ((s[i] != c) && ((s[i + 1] && s[i + 1] == c) || (!s[i + 1])))
 		{
-			if (check_null(ret, &num_of_str, str_len, &i) == 0)
-				return (NULL);
+			check_null(ret, &num_of_str, str_len, &i);
 			fill_strs(ret[num_of_str - 1], s, &str_len, &i);
 		}
 		i++;

@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   execve_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/04 19:27:27 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/19 17:10:45 by bfarm            ###   ########.fr       */
+/*   Created: 2022/08/25 17:31:09 by bfarm             #+#    #+#             */
+/*   Updated: 2022/08/25 17:31:31 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
-#include "minishell.h"
+#include <stdlib.h>
 
-int	ft_pwd(t_info *info, t_list *grammeme)
+void	ft_free_cmdargs(char **cmdargs)
 {
-	char	*str;
-	char	buf[255];
+	int	i;
 
-	(void)info;
-	(void)grammeme;
-	str = getcwd(buf, 255);
-	if (!str)
+	i = 0;
+	if (!cmdargs)
+		return ;
+	while (cmdargs[i])
 	{
-		p_err("minishell: pwd: Error with pwd path\n");
-		return (1);
+		free(cmdargs[i]);
+		i++;
 	}
-	printf("%s\n", str);
-	return (0);
+	free(cmdargs);
 }

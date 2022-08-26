@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sshana <sshana@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/04 19:27:27 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/19 17:10:45 by bfarm            ###   ########.fr       */
+/*   Created: 2022/08/21 20:05:20 by sshana            #+#    #+#             */
+/*   Updated: 2022/08/25 09:55:03 by sshana           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
-#include "minishell.h"
-
-int	ft_pwd(t_info *info, t_list *grammeme)
+int	ft_strncmp(const char *s1, const char *s2, int n)
 {
-	char	*str;
-	char	buf[255];
+	int	i;
 
-	(void)info;
-	(void)grammeme;
-	str = getcwd(buf, 255);
-	if (!str)
+	i = 0;
+	while (i != n)
 	{
-		p_err("minishell: pwd: Error with pwd path\n");
-		return (1);
+		if (s1[i] == '\0' && s2[i] == '\0')
+			return (0);
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
 	}
-	printf("%s\n", str);
 	return (0);
 }

@@ -6,11 +6,12 @@
 /*   By: bfarm <bfarm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 22:31:41 by bfarm             #+#    #+#             */
-/*   Updated: 2022/08/04 22:39:38 by bfarm            ###   ########.fr       */
+/*   Updated: 2022/08/25 14:39:26 by bfarm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../structs.h"
+#include "libft_funcs.h"
+#include "structs.h"
 
 static void	fill_first(char const *s1, char *ret, int *i)
 {
@@ -34,7 +35,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	len += (int)ft_strlen(s2);
 	ret = (char *)malloc(sizeof(char) * (len + 1));
 	if (ret == NULL)
-		return (NULL);
+		malloc_err();
 	fill_first(s1, ret, &i);
 	len = i;
 	i = 0;
