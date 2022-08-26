@@ -55,7 +55,7 @@ int	ft_export(t_info *info, t_list *grammeme)
 			env_parse(arr, grammeme->value);
 			if (ft_strcmp(arr[1], "="))
 			{
-				lst_remove_node(&info->envp_list, arr[1]);
+				lst_remove_node(&info->envp_list, arr[0]);
 				lst_push_back(&info->envp_list, lst_new(arr[0], arr[2]));
 			}
 			else

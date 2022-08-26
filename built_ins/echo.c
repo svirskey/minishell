@@ -16,7 +16,17 @@
 int	ft_echo(t_info *info, t_list *grammeme)
 {
 	(void)info;
+	int is_param;
+
+	is_param = 0;
 	grammeme = grammeme->next;
+	if (grammeme)
+	{
+		if (ft_strncmp(grammeme->value, "-n") == 1)
+			is_param = 1;
+		else
+			is_param = 0;
+	}
 	while (grammeme)
 	{
 		printf("%s", (char *)grammeme->value);
@@ -24,6 +34,7 @@ int	ft_echo(t_info *info, t_list *grammeme)
 			printf(" ");
 		grammeme = grammeme->next;
 	}
-	printf("\n");
+	if (!is_param)
+		printf("\n");
 	return (0);
 }
