@@ -8,14 +8,13 @@ on:
 
 jobs:
   build-and-test:
-  
+
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
     - name: make
       run: make
-    - name: cd minishell_tester
-      run: cd minishell_tester
     - name: run tester
-      run: ./tester
+      run: cd minishell_tester && ./tester
+      
