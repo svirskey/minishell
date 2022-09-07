@@ -35,7 +35,7 @@ static void	print_required(t_info *info, char *str)
 	p_err(str);
 	p_err(": numeric argument required\n");
 	ft_free_info(info);
-	exit (255);
+	exit (2);
 }
 
 static int	check_signs(char *str)

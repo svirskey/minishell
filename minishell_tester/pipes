@@ -1,0 +1,4 @@
+env | sort | grep -v SHLVL | grep -v ^_
+export | sort | grep -v SHLVL | grep -v "declare -x _" | grep -v "PS.="
+cat minishell.h | grep ");"$
+export GHOST=123 | env | grep GHOSTs

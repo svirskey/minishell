@@ -42,7 +42,7 @@ void	bash_error_output(char *fpath, t_info *info, char **cmdargs)
 		if (S_ISDIR(buff.st_mode) && ((ft_strncmp(fpath, "./", 2) == 0) \
 		|| (ft_strncmp(fpath, "/", 1) == 0)))
 		{
-			p_err_three("minishell: ", cmdargs[0], ": is a directory\n");
+			p_err_three("minishell: ", cmdargs[0], ": Is a directory\n");
 			info->exit_status = 126;
 		}
 		else if (S_ISREG(buff.st_mode) && access(fpath, X_OK) != 0 \

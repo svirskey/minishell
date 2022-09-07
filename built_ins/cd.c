@@ -35,6 +35,11 @@ int	ft_cd(t_info *info, t_list *grammeme)
 {
 	char	*path;
 
+	if (lst_len(grammeme) > 2) 
+	{
+		p_err("minishell: cd: too many arguments\n");
+		return (1);
+	}
 	path = get_path(info, grammeme);
 	if (!path || path[0] == 0)
 	{
